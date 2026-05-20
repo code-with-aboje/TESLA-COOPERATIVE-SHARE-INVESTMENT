@@ -3,436 +3,485 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Withdraw - BluStone</title>
+<title>Withdraw — Tesla Cooperative</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,-apple-system,sans-serif;background:#fafafa;padding:20px}
-.container{max-width:900px;margin:0 auto;padding-bottom:80px}.page-header{margin-bottom:32px}
-.page-header h1{font-size:28px;color:#0f172a;margin-bottom:8px}.page-header p{color:#64748b;font-size:15px}
-.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
-.card{background:white;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.05);border:1px solid #e5e7eb}
-.card-title{font-size:14px;font-weight:600;color:#64748b;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
-.card-value{font-size:32px;font-weight:700;color:#10b981;margin-bottom:12px}.card-meta{font-size:13px;color:#94a3b8}
-.section{background:white;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.05);border:1px solid #e5e7eb;margin-bottom:32px}
-.section-title{font-size:18px;font-weight:700;color:#0f172a;margin-bottom:24px;display:flex;align-items:center;gap:12px}
-.section-title i{color:#10b981;font-size:20px}.btn-withdraw{width:100%;padding:14px;background:linear-gradient(135deg,#10b981,#059669);color:white;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;box-shadow:0 4px 12px rgba(16,185,129,.3)}
-.btn-withdraw:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(16,185,129,.4)}.btn-withdraw:active{transform:translateY(0)}
-.btn-withdraw:disabled{opacity:.6;cursor:not-allowed;background:#9ca3af}.history-wrapper{overflow-x:auto;margin:0 -24px;padding:0 24px}
-.history-table{width:100%;border-collapse:collapse;min-width:500px}.history-table thead{background:#f8fafc;border-bottom:2px solid #e2e8f0}
-.history-table th{padding:12px;text-align:left;font-weight:600;color:#475569;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
-.history-table td{padding:14px 12px;border-bottom:1px solid #e5e7eb;font-size:14px;color:#334155}.history-table tbody tr:hover{background:#f8fafc}
-.status-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;text-transform:capitalize}
-.status-pending{background:#fef3c7;color:#92400e}.status-completed{background:#d1fae5;color:#065f46}
-.status-approved{background:#d1fae5;color:#065f46}.status-rejected{background:#fee2e2;color:#991b1b}
-.empty-state{text-align:center;padding:40px 20px;color:#94a3b8}.empty-state-icon{font-size:48px;color:#cbd5e1;margin-bottom:16px}
-.info-box{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px;margin-bottom:24px;font-size:14px;color:#0c4a6e;display:flex;gap:12px;align-items:flex-start}
-.info-box i{color:#0284c7;flex-shrink:0;margin-top:2px}
-.time-restriction{background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:14px;margin-bottom:24px;font-size:14px;color:#92400e;display:flex;gap:12px;align-items:flex-start}
-.time-restriction i{color:#f59e0b;flex-shrink:0;margin-top:2px;font-size:18px}
-.time-restriction strong{color:#78350f}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,.6);z-index:10000;padding:20px;overflow-y:auto}
-.modal.active{display:flex;align-items:center;justify-content:center;animation:fadeIn .3s}@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes scaleIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
-.modal-content{width:100%;max-width:480px;background:white;border-radius:16px;padding:20px;animation:scaleIn .3s;box-shadow:0 20px 60px rgba(0,0,0,.3);max-height:85vh;overflow-y:auto}
-.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #e5e7eb}
-.modal-title{font-size:18px;font-weight:700;color:#0f172a}.close-btn{background:none;border:none;font-size:24px;color:#64748b;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:background .3s;line-height:1}
-.close-btn:hover{background:#f1f5f9}.form-group{margin-bottom:16px}.form-label{display:block;font-size:13px;font-weight:600;color:#334155;margin-bottom:6px}
-.form-input,.form-select{width:100%;padding:10px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:13px;transition:all .3s}
-.form-input:focus,.form-select:focus{outline:none;border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.1)}
-.amount-info{background:#f0fdf4;border:1px solid #dcfce7;border-radius:8px;padding:10px;margin-bottom:16px;font-size:13px;color:#166534}
-.info-row{display:flex;justify-content:space-between;padding:4px 0}.info-label{font-weight:500;font-size:12px}
-.info-value{font-weight:700;color:#15803d;font-size:13px}.fee-warning{background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:10px;margin-bottom:16px;font-size:12px;color:#92400e;display:none}
-.fee-warning.show{display:block}.fee-breakdown{margin-top:8px;padding-top:8px;border-top:1px solid #fde68a}
-.fee-breakdown .info-row{font-size:11px;padding:2px 0}
-.message{border-radius:8px;padding:10px;margin-bottom:16px;font-size:13px;display:none}
-.message.show{display:block}.error{background:#fee2e2;border:1px solid #fecaca;color:#991b1b}
-.success{background:#f0fdf4;border:1px solid:#86efac;color:#166534}.button-group{display:flex;gap:10px;margin-top:20px}
-.btn{flex:1;padding:11px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all .3s}
-.btn-cancel{background:#f1f5f9;color:#475569}.btn-submit{background:linear-gradient(135deg,#10b981,#059669);color:white;box-shadow:0 4px 12px rgba(16,185,129,.3)}
-.btn-submit:hover:not(:disabled){transform:translateY(-2px)}.btn-submit:disabled{opacity:.6;cursor:not-allowed}
-.pending-notice{background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:16px;margin-top:16px;display:none}
-.pending-notice.show{display:block}.pending-notice h3{color:#92400e;font-size:16px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.pending-notice p{color:#92400e;font-size:13px;line-height:1.6}.whatsapp-btn{width:100%;padding:12px;background:#0088cc;color:white;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .3s}
-.whatsapp-btn:hover{background:#0077b3;transform:translateY(-2px)}.spinner{display:inline-block;width:14px;height:14px;border:2px solid #e0e0e0;border-top-color:#10b981;border-radius:50%;animation:spin .8s linear infinite}
+:root{
+  --R:#CC0000;--Rg:rgba(204,0,0,0.15);--Rb:rgba(204,0,0,0.06);
+  --bg:#080808;--g1:#0f0f0f;--g2:#161616;--g3:#1e1e1e;
+  --line:rgba(255,255,255,0.06);--T:#f5f5f5;--M:#888;--dim:#444;
+  --gold:#C9A84C;--green:#22c55e;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--T);overflow-x:hidden;padding-bottom:120px}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+
+/* ── PAGE LAYOUT ── */
+.page{position:relative;z-index:1;min-height:100vh}
+
+/* ── TOP HERO STRIP ── */
+.hero{background:var(--g1);border-bottom:1px solid var(--line);padding:28px 24px 0;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--R),transparent 60%)}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.page-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--R);text-transform:uppercase;margin-bottom:6px}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,10vw,72px);letter-spacing:2px;line-height:.9;color:var(--T)}
+.page-title span{color:var(--R)}
+.balance-pill{background:var(--g2);border:1px solid var(--line);border-radius:12px;padding:12px 16px;text-align:right;min-width:140px}
+.bp-label{font-size:10px;letter-spacing:2px;color:var(--M);text-transform:uppercase;margin-bottom:4px}
+.bp-val{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--green);letter-spacing:1px}
+
+/* ── TIME ALERT ── */
+.time-bar{display:flex;align-items:center;gap:10px;background:rgba(201,168,76,0.08);border-top:none;border-bottom:1px solid rgba(201,168,76,0.15);padding:10px 24px;font-size:12px;color:var(--gold)}
+.time-bar i{font-size:13px}
+
+/* ── STATS ROW ── */
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+.stat{background:var(--g1);padding:20px 24px}
+.stat-label{font-size:10px;letter-spacing:2px;color:var(--M);text-transform:uppercase;margin-bottom:6px}
+.stat-value{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:1px;color:var(--T)}
+.stat-value.accent{color:var(--R)}
+.stat-sub{font-size:11px;color:var(--dim);margin-top:2px;font-family:'DM Mono',monospace}
+
+/* ── MAIN CONTENT ── */
+.content{padding:24px}
+
+/* ── WITHDRAW TRIGGER (mobile) ── */
+.trigger-card{background:linear-gradient(135deg,var(--R) 0%,#8B0000 100%);border-radius:20px;padding:24px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;cursor:pointer;position:relative;overflow:hidden;transition:opacity .2s}
+.trigger-card::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,0.06);border-radius:50%}
+.trigger-card::after{content:'';position:absolute;bottom:-20px;left:40px;width:80px;height:80px;background:rgba(255,255,255,0.04);border-radius:50%}
+.trigger-card:active{opacity:.85}
+.tc-left{}
+.tc-label{font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:6px}
+.tc-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;color:#fff}
+.tc-sub{font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px}
+.tc-icon{width:52px;height:52px;background:rgba(255,255,255,0.15);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;flex-shrink:0;position:relative;z-index:1}
+.trigger-card.disabled{background:var(--g2);cursor:not-allowed}
+.trigger-card.disabled .tc-title,.trigger-card.disabled .tc-sub,.trigger-card.disabled .tc-label{color:var(--M)}
+.trigger-card.disabled .tc-icon{background:var(--g3);color:var(--dim)}
+
+/* ── INFO CHIPS ── */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.chip{display:flex;align-items:center;gap:6px;background:var(--g2);border:1px solid var(--line);border-radius:100px;padding:7px 12px;font-size:12px;color:var(--M)}
+.chip i{font-size:11px;color:var(--R)}
+
+/* ── SECTION HEADER ── */
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.sh-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1.5px;color:var(--T)}
+.sh-line{flex:1;height:1px;background:var(--line);margin-left:12px}
+
+/* ── HISTORY TABLE (card style) ── */
+.history-list{display:flex;flex-direction:column;gap:8px}
+.h-item{background:var(--g1);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:4px;align-items:center;transition:border-color .2s}
+.h-item:hover{border-color:rgba(255,255,255,0.12)}
+.h-top{display:flex;align-items:center;gap:10px}
+.h-dot{width:8px;height:8px;border-radius:50%;background:var(--dim);flex-shrink:0}
+.h-dot.pending{background:var(--gold)}
+.h-dot.completed,.h-dot.approved{background:var(--green)}
+.h-dot.rejected{background:var(--R)}
+.h-method{font-size:14px;font-weight:500;color:var(--T)}
+.h-date{font-size:11px;color:var(--dim);font-family:'DM Mono',monospace;margin-top:2px;padding-left:18px}
+.h-right{text-align:right}
+.h-amount{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.5px;color:var(--T)}
+.h-badge{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--M);margin-top:2px;font-family:'DM Mono',monospace}
+.h-badge.pending{color:var(--gold)}
+.h-badge.completed,.h-badge.approved{color:var(--green)}
+.h-badge.rejected{color:var(--R)}
+
+.empty{text-align:center;padding:48px 20px;color:var(--dim)}
+.empty i{font-size:36px;margin-bottom:12px;display:block;opacity:.3}
+.empty p{font-size:13px}
+
+/* ── DESKTOP PANEL (right split) ── */
+@media(min-width:769px){
+  .trigger-card{display:none}
+  .page{display:grid;grid-template-columns:1fr 380px;min-height:100vh}
+  .page-left{border-right:1px solid var(--line)}
+  .hero{padding:40px 40px 0}
+  .hero-top{margin-bottom:28px}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .content{padding:32px 40px}
+  .chips{margin-bottom:28px}
+  .page-right{background:var(--g1);display:flex;flex-direction:column}
+  .right-head{padding:40px 32px 24px;border-bottom:1px solid var(--line)}
+  .right-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--R);text-transform:uppercase;margin-bottom:6px}
+  .right-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px}
+  .right-body{padding:24px 32px;flex:1;overflow-y:auto}
+}
+@media(max-width:768px){
+  .page-right{display:none}
+}
+
+/* ── DESKTOP FORM ── */
+.form-field{margin-bottom:18px}
+.f-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--M);display:block;margin-bottom:8px;font-family:'DM Mono',monospace}
+.f-input,.f-select{width:100%;background:var(--g2);border:1px solid var(--line);border-radius:10px;padding:13px 14px;color:var(--T);font-family:'DM Sans',sans-serif;font-size:15px;transition:border-color .2s,box-shadow .2s}
+.f-input:focus,.f-select:focus{outline:none;border-color:var(--R);box-shadow:0 0 0 3px var(--Rg)}
+.f-input::placeholder{color:var(--dim)}
+.f-select option{background:#1a1a1a}
+
+.fee-reveal{background:var(--Rb);border:1px solid rgba(204,0,0,0.2);border-radius:10px;padding:14px;margin-bottom:18px;display:none}
+.fee-reveal.show{display:block}
+.fee-line{display:flex;justify-content:space-between;padding:3px 0;font-size:13px;color:var(--M)}
+.fee-line strong{color:var(--T);font-family:'DM Mono',monospace}
+.fee-total{border-top:1px solid rgba(204,0,0,0.15);margin-top:8px;padding-top:10px}
+.fee-total .fee-line{font-size:15px}
+.fee-total strong{color:var(--R);font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.5px}
+
+.msg{border-radius:10px;padding:11px 14px;font-size:13px;margin-bottom:14px;border:1px solid;display:none}
+.msg.show{display:block}
+.msg-err{background:var(--Rb);border-color:rgba(204,0,0,0.25);color:#ff7070}
+.msg-ok{background:rgba(34,197,94,0.07);border-color:rgba(34,197,94,0.2);color:var(--green)}
+
+.pending-notice{background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:16px;margin-bottom:14px;display:none}
+.pending-notice.show{display:block}
+.pending-notice h4{color:var(--gold);font-size:13px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.pending-notice p{font-size:12px;color:var(--M);line-height:1.6}
+
+.submit-row{display:flex;gap:10px;margin-top:6px}
+.btn-ghost{flex:1;padding:13px;background:transparent;border:1px solid var(--line);border-radius:10px;color:var(--M);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.15);color:var(--T)}
+.btn-red{flex:2;padding:13px;background:var(--R);border:none;border-radius:10px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-red:hover:not(:disabled){background:#a80000;box-shadow:0 4px 20px rgba(204,0,0,0.3)}
+.btn-red:disabled{opacity:.45;cursor:not-allowed}
+.tg-btn{width:100%;margin-top:10px;padding:11px;background:#1d97cc;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .2s;font-family:'DM Sans',sans-serif}
+.tg-btn:hover{background:#1780aa}
+
+/* ── BOTTOM SHEET MODAL (mobile) ── */
+.sheet-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;backdrop-filter:blur(4px)}
+.sheet-bg.open{display:block;animation:bgIn .25s}
+@keyframes bgIn{from{opacity:0}to{opacity:1}}
+.sheet{position:fixed;bottom:0;left:0;right:0;background:var(--g1);border-radius:24px 24px 0 0;padding:0;z-index:201;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1)}
+.sheet.open{transform:translateY(0)}
+.sheet-handle{width:40px;height:4px;background:var(--g3);border-radius:2px;margin:14px auto 0}
+.sheet-header{padding:20px 24px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.sheet-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px}
+.sheet-close{width:30px;height:30px;background:var(--g2);border:none;border-radius:8px;color:var(--M);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.sheet-body{padding:20px 24px 40px}
+
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.15);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:768px){.content-grid{grid-template-columns:1fr}.page-header h1{font-size:24px}.card-value{font-size:28px}
-.section.desktop{display:none}.btn-withdraw.mobile{display:block;margin-bottom:32px}.modal{padding:10px}.modal-content{padding:16px}}
-@media(min-width:769px){.btn-withdraw.mobile{display:none}}
+.spinner-dark{border-top-color:var(--R);border-color:rgba(204,0,0,0.15)}
 </style>
 </head>
 <body>
-<div class="container">
-<div class="page-header">
-<h1>Withdraw Funds</h1>
-<p>Request a withdrawal from your investment account</p>
+<div class="page" id="page">
+
+  <!-- LEFT COLUMN / MOBILE FULL -->
+  <div class="page-left">
+    <div class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="page-eyebrow">// Funds</div>
+          <div class="page-title">WITH<span>DRAW</span></div>
+        </div>
+        <div class="balance-pill">
+          <div class="bp-label">Available</div>
+          <div class="bp-val" id="availableAmount"><span class="spinner spinner-dark" style="width:16px;height:16px"></span></div>
+        </div>
+      </div>
+      <div class="stats-row" style="margin:0 -24px">
+        <div class="stat">
+          <div class="stat-label">Total Withdrawn</div>
+          <div class="stat-value accent" id="totalWithdrawn">—</div>
+          <div class="stat-sub">lifetime</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Processing Fee</div>
+          <div class="stat-value">15%</div>
+          <div class="stat-sub">per request</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="time-bar">
+      <i class="fas fa-clock"></i>
+      <span>Withdrawal window: <strong>10:00 AM – 6:00 PM</strong> daily &nbsp;·&nbsp; Min: ₦800 &nbsp;·&nbsp; Processed within 10 mins</span>
+    </div>
+
+    <div class="content">
+      <!-- Mobile CTA -->
+      <div class="trigger-card" id="triggerCard" onclick="openSheet()">
+        <div class="tc-left">
+          <div class="tc-label">Tap to begin</div>
+          <div class="tc-title">New Request</div>
+          <div class="tc-sub">Secure · Encrypted</div>
+        </div>
+        <div class="tc-icon"><i class="fas fa-arrow-up-right"></i></div>
+      </div>
+
+      <!-- Info chips -->
+      <div class="chips">
+        <div class="chip"><i class="fas fa-shield-alt"></i>Bank-level security</div>
+        <div class="chip"><i class="fas fa-bolt"></i>10 min processing</div>
+        <div class="chip"><i class="fas fa-headset"></i>24/7 support</div>
+      </div>
+
+      <!-- History -->
+      <div class="section-head">
+        <div class="sh-title">History</div>
+        <div class="sh-line"></div>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="empty"><span class="spinner spinner-dark" style="width:20px;height:20px;display:inline-block"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL — Desktop form -->
+  <div class="page-right">
+    <div class="right-head">
+      <div class="right-eyebrow">// New Request</div>
+      <div class="right-title">Request Withdrawal</div>
+    </div>
+    <div class="right-body">
+      <div class="msg msg-err" id="d_error"></div>
+      <div class="msg msg-ok" id="d_success"></div>
+      <div class="pending-notice" id="d_pending">
+        <h4><i class="fas fa-hourglass-half"></i> Request Submitted</h4>
+        <p>Your withdrawal is pending approval. Contact support to speed up processing.</p>
+        <button class="tg-btn" onclick="contactCS('d')"><i class="fab fa-telegram"></i> Contact Support</button>
+      </div>
+      <div id="d_form">
+        <div class="form-field">
+          <label class="f-label">Payment Method</label>
+          <select class="f-select" id="d_method">
+            <option value="">Select method…</option>
+            <option>Bank Transfer</option><option>Opay</option><option>Palmpay</option>
+            <option>Kuda Bank</option><option>GTBank</option><option>First Bank</option>
+            <option>Access Bank</option><option>Zenith Bank</option><option>UBA</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="f-label">Account Number</label>
+          <input class="f-input" type="text" id="d_acctNum" placeholder="0123456789">
+        </div>
+        <div class="form-field">
+          <label class="f-label">Account Name</label>
+          <input class="f-input" type="text" id="d_acctName" placeholder="Full account name">
+        </div>
+        <div class="form-field">
+          <label class="f-label">Amount (₦)</label>
+          <input class="f-input" type="number" id="d_amount" placeholder="Minimum ₦800" min="800" step="0.01">
+        </div>
+        <div class="fee-reveal" id="d_feeBox">
+          <div class="fee-line"><span>Requested</span><strong id="d_req">₦0</strong></div>
+          <div class="fee-line"><span>Fee (15%)</span><strong id="d_fee">₦0</strong></div>
+          <div class="fee-line fee-total"><span>You Receive</span><strong id="d_net">₦0</strong></div>
+        </div>
+        <div class="submit-row" id="d_btnRow">
+          <button class="btn-red" id="d_submitBtn" onclick="submitDesktop()">
+            <i class="fas fa-arrow-up-right"></i> SEND REQUEST
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="content-grid">
-<div class="card">
-<div class="card-title">Available Balance</div>
-<div class="card-value" id="availableAmount"><span class="spinner"></span></div>
-<div class="card-meta">Total funds available to withdraw</div>
-</div>
-<div class="card">
-<div class="card-title">Total Withdrawn</div>
-<div class="card-value" id="totalWithdrawn"><span class="spinner"></span></div>
-<div class="card-meta">Lifetime withdrawals</div>
-</div>
-</div>
-
-<div class="time-restriction">
-<i class="fas fa-clock"></i>
-<div><strong>⏰ Withdrawal Hours:</strong> Withdrawals can only be requested between <strong>10:00 AM and 6:00 PM</strong> daily. Please return during these hours to process your withdrawal.</div>
-</div>
-
-<div class="info-box">
-<i class="fas fa-info-circle"></i>
-<div><strong>Processing:</strong> Withdrawals are processed within 10mins. A 15% processing fee applies to all withdrawals. Minimum withdrawal: ₦800</div>
-</div>
-
-<button class="btn-withdraw mobile" onclick="openModal()" id="withdrawBtnMobile"><i class="fas fa-arrow-down"></i> Request Withdrawal</button>
-
-<div class="section desktop">
-<div class="section-title"><i class="fas fa-wallet"></i>Request Withdrawal</div>
-<button class="btn-withdraw" onclick="openModal()" id="withdrawBtnDesktop"><i class="fas fa-arrow-down"></i> Request Withdrawal</button>
-</div>
-
-<div class="section">
-<div class="section-title"><i class="fas fa-history"></i>Withdrawal History</div>
-<div class="history-wrapper">
-<table class="history-table">
-<thead>
-<tr><th>Date</th><th>Amount</th><th>Method</th><th>Status</th><th>Fee</th></tr>
-</thead>
-<tbody id="historyBody"><tr><td colspan="5"><div class="empty-state"><span class="spinner"></span></div></td></tr></tbody>
-</table>
-</div>
-</div>
-</div>
-
-<div class="modal" id="modal">
-<div class="modal-content">
-<div class="modal-header">
-<h2 class="modal-title">Request Withdrawal</h2>
-<button class="close-btn" onclick="closeModal()">✕</button>
-</div>
-
-<div class="message error" id="error"></div>
-<div class="message success" id="success"></div>
-
-<form id="form">
-<div class="form-group">
-<label class="form-label">Available Balance</label>
-<div class="amount-info">
-<div class="info-row">
-<span class="info-label">Total Available:</span>
-<span class="info-value" id="balance"><span class="spinner"></span></span>
-</div>
-</div>
-</div>
-
-<div class="form-group">
-<label class="form-label">Select Payment Method</label>
-<select id="method" class="form-select" required>
-<option value="">Choose payment method...</option>
-<option value="Bank Transfer">Bank Transfer</option>
-<option value="Opay">Opay</option>
-<option value="Palmpay">Palmpay</option>
-<option value="Kuda Bank">Kuda Bank</option>
-<option value="GTBank">GTBank</option>
-<option value="First Bank">First Bank</option>
-<option value="Access Bank">Access Bank</option>
-<option value="Zenith Bank">Zenith Bank</option>
-<option value="UBA">UBA</option>
-</select>
-</div>
-
-<div class="form-group">
-<label class="form-label">Account Number</label>
-<input type="text" class="form-input" id="accountNumber" placeholder="Enter account number" required>
-</div>
-
-<div class="form-group">
-<label class="form-label">Account Name</label>
-<input type="text" class="form-input" id="accountName" placeholder="Enter account name" required>
-</div>
-
-<div class="form-group">
-<label class="form-label">Withdrawal Amount (₦)</label>
-<input type="number" class="form-input" id="amount" placeholder="Enter amount (min. ₦800)" step="0.01" min="800" required>
-</div>
-
-<div class="fee-warning" id="feeWarning">
-<strong>Processing Fee:</strong> <span id="feeAmount">₦0.00</span> (15%)
-<div class="fee-breakdown">
-<div class="info-row">
-<span>Requested Amount:</span>
-<strong id="requestedAmt">₦0.00</strong>
-</div>
-<div class="info-row">
-<span>Processing Fee (15%):</span>
-<strong id="feeAmt">₦0.00</strong>
-</div>
-<div class="info-row" style="border-top:1px solid #fde68a;margin-top:4px;padding-top:4px">
-<span>You Will Receive:</span>
-<strong style="color:#f59e0b" id="netAmt">₦0.00</strong>
-</div>
-</div>
-</div>
-
-<div class="pending-notice" id="pendingNotice">
-<h3><i class="fas fa-clock"></i> Withdrawal Request Created</h3>
-<p>Your withdrawal request has been submitted and is now <strong>pending approval</strong>. You can track its status in your withdrawal history below.</p>
-<p style="margin-top:8px">To speed up processing, contact our customer service with your request details.</p>
-<button type="button" class="whatsapp-btn" onclick="contactCustomerService()">
-<i class="fab fa-telegram"></i> Contact Customer Service
-</button>
-</div>
-
-<div class="button-group" id="buttonGroup">
-<button type="button" class="btn btn-cancel" onclick="closeModal()">Cancel</button>
-<button type="submit" class="btn btn-submit" id="submitBtn">Submit Request</button>
-</div>
-</form>
-</div>
+<!-- MOBILE BOTTOM SHEET -->
+<div class="sheet-bg" id="sheetBg" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-title">New Withdrawal</div>
+    <button class="sheet-close" onclick="closeSheet()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="sheet-body">
+    <div class="msg msg-err" id="m_error"></div>
+    <div class="msg msg-ok" id="m_success"></div>
+    <div class="pending-notice" id="m_pending">
+      <h4><i class="fas fa-hourglass-half"></i> Request Submitted</h4>
+      <p>Your withdrawal is pending approval. Contact support to speed it up.</p>
+      <button class="tg-btn" onclick="contactCS('m')"><i class="fab fa-telegram"></i> Contact Support</button>
+    </div>
+    <div id="m_form">
+      <div class="form-field" style="background:var(--Rb);border:1px solid rgba(204,0,0,0.15);border-radius:10px;padding:12px 14px;margin-bottom:18px">
+        <div class="f-label" style="margin-bottom:4px">Available Balance</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--green);letter-spacing:1px" id="m_balance">—</div>
+      </div>
+      <div class="form-field">
+        <label class="f-label">Payment Method</label>
+        <select class="f-select" id="m_method">
+          <option value="">Select method…</option>
+          <option>Bank Transfer</option><option>Opay</option><option>Palmpay</option>
+          <option>Kuda Bank</option><option>GTBank</option><option>First Bank</option>
+          <option>Access Bank</option><option>Zenith Bank</option><option>UBA</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="f-label">Account Number</label>
+        <input class="f-input" type="text" id="m_acctNum" placeholder="0123456789">
+      </div>
+      <div class="form-field">
+        <label class="f-label">Account Name</label>
+        <input class="f-input" type="text" id="m_acctName" placeholder="Full account name">
+      </div>
+      <div class="form-field">
+        <label class="f-label">Amount (₦)</label>
+        <input class="f-input" type="number" id="m_amount" placeholder="Min ₦800" min="800" step="0.01">
+      </div>
+      <div class="fee-reveal" id="m_feeBox">
+        <div class="fee-line"><span>Requested</span><strong id="m_req">₦0</strong></div>
+        <div class="fee-line"><span>Fee (15%)</span><strong id="m_fee">₦0</strong></div>
+        <div class="fee-line fee-total"><span>You Receive</span><strong id="m_net">₦0</strong></div>
+      </div>
+      <div class="submit-row" id="m_btnRow">
+        <button class="btn-ghost" onclick="closeSheet()">Cancel</button>
+        <button class="btn-red" id="m_submitBtn" onclick="submitMobile()">
+          <i class="fas fa-arrow-up-right"></i> SEND
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="module">
-import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-import{getDatabase,ref,get,set,push,update}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import{onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import{ref,get,set,push,update}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 import{auth,database}from"./lib/firebase.js";
 
-let user,userData,currentWithdrawal;
-const modal=document.getElementById('modal'),form=document.getElementById('form'),error=document.getElementById('error'),success=document.getElementById('success');
+let user,userData,dRef,mRef;
+const fmt=n=>`₦${n.toLocaleString('en-NG',{minimumFractionDigits:2})}`;
+const isAllowed=()=>{const h=new Date().getHours();return h>=10&&h<18;};
 
-const fmt=a=>`₦${a.toLocaleString('en-NG',{minimumFractionDigits:2})}`;
-
-function isWithinWithdrawalHours(){
-const now=new Date();
-const hour=now.getHours();
-return hour>=10&&hour<18;
-}
-
-function updateWithdrawalButtons(){
-const allowed=isWithinWithdrawalHours();
-const mobileBtn=document.getElementById('withdrawBtnMobile');
-const desktopBtn=document.getElementById('withdrawBtnDesktop');
-[mobileBtn,desktopBtn].forEach(btn=>{
-if(btn){
-btn.disabled=!allowed;
-if(!allowed){
-btn.innerHTML='<i class="fas fa-clock"></i> Available 10 AM - 6 PM';
-}else{
-btn.innerHTML='<i class="fas fa-arrow-down"></i> Request Withdrawal';
-}
-}
-});
-}
-
-window.openModal=async()=>{
-if(!isWithinWithdrawalHours()){
-alert('⏰ Withdrawals can only be requested between 10:00 AM and 6:00 PM. Please return during these hours.');
-return;
-}
-modal.classList.add('active');
-document.body.style.overflow='hidden';
-await loadBalance();
-resetForm();
+// ── sheet open/close ──
+window.openSheet=()=>{
+  if(!isAllowed()){alert('⏰ Withdrawals available 10:00 AM – 6:00 PM only.');return;}
+  document.getElementById('sheetBg').classList.add('open');
+  setTimeout(()=>document.getElementById('sheet').classList.add('open'),10);
+  document.body.style.overflow='hidden';
+  if(userData)document.getElementById('m_balance').textContent=fmt(userData.balance||0);
+};
+window.closeSheet=()=>{
+  document.getElementById('sheet').classList.remove('open');
+  setTimeout(()=>document.getElementById('sheetBg').classList.remove('open'),350);
+  document.body.style.overflow='';
 };
 
-window.closeModal=()=>{
-modal.classList.remove('active');
-document.body.style.overflow='';
-resetForm();
+// ── trigger card state ──
+function syncTrigger(){
+  const ok=isAllowed();
+  const card=document.getElementById('triggerCard');
+  if(!ok){
+    card.classList.add('disabled');
+    card.onclick=()=>alert('⏰ Withdrawals available 10:00 AM – 6:00 PM only.');
+    card.querySelector('.tc-title').textContent='Unavailable';
+    card.querySelector('.tc-sub').textContent='Available 10 AM – 6 PM';
+    card.querySelector('.tc-icon').innerHTML='<i class="fas fa-clock"></i>';
+  }
+  const btn=document.getElementById('d_submitBtn');
+  if(btn){btn.disabled=!ok;}
+}
+
+// ── fee calcs ──
+function setupFee(amtId,reqId,feeId,netId,boxId){
+  document.getElementById(amtId).addEventListener('input',function(){
+    const a=parseFloat(this.value)||0;
+    const box=document.getElementById(boxId);
+    if(a>0){
+      const f=a*.15,n=a-f;
+      document.getElementById(reqId).textContent=fmt(a);
+      document.getElementById(feeId).textContent=fmt(f);
+      document.getElementById(netId).textContent=fmt(n);
+      box.classList.add('show');
+    }else box.classList.remove('show');
+  });
+}
+setupFee('d_amount','d_req','d_fee','d_net','d_feeBox');
+setupFee('m_amount','m_req','m_fee','m_net','m_feeBox');
+
+// ── shared withdrawal logic ──
+async function processW(method,acctNum,acctName,amt,errId,okId,pendId,btnId,formId){
+  if(!isAllowed()){show(errId,'⏰ Available 10 AM – 6 PM only');return;}
+  if(!method)return show(errId,'Select a payment method');
+  if(!acctNum.trim())return show(errId,'Enter account number');
+  if(!acctName.trim())return show(errId,'Enter account name');
+  if(amt<800)return show(errId,'Minimum withdrawal is ₦800');
+  if(!userData||amt>(userData.balance||0))return show(errId,'Insufficient balance');
+  hide(errId);hide(okId);
+  const btn=document.getElementById(btnId);
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
+  try{
+    const fee=amt*.15,net=amt-fee,ts=new Date().toISOString();
+    const wData={userId:user.uid,userName:userData.name||userData.fullName||'User',userEmail:user.email||'',
+      amount:amt,fee,netAmount:net,method,accountNumber:acctNum,accountName:acctName,status:'pending',requestDate:ts,timestamp:Date.now()};
+    const newRef=push(ref(database,'pendingWithdrawals'));
+    const id=newRef.key;
+    await set(newRef,wData);
+    const snap=await get(ref(database,`users/${user.uid}`));
+    const bal=snap.val().balance||0;
+    const upd={};
+    upd[`users/${user.uid}/balance`]=Math.max(0,bal-amt);
+    upd[`users/${user.uid}/transactions/${id}`]={type:'withdrawal',amount:amt,fee,netAmount:net,status:'pending',method,accountNumber:acctNum,accountName:acctName,requestDate:ts};
+    await update(ref(database),upd);
+    userData.balance=Math.max(0,bal-amt);
+    document.getElementById('availableAmount').textContent=fmt(userData.balance);
+    if(formId==='d')dRef={id,method,accountNumber:acctNum,accountName:acctName,amount:amt,fee,netAmount:net};
+    else mRef={id,method,accountNumber:acctNum,accountName:acctName,amount:amt,fee,netAmount:net};
+    document.getElementById(`${formId}_btnRow`).style.display='none';
+    document.getElementById(`${pendId}`).classList.add('show');
+    show(okId,'✅ Request submitted successfully!');
+    await loadHistory(user.uid);
+  }catch(e){show(errId,e.message||'Error occurred');}
+  finally{btn.disabled=false;btn.innerHTML='<i class="fas fa-arrow-up-right"></i> SEND';}
+}
+
+window.submitDesktop=()=>{
+  const a=parseFloat(document.getElementById('d_amount').value);
+  processW(document.getElementById('d_method').value,document.getElementById('d_acctNum').value,document.getElementById('d_acctName').value,a,'d_error','d_success','d_pending','d_submitBtn','d');
+};
+window.submitMobile=()=>{
+  const a=parseFloat(document.getElementById('m_amount').value);
+  processW(document.getElementById('m_method').value,document.getElementById('m_acctNum').value,document.getElementById('m_acctName').value,a,'m_error','m_success','m_pending','m_submitBtn','m');
 };
 
-function resetForm(){
-form.reset();
-error.classList.remove('show');
-success.classList.remove('show');
-document.getElementById('feeWarning').classList.remove('show');
-document.getElementById('pendingNotice').classList.remove('show');
-document.getElementById('buttonGroup').style.display='flex';
-currentWithdrawal=null;
-}
-
-window.contactCustomerService=()=>{
-if(!currentWithdrawal)return;
-const msg=`Hello! I have a pending withdrawal request.\n\n*Account Details:*\nEmail: ${user.email}\n\n*Withdrawal Details:*\nPayment Method: ${currentWithdrawal.method}\nAccount Number: ${currentWithdrawal.accountNumber}\nAccount Name: ${currentWithdrawal.accountName}\nRequested Amount: ${fmt(currentWithdrawal.amount)}\nProcessing Fee (25%): ${fmt(currentWithdrawal.fee)}\nNet Amount: ${fmt(currentWithdrawal.netAmount)}\nRequest ID: ${currentWithdrawal.id}\n\nPlease process my withdrawal. Thank you!`;
-window.open(`https://t.me/+haQbwQasg8xjZjRk?text=${encodeURIComponent(msg)}`,'_blank');
+window.contactCS=(src)=>{
+  const w=src==='d'?dRef:mRef;if(!w)return;
+  const msg=`Hello! Pending withdrawal:\nEmail: ${user.email}\nMethod: ${w.method}\nAccount: ${w.accountNumber}\nName: ${w.accountName}\nAmount: ${fmt(w.amount)}\nFee: ${fmt(w.fee)}\nNet: ${fmt(w.netAmount)}\nID: ${w.id}\n\nPlease process. Thank you!`;
+  window.open(`https://t.me/+haQbwQasg8xjZjRk?text=${encodeURIComponent(msg)}`,'_blank');
 };
 
-modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
-
-onAuthStateChanged(auth,async u=>{
-if(u){
-user=u;
-try{
-const snap=await get(ref(database,`users/${u.uid}`));
-if(snap.exists()){
-userData=snap.val();
-document.getElementById('availableAmount').textContent=fmt(userData.balance||0);
-loadHistory(u.uid);
-}
-}catch(e){console.error(e)}
-}else location.href='/login';
-});
-
-async function loadBalance(){
-try{
-if(!user){document.getElementById('balance').innerHTML='<span class="spinner"></span>';return}
-const snap=await get(ref(database,`users/${user.uid}`));
-if(snap.exists()){
-userData=snap.val();
-document.getElementById('balance').textContent=fmt(userData.balance||0);
-}else document.getElementById('balance').textContent=fmt(0);
-}catch(e){document.getElementById('balance').textContent=fmt(0)}
-}
-
-document.getElementById('amount').addEventListener('input',function(){
-const amt=parseFloat(this.value)||0;
-if(amt>0){
-const fee=amt*0.15;
-const net=amt-fee;
-document.getElementById('feeAmount').textContent=fmt(fee);
-document.getElementById('requestedAmt').textContent=fmt(amt);
-document.getElementById('feeAmt').textContent=fmt(fee);
-document.getElementById('netAmt').textContent=fmt(net);
-document.getElementById('feeWarning').classList.add('show');
-}else document.getElementById('feeWarning').classList.remove('show');
-});
-
-form.addEventListener('submit',async e=>{
-e.preventDefault();
-
-if(!isWithinWithdrawalHours()){
-error.textContent='⏰ Withdrawals can only be requested between 10:00 AM and 6:00 PM';
-error.classList.add('show');
-return;
-}
-
-const method=document.getElementById('method').value;
-const accountNumber=document.getElementById('accountNumber').value.trim();
-const accountName=document.getElementById('accountName').value.trim();
-const amt=parseFloat(document.getElementById('amount').value);
-const submitBtn=document.getElementById('submitBtn');
-
-error.classList.remove('show');
-success.classList.remove('show');
-
-if(!method){error.textContent='Please select a payment method';error.classList.add('show');return}
-if(!accountNumber){error.textContent='Please enter account number';error.classList.add('show');return}
-if(!accountName){error.textContent='Please enter account name';error.classList.add('show');return}
-if(amt<800){error.textContent='Minimum withdrawal amount is ₦800';error.classList.add('show');return}
-if(!userData||amt>(userData.balance||0)){error.textContent='Insufficient balance';error.classList.add('show');return}
-
-submitBtn.disabled=true;
-submitBtn.textContent='Processing...';
-
-try{
-if(!user)throw new Error('User not authenticated');
-
-const fee=amt*0.15;
-const netAmount=amt-fee;
-const ts=new Date().toISOString();
-
-const withdrawalData={
-userId:user.uid,
-userName:userData.name||userData.fullName||'User',
-userEmail:user.email||'',
-amount:amt,
-fee:fee,
-netAmount:netAmount,
-method:method,
-accountNumber:accountNumber,
-accountName:accountName,
-status:'pending',
-requestDate:ts,
-timestamp:Date.now()
-};
-
-const withdrawalsRef=ref(database,'pendingWithdrawals');
-const newRef=push(withdrawalsRef);
-const id=newRef.key;
-
-await set(newRef,withdrawalData);
-
-const transactionData={
-type:'withdrawal',
-amount:amt,
-fee:fee,
-netAmount:netAmount,
-status:'pending',
-method:method,
-accountNumber:accountNumber,
-accountName:accountName,
-requestDate:ts
-};
-
-const snap=await get(ref(database,`users/${user.uid}`));
-const balance=snap.val().balance||0;
-
-const updates={};
-updates[`users/${user.uid}/balance`]=Math.max(0,balance-amt);
-updates[`users/${user.uid}/transactions/${id}`]=transactionData;
-
-await update(ref(database),updates);
-
-userData.balance=Math.max(0,balance-amt);
-document.getElementById('availableAmount').textContent=fmt(userData.balance);
-
-currentWithdrawal={id,method,accountNumber,accountName,amount:amt,fee,netAmount};
-
-await loadHistory(user.uid);
-
-document.getElementById('buttonGroup').style.display='none';
-document.getElementById('pendingNotice').classList.add('show');
-success.textContent='✅ Withdrawal request created successfully!';
-success.classList.add('show');
-
-}catch(e){
-console.error(e);
-error.textContent=e.message||'An error occurred';
-error.classList.add('show');
-}finally{
-submitBtn.disabled=false;
-submitBtn.textContent='Submit Request';
-}
-});
+function show(id,msg){const e=document.getElementById(id);e.textContent=msg;e.classList.add('show');}
+function hide(id){document.getElementById(id).classList.remove('show');}
 
 async function loadHistory(uid){
-try{
-const snap=await get(ref(database,`users/${uid}`));
-if(snap.exists()){
-const data=snap.val();
-const txs=data.transactions||{};
-const withdrawals=Object.values(txs).filter(t=>t.type==='withdrawal').sort((a,b)=>new Date(b.requestDate)-new Date(a.requestDate));
-
-if(withdrawals.length>0){
-document.getElementById('historyBody').innerHTML=withdrawals.map(w=>`
-<tr>
-<td>${new Date(w.requestDate).toLocaleDateString()}</td>
-<td>${fmt(w.amount)}</td>
-<td>${w.method}</td>
-<td><span class="status-badge status-${w.status}">${w.status}</span></td>
-<td>${fmt(w.fee)}</td>
-</tr>
-`).join('');
-
-const total=withdrawals.filter(w=>w.status==='completed'||w.status==='approved').reduce((sum,w)=>sum+w.amount,0);
-document.getElementById('totalWithdrawn').textContent=fmt(total);
-}else{
-document.getElementById('historyBody').innerHTML=`<tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon"><i class="fas fa-inbox"></i></div><p>No withdrawal history yet</p></div></td></tr>`;
-document.getElementById('totalWithdrawn').textContent=fmt(0);
-}
-}else{
-document.getElementById('historyBody').innerHTML=`<tr><td colspan="5"><div class="empty-state"><p>Unable to load history</p></div></td></tr>`;
-}
-}catch(e){console.error(e)}
+  try{
+    const snap=await get(ref(database,`users/${uid}`));
+    if(!snap.exists()){document.getElementById('historyList').innerHTML='<div class="empty"><i class="fas fa-inbox"></i><p>No history yet</p></div>';return;}
+    const txs=snap.val().transactions||{};
+    const ws=Object.values(txs).filter(t=>t.type==='withdrawal').sort((a,b)=>new Date(b.requestDate)-new Date(a.requestDate));
+    if(!ws.length){document.getElementById('historyList').innerHTML='<div class="empty"><i class="fas fa-inbox"></i><p>No withdrawals yet</p></div>';document.getElementById('totalWithdrawn').textContent='₦0.00';return;}
+    document.getElementById('historyList').innerHTML=ws.map(w=>`
+      <div class="h-item">
+        <div>
+          <div class="h-top"><span class="h-dot ${w.status}"></span><span class="h-method">${w.method}</span></div>
+          <div class="h-date">${new Date(w.requestDate).toLocaleDateString('en-NG',{day:'2-digit',month:'short',year:'numeric'})}</div>
+        </div>
+        <div class="h-right">
+          <div class="h-amount">${fmt(w.amount)}</div>
+          <div class="h-badge ${w.status}">${w.status}</div>
+        </div>
+      </div>`).join('');
+    const total=ws.filter(w=>w.status==='completed'||w.status==='approved').reduce((s,w)=>s+w.amount,0);
+    document.getElementById('totalWithdrawn').textContent=fmt(total);
+  }catch(e){console.error(e);}
 }
 
-updateWithdrawalButtons();
-setInterval(updateWithdrawalButtons,60000);
+onAuthStateChanged(auth,async u=>{
+  if(u){user=u;
+    try{
+      const snap=await get(ref(database,`users/${u.uid}`));
+      if(snap.exists()){userData=snap.val();document.getElementById('availableAmount').textContent=fmt(userData.balance||0);}
+      loadHistory(u.uid);
+    }catch(e){console.error(e);}
+  }else location.href='/login';
+});
+
+syncTrigger();setInterval(syncTrigger,60000);
 </script>
 </body>
 </html>

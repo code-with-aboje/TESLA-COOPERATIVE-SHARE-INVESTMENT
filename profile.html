@@ -1,211 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - BluStone</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:Inter,sans-serif;background:#fafafa;padding:24px;min-height:100vh;padding-bottom:100px}
-        .container{max-width:1200px;margin:0 auto}
-        .profile-header{background:linear-gradient(135deg,#10b981,#059669);border-radius:24px;padding:32px;color:#fff;box-shadow:0 4px 20px rgba(16,185,129,.2);margin-bottom:24px;position:relative;overflow:hidden}
-        .profile-header::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:shine 3s infinite}
-        @keyframes shine{0%{left:-100%}50%,100%{left:100%}}
-        .profile-top{display:flex;align-items:center;gap:20px;position:relative;z-index:1}
-        .avatar{width:80px;height:80px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#10b981;box-shadow:0 8px 24px rgba(0,0,0,.15);overflow:hidden;flex-shrink:0}
-        .avatar img{width:100%;height:100%;object-fit:cover}
-        .profile-info{flex:1}
-        .profile-info h1{font-size:26px;font-weight:700;margin-bottom:8px}
-        .profile-meta{display:flex;gap:20px;font-size:13px;opacity:.95;flex-wrap:wrap}
-        .profile-meta-item{display:flex;align-items:center;gap:6px}
-        .checkin-card{background:linear-gradient(135deg,#667eea,#764ba2);border-radius:20px;padding:32px;margin-bottom:24px;color:#fff;box-shadow:0 8px 32px rgba(102,126,234,.3);position:relative;overflow:hidden}
-        .checkin-card::after{content:'';position:absolute;top:-50%;right:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.15),transparent 60%);animation:float 8s ease-in-out infinite}
-        @keyframes float{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-20px,-20px) rotate(180deg)}}
-        .checkin-grid{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;z-index:1}
-        .checkin-left h3{font-size:20px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:10px}
-        .checkin-amount{font-size:48px;font-weight:700;margin:12px 0;text-shadow:0 2px 10px rgba(0,0,0,.2)}
-        .checkin-streak{background:rgba(255,255,255,.2);padding:8px 16px;border-radius:12px;font-size:14px;font-weight:600;backdrop-filter:blur(10px);display:inline-block;margin-top:8px}
-        .checkin-btn{padding:16px 32px;background:#fff;color:#667eea;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 4px 12px rgba(0,0,0,.15);min-width:180px}
-        .checkin-btn:hover:not(:disabled){transform:translateY(-2px) scale(1.05);box-shadow:0 6px 20px rgba(0,0,0,.25)}
-        .checkin-btn:disabled{opacity:.6;cursor:not-allowed;background:rgba(255,255,255,.7)}
-        .checkin-info{text-align:center;margin-top:16px;font-size:13px;opacity:.9;position:relative;z-index:1}
-        .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
-        .card{background:#fff;border-radius:20px;padding:32px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-        .card-title{font-size:20px;font-weight:700;color:#0f172a;margin-bottom:24px}
-        .info-row{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid #f1f5f9}
-        .info-row:last-child{border-bottom:none}
-        .info-label{font-size:14px;color:#64748b;font-weight:500}
-        .info-value{font-size:14px;color:#0f172a;font-weight:600}
-        .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;font-size:13px;font-weight:600}
-        .badge-success{background:#d1fae5;color:#065f46}
-        .badge-warning{background:#fef3c7;color:#92400e}
-        .spinner{display:inline-block;width:12px;height:12px;border:2px solid #e0e0e0;border-top-color:#10b981;border-radius:50%;animation:spin .8s linear infinite}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        @media(max-width:768px){body{padding:16px}.grid{grid-template-columns:1fr}.profile-top{flex-direction:column;text-align:center}.profile-meta{justify-content:center;flex-direction:column;gap:8px}.card{padding:20px}.checkin-grid{grid-template-columns:1fr;text-align:center}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Profile — Tesla Cooperative</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e3000f;--red-dim:#a80009;--red-glow:rgba(227,0,15,0.22);--bg:#0a0a0a;--surface:#111;--surface2:#181818;--border:rgba(255,255,255,0.07);--text:#f0f0f0;--muted:#666;--gold:#f59e0b;--success:#1db954}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:24px 20px 100px}
+
+/* PROFILE HERO */
+.profile-hero{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;margin-bottom:20px;position:relative;overflow:hidden}
+.profile-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),transparent)}
+.profile-hero::after{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(227,0,15,0.08),transparent 70%);pointer-events:none}
+.hero-inner{display:flex;align-items:center;gap:20px;position:relative;z-index:1}
+.avatar{width:72px;height:72px;border-radius:50%;background:var(--surface2);border:2px solid rgba(227,0,15,0.4);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;color:var(--red);flex-shrink:0;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.hero-info{flex:1;min-width:0}
+.hero-info h1{font-family:'Orbitron',sans-serif;font-size:clamp(16px,4vw,24px);font-weight:900;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero-meta{display:flex;flex-wrap:wrap;gap:14px}
+.meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.meta-item i{color:var(--red);font-size:12px}
+
+/* CHECKIN CARD */
+.checkin-card{background:var(--surface);border:1px solid rgba(245,158,11,0.2);border-radius:20px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden}
+.checkin-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+.checkin-glow{position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(245,158,11,0.08),transparent 70%);pointer-events:none}
+.checkin-grid{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;position:relative;z-index:1}
+.checkin-left h3{font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.checkin-amount{font-family:'Orbitron',sans-serif;font-size:clamp(32px,8vw,52px);font-weight:900;color:var(--gold);line-height:1;margin-bottom:10px}
+.streak-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:20px;padding:5px 12px;font-size:13px;font-weight:700;color:var(--gold)}
+.checkin-btn{padding:14px 22px;background:var(--gold);color:#000;border:none;border-radius:12px;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .25s;white-space:nowrap;min-width:150px;text-align:center}
+.checkin-btn:hover:not(:disabled){background:#e08d00;box-shadow:0 0 20px rgba(245,158,11,0.35)}
+.checkin-btn:disabled{opacity:.5;cursor:not-allowed}
+.checkin-info{font-size:13px;color:var(--muted);margin-top:12px;position:relative;z-index:1}
+
+/* GRID */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--border)}
+.card-title{font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.info-row:last-child{border-bottom:none}
+.info-label{font-size:13px;color:var(--muted)}
+.info-value{font-size:14px;color:var(--text);font-weight:600;text-align:right;max-width:60%}
+
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.badge-active{background:rgba(29,185,84,0.1);border:1px solid rgba(29,185,84,0.25);color:var(--success)}
+.badge-moderate{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);color:var(--gold)}
+
+.spinner{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,0.1);border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:640px){
+  .hero-inner{flex-direction:column;text-align:center}
+  .hero-meta{justify-content:center}
+  .checkin-grid{grid-template-columns:1fr;text-align:center}
+  .checkin-btn{width:100%}
+  .info-grid{grid-template-columns:1fr}
+}
+@media(min-width:769px){body{padding:32px 40px 80px}}
+@media(min-width:1024px){body{max-width:1000px;margin:0 auto;padding:40px 60px 80px}}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="profile-header">
-            <div class="profile-top">
-                <div class="avatar" id="avatar"><span id="initials">JI</span></div>
-                <div class="profile-info">
-                    <h1 id="name"><span class="spinner"></span> Loading...</h1>
-                    <div class="profile-meta">
-                        <div class="profile-meta-item"><i class="fas fa-envelope"></i><span id="email">-</span></div>
-                        <div class="profile-meta-item"><i class="fas fa-calendar"></i><span id="joined">-</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="checkin-card">
-            <div class="checkin-grid">
-                <div class="checkin-left">
-                    <h3><i class="fas fa-gift"></i> Daily Check-in Reward</h3>
-                    <div class="checkin-amount">₦200</div>
-                    <div class="checkin-streak">🔥 <span id="streak">0</span> Day Streak</div>
-                </div>
-                <button class="checkin-btn" id="btn"><i class="fas fa-hand-pointer"></i> Claim Reward</button>
-            </div>
-            <div class="checkin-info" id="info">Check in daily to earn rewards!</div>
-        </div>
-
-        <div class="grid">
-            <div class="card">
-                <h2 class="card-title">Account Details</h2>
-                <div class="info-row"><span class="info-label">Full Name</span><span class="info-value" id="n1"><span class="spinner"></span></span></div>
-                <div class="info-row"><span class="info-label">Email</span><span class="info-value" id="e1"><span class="spinner"></span></span></div>
-                <div class="info-row"><span class="info-label">Account Type</span><span class="info-value">Standard</span></div>
-                <div class="info-row"><span class="info-label">Status</span><span class="badge badge-success"><i class="fas fa-check-circle"></i> Active</span></div>
-                <div class="info-row"><span class="info-label">Risk Profile</span><span class="badge badge-warning"><i class="fas fa-chart-line"></i> Moderate</span></div>
-            </div>
-
-            <div class="card">
-                <h2 class="card-title">Additional Information</h2>
-                <div class="info-row"><span class="info-label">Last Sign In</span><span class="info-value" id="lastSign"><span class="spinner"></span></span></div>
-                <div class="info-row"><span class="info-label">Created</span><span class="info-value" id="created"><span class="spinner"></span></span></div>
-                <div class="info-row"><span class="info-label">Last Check-in</span><span class="info-value" id="lastCheck">Never</span></div>
-                <div class="info-row"><span class="info-label">Total Check-ins</span><span class="info-value" id="total">0</span></div>
-            </div>
-        </div>
+<!-- PROFILE HERO -->
+<div class="profile-hero">
+  <div class="hero-inner">
+    <div class="avatar" id="avatar"><span id="initials">TC</span></div>
+    <div class="hero-info">
+      <h1 id="name"><span class="spinner"></span> Loading…</h1>
+      <div class="hero-meta">
+        <div class="meta-item"><i class="fas fa-envelope"></i><span id="email">—</span></div>
+        <div class="meta-item"><i class="fas fa-calendar-alt"></i><span id="joined">—</span></div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <script type="module">
-        import{onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-        import{ref,get,update}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
-        import{auth,database}from"./lib/firebase.js";
+<!-- DAILY CHECK-IN -->
+<div class="checkin-card">
+  <div class="checkin-glow"></div>
+  <div class="checkin-grid">
+    <div class="checkin-left">
+      <h3><i class="fas fa-gift"></i> Daily Check-in</h3>
+      <div class="checkin-amount">₦200</div>
+      <div class="streak-badge">🔥 <span id="streak">0</span> Day Streak</div>
+    </div>
+    <button class="checkin-btn" id="btn"><i class="fas fa-hand-pointer"></i> Claim Reward</button>
+  </div>
+  <div class="checkin-info" id="info">Check in daily to earn rewards!</div>
+</div>
 
-        let user,userData;
+<!-- INFO GRID -->
+<div class="info-grid">
+  <div class="card">
+    <div class="card-title"><i class="fas fa-user" style="color:var(--red)"></i> Account Details</div>
+    <div class="info-row"><span class="info-label">Full Name</span><span class="info-value" id="n1"><span class="spinner"></span></span></div>
+    <div class="info-row"><span class="info-label">Email</span><span class="info-value" id="e1"><span class="spinner"></span></span></div>
+    <div class="info-row"><span class="info-label">Account Type</span><span class="info-value">Standard</span></div>
+    <div class="info-row"><span class="info-label">Status</span><span class="badge badge-active"><i class="fas fa-circle" style="font-size:7px"></i> Active</span></div>
+    <div class="info-row"><span class="info-label">Risk Profile</span><span class="badge badge-moderate"><i class="fas fa-chart-line" style="font-size:10px"></i> Moderate</span></div>
+  </div>
 
-        onAuthStateChanged(auth,async u=>{
-            if(!u){
-                document.getElementById('name').textContent='Not Logged In';
-                return;
-            }
-            user=u;
-            const snap=await get(ref(database,`users/${u.uid}`));
-            userData=snap.exists()?snap.val():{};
-            
-            const displayName=userData.fullName||u.displayName||u.email?.split('@')[0]||'User';
-            const email=u.email||'-';
-            const created=new Date(u.metadata.creationTime).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
-            const lastSignIn=new Date(u.metadata.lastSignInTime).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
-            
-            document.getElementById('name').textContent=displayName;
-            document.getElementById('email').textContent=email;
-            document.getElementById('joined').textContent=`Member since ${created}`;
-            document.getElementById('n1').textContent=displayName;
-            document.getElementById('e1').textContent=email;
-            document.getElementById('lastSign').textContent=lastSignIn;
-            document.getElementById('created').textContent=created;
-            
-            const initials=displayName.split(' ').map(n=>n[0]).join('').toUpperCase();
-            document.getElementById('initials').textContent=initials;
-            
-            if(u.photoURL){
-                const img=document.createElement('img');
-                img.src=u.photoURL;
-                document.getElementById('avatar').innerHTML='';
-                document.getElementById('avatar').appendChild(img);
-            }
-            
-            updateCheckin();
-        });
+  <div class="card">
+    <div class="card-title"><i class="fas fa-info-circle" style="color:var(--red)"></i> More Info</div>
+    <div class="info-row"><span class="info-label">Last Sign In</span><span class="info-value" id="lastSign"><span class="spinner"></span></span></div>
+    <div class="info-row"><span class="info-label">Member Since</span><span class="info-value" id="created"><span class="spinner"></span></span></div>
+    <div class="info-row"><span class="info-label">Last Check-in</span><span class="info-value" id="lastCheck">Never</span></div>
+    <div class="info-row"><span class="info-label">Total Check-ins</span><span class="info-value" id="total">0</span></div>
+  </div>
+</div>
 
-        function updateCheckin(){
-            const lastCheckin=userData.lastCheckin||0;
-            const streak=userData.checkinStreak||0;
-            const totalCheckins=userData.totalCheckins||0;
-            
-            document.getElementById('streak').textContent=streak;
-            document.getElementById('total').textContent=totalCheckins;
-            
-            if(lastCheckin){
-                const date=new Date(lastCheckin).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
-                document.getElementById('lastCheck').textContent=date;
-            }
-            
-            const now=new Date();
-            const lastDate=new Date(lastCheckin);
-            const isSameDay=now.toDateString()===lastDate.toDateString();
-            
-            if(isSameDay){
-                document.getElementById('btn').disabled=true;
-                document.getElementById('btn').innerHTML='<i class="fas fa-check"></i> Claimed Today';
-                const tomorrow=new Date(now);
-                tomorrow.setDate(tomorrow.getDate()+1);
-                tomorrow.setHours(0,0,0,0);
-                const hours=Math.floor((tomorrow-now)/3600000);
-                document.getElementById('info').textContent=`Come back in ${hours}h to claim tomorrow's reward`;
-            }
-        }
+<script type="module">
+import{onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import{ref,get,update}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import{auth,database}from"./lib/firebase.js";
 
-        document.getElementById('btn').onclick=async()=>{
-            if(!user)return;
-            
-            const btn=document.getElementById('btn');
-            btn.disabled=true;
-            btn.innerHTML='<span class="spinner"></span> Processing...';
-            
-            try{
-                const now=Date.now();
-                const lastCheckin=userData.lastCheckin||0;
-                const lastDate=new Date(lastCheckin);
-                const today=new Date(now);
-                
-                let newStreak=1;
-                if(lastCheckin){
-                    const yesterday=new Date(today);
-                    yesterday.setDate(yesterday.getDate()-1);
-                    if(lastDate.toDateString()===yesterday.toDateString()){
-                        newStreak=(userData.checkinStreak||0)+1;
-                    }
-                }
-                
-                const currentBalance=userData.balance||0;
-                await update(ref(database,`users/${user.uid}`),{
-                    balance:currentBalance+200,
-                    lastCheckin:now,
-                    checkinStreak:newStreak,
-                    totalCheckins:(userData.totalCheckins||0)+1
-                });
-                
-                userData.balance=currentBalance+200;
-                userData.lastCheckin=now;
-                userData.checkinStreak=newStreak;
-                userData.totalCheckins=(userData.totalCheckins||0)+1;
-                
-                updateCheckin();
-                alert('🎉 Success!\n\n₦200 has been added to your balance!');
-            }catch(e){
-                alert('Error: '+e.message);
-                btn.disabled=false;
-                btn.innerHTML='<i class="fas fa-hand-pointer"></i> Claim Reward';
-            }
-        };
-    </script>
+let user,userData;
+
+onAuthStateChanged(auth,async u=>{
+  if(!u){document.getElementById('name').textContent='Not Logged In';return;}
+  user=u;
+  const snap=await get(ref(database,`users/${u.uid}`));
+  userData=snap.exists()?snap.val():{};
+  const displayName=userData.fullName||u.displayName||u.email?.split('@')[0]||'User';
+  const email=u.email||'—';
+  const created=new Date(u.metadata.creationTime).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
+  const lastSignIn=new Date(u.metadata.lastSignInTime).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
+  document.getElementById('name').textContent=displayName;
+  document.getElementById('email').textContent=email;
+  document.getElementById('joined').textContent=`Since ${created}`;
+  document.getElementById('n1').textContent=displayName;
+  document.getElementById('e1').textContent=email;
+  document.getElementById('lastSign').textContent=lastSignIn;
+  document.getElementById('created').textContent=created;
+  const initials=displayName.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('initials').textContent=initials;
+  if(u.photoURL){const img=document.createElement('img');img.src=u.photoURL;document.getElementById('avatar').innerHTML='';document.getElementById('avatar').appendChild(img);}
+  updateCheckin();
+});
+
+function updateCheckin(){
+  const lastCheckin=userData.lastCheckin||0;
+  const streak=userData.checkinStreak||0;
+  const totalCheckins=userData.totalCheckins||0;
+  document.getElementById('streak').textContent=streak;
+  document.getElementById('total').textContent=totalCheckins;
+  if(lastCheckin){document.getElementById('lastCheck').textContent=new Date(lastCheckin).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});}
+  const now=new Date();const lastDate=new Date(lastCheckin);
+  if(now.toDateString()===lastDate.toDateString()){
+    const btn=document.getElementById('btn');
+    btn.disabled=true;btn.innerHTML='<i class="fas fa-check"></i> Claimed Today';
+    const tomorrow=new Date(now);tomorrow.setDate(tomorrow.getDate()+1);tomorrow.setHours(0,0,0,0);
+    const hours=Math.floor((tomorrow-now)/3600000);
+    document.getElementById('info').textContent=`Return in ${hours}h for tomorrow's reward`;
+  }
+}
+
+document.getElementById('btn').onclick=async()=>{
+  if(!user)return;
+  const btn=document.getElementById('btn');
+  btn.disabled=true;btn.innerHTML='<span class="spinner" style="border-top-color:#000"></span> Processing…';
+  try{
+    const now=Date.now();const lastCheckin=userData.lastCheckin||0;
+    const lastDate=new Date(lastCheckin);const today=new Date(now);
+    let newStreak=1;
+    if(lastCheckin){const yesterday=new Date(today);yesterday.setDate(yesterday.getDate()-1);if(lastDate.toDateString()===yesterday.toDateString())newStreak=(userData.checkinStreak||0)+1;}
+    const currentBalance=userData.balance||0;
+    await update(ref(database,`users/${user.uid}`),{balance:currentBalance+200,lastCheckin:now,checkinStreak:newStreak,totalCheckins:(userData.totalCheckins||0)+1});
+    userData.balance=currentBalance+200;userData.lastCheckin=now;userData.checkinStreak=newStreak;userData.totalCheckins=(userData.totalCheckins||0)+1;
+    updateCheckin();
+    alert('🎉 ₦200 has been added to your balance!');
+  }catch(e){alert('Error: '+e.message);btn.disabled=false;btn.innerHTML='<i class="fas fa-hand-pointer"></i> Claim Reward';}
+};
+</script>
 </body>
-                                                                                      </html>
+</html>

@@ -1,356 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investment Plans</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:Inter,sans-serif;background:#f8fafc;min-height:100vh;padding:80px 20px 300px;color:#1e293b}
-        .container{max-width:1200px;margin:0 auto}
-        .header{text-align:center;margin-bottom:24px}
-        .header h1{font-size:28px;font-weight:700;color:#0f172a;margin-bottom:6px}
-        .header p{font-size:14px;color:#64748b}
-        .balance{background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:16px;border-radius:12px;text-align:center;margin-bottom:20px;box-shadow:0 2px 12px rgba(16,185,129,.2)}
-        .balance-label{font-size:12px;opacity:.9;margin-bottom:4px}
-        .balance-amount{font-size:32px;font-weight:700}
-        .banner{padding:12px;border-radius:8px;margin-bottom:16px;font-size:12px;display:none;align-items:center;gap:8px}
-        .banner.show{display:flex}
-        .banner i{font-size:14px}
-        .error{background:#fee;border:1px solid #dc2626;color:#dc2626}
-        .warning{background:#fef3c7;border:1px solid #f59e0b;color:#92400e}
-        .info{background:#dbeafe;border:1px solid #3b82f6;color:#1e40af}
-        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-        .card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);transition:all .2s;border:1px solid #e2e8f0;position:relative}
-        .card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.1);border-color:#10b981}
-        .card.featured{border-color:#10b981;background:linear-gradient(135deg,#fff,#f0fdf4)}
-        .badge{position:absolute;top:12px;right:12px;background:#10b981;color:#fff;padding:4px 10px;border-radius:12px;font-size:10px;font-weight:700;text-transform:uppercase}
-        .plan-name{font-size:18px;font-weight:700;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e2e8f0}
-        .price{text-align:center;margin:12px 0;padding:12px;background:#f8fafc;border-radius:8px}
-        .price-label{font-size:10px;color:#64748b;font-weight:600;text-transform:uppercase;margin-bottom:4px}
-        .price-amount{font-size:28px;font-weight:700}
-        .daily{background:#f0fdf4;border:1px solid #10b981;color:#059669;padding:8px;border-radius:6px;text-align:center;margin:10px 0;font-size:12px;font-weight:600}
-        .features{list-style:none;margin:12px 0}
-        .features li{padding:6px 0;color:#475569;display:flex;align-items:center;font-size:12px}
-        .features i{color:#10b981;font-size:12px;margin-right:8px;flex-shrink:0}
-        .btn{width:100%;padding:12px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;text-transform:uppercase}
-        .btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 4px 12px rgba(16,185,129,.3)}
-        .btn:disabled{opacity:.6;cursor:not-allowed;background:#94a3b8}
-        .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;backdrop-filter:blur(3px);padding:20px;align-items:center;justify-content:center}
-        .modal.active{display:flex}
-        .modal-content{background:#fff;border-radius:12px;padding:20px;max-width:360px;width:100%;box-shadow:0 20px 40px rgba(0,0,0,.2);max-height:85vh;overflow-y:auto}
-        .modal h3{font-size:16px;margin-bottom:12px;text-align:center;font-weight:700}
-        .confirm{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #10b981;border-radius:6px;padding:12px;text-align:center;margin-bottom:12px}
-        .confirm-label{color:#059669;font-size:11px;font-weight:600;margin-bottom:4px}
-        .confirm-value{color:#10b981;font-size:28px;font-weight:700}
-        .summary{background:#f8fafc;padding:10px;border-radius:6px;margin-bottom:10px}
-        .row{display:flex;justify-content:space-between;padding:5px 0;font-size:12px}
-        .row span{color:#64748b}
-        .row strong{color:#0f172a;font-weight:600}
-        .actions{display:flex;gap:8px;margin-top:12px}
-        .modal-btn{flex:1;padding:10px;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
-        .cancel{background:#f1f5f9;color:#475569}
-        .confirm-btn{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
-        .modal-btn:disabled{opacity:.6;cursor:not-allowed}
-        .err{background:#fee;border:1px solid #dc2626;color:#dc2626;padding:8px;border-radius:6px;font-size:11px;margin-top:8px;display:none}
-        .err.show{display:block}
-        .spinner{display:inline-block;width:12px;height:12px;border:2px solid #e0e0e0;border-top-color:#10b981;border-radius:50%;animation:spin .8s linear infinite}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        .loading{text-align:center;padding:40px;color:#64748b}
-        .welcome-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;backdrop-filter:blur(4px);padding:20px;align-items:center;justify-content:center;animation:fadeIn .3s}
-        .welcome-modal.active{display:flex}
-        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-        @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-        .welcome-content{background:#fff;border-radius:16px;padding:32px 24px;max-width:420px;width:100%;box-shadow:0 25px 50px rgba(0,0,0,.3);text-align:center;animation:slideUp .4s ease-out}
-        .welcome-icon{width:80px;height:80px;background:linear-gradient(135deg,#10b981,#059669);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 20px rgba(16,185,129,.3)}
-        .welcome-icon i{font-size:40px;color:#fff}
-        .welcome-title{font-size:24px;font-weight:700;color:#0f172a;margin-bottom:12px}
-        .welcome-text{font-size:14px;color:#64748b;line-height:1.6;margin-bottom:20px}
-        .bonus-box{background:linear-gradient(135deg,#fef3c7,#fde68a);border:2px solid #f59e0b;border-radius:12px;padding:16px;margin:20px 0}
-        .bonus-label{font-size:12px;color:#92400e;font-weight:600;margin-bottom:6px;text-transform:uppercase}
-        .bonus-amount{font-size:36px;font-weight:700;color:#f59e0b;margin-bottom:4px}
-        .bonus-note{font-size:11px;color:#92400e}
-        .welcome-btn{width:100%;padding:14px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
-        .welcome-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(16,185,129,.4)}
-        @media(max-width:768px){body{padding:60px 12px 200px}.header h1{font-size:24px}.grid{grid-template-columns:1fr}.welcome-content{padding:24px 20px}.welcome-title{font-size:20px}.bonus-amount{font-size:32px}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Investment Plans — Tesla Cooperative</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--R:#CC0000;--Rg:rgba(204,0,0,0.15);--Rb:rgba(204,0,0,0.06);--bg:#080808;--g1:#0f0f0f;--g2:#161616;--g3:#1e1e1e;--line:rgba(255,255,255,0.06);--T:#f5f5f5;--M:#888;--dim:#444;--gold:#C9A84C;--green:#22c55e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--T);min-height:100vh;padding-bottom:120px;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+
+/* HERO */
+.hero{position:relative;z-index:1;background:var(--g1);border-bottom:1px solid var(--line);padding:28px 24px 24px;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--R),transparent 60%)}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--R);text-transform:uppercase;margin-bottom:8px}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,11vw,80px);letter-spacing:2px;line-height:.85;margin-bottom:16px}
+.hero-title span{color:var(--R)}
+.hero-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.balance-block{display:flex;align-items:center;gap:16px}
+.bal-inner{background:var(--g2);border:1px solid var(--line);border-radius:12px;padding:12px 18px}
+.bal-l{font-size:10px;letter-spacing:2px;color:var(--M);text-transform:uppercase;margin-bottom:4px}
+.bal-v{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--green);letter-spacing:1px}
+.banner{display:none;align-items:center;gap:8px;background:var(--Rb);border:1px solid rgba(204,0,0,0.2);border-radius:8px;padding:8px 12px;font-size:12px;color:#ff7070}
+.banner.show{display:flex}
+.banner-warn{background:rgba(201,168,76,0.07);border-color:rgba(201,168,76,0.2);color:var(--gold)}
+.banner-info{background:rgba(255,255,255,0.03);border-color:var(--line);color:var(--M);display:flex}
+
+/* PLAN GRID */
+.plans-wrap{position:relative;z-index:1;padding:24px}
+.grid-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--M);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.grid-label::after{content:'';flex:1;height:1px;background:var(--line)}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+
+/* PLAN CARD — totally new layout */
+.plan-card{background:var(--g1);border:1px solid var(--line);border-radius:20px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;position:relative}
+.plan-card:hover{transform:translateY(-3px);border-color:rgba(204,0,0,0.4)}
+.plan-card.featured{border-color:rgba(204,0,0,0.3)}
+
+/* colored top band with plan number */
+.card-band{padding:18px 20px 16px;position:relative;display:flex;align-items:flex-start;justify-content:space-between}
+.band-default{background:linear-gradient(135deg,#141414,#1a1a1a)}
+.band-featured{background:linear-gradient(135deg,#1a0000,#200808)}
+.plan-num{font-family:'Bebas Neue',sans-serif;font-size:64px;color:rgba(255,255,255,0.05);line-height:1;position:absolute;right:14px;bottom:-4px;letter-spacing:-2px}
+.plan-tier{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--T)}
+.plan-badge{background:var(--R);color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px;font-family:'DM Mono',monospace}
+.plan-badge.gold{background:var(--gold);color:#000}
+
+/* card body */
+.card-body{padding:16px 20px 20px;background:var(--g1)}
+.cost-row{display:flex;align-items:baseline;gap:4px;margin-bottom:4px}
+.cost-label{font-size:11px;color:var(--M);text-transform:uppercase;letter-spacing:1.5px;font-family:'DM Mono',monospace}
+.cost-amount{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:1px;color:var(--T)}
+
+.daily-row{display:flex;align-items:center;gap:8px;background:var(--Rb);border:1px solid rgba(204,0,0,0.18);border-radius:8px;padding:9px 12px;margin:12px 0}
+.daily-row i{color:var(--R);font-size:12px}
+.daily-row span{font-size:13px;color:var(--M)}
+.daily-row strong{font-family:'DM Mono',monospace;color:var(--T);margin-left:auto;font-size:14px}
+
+.divider{height:1px;background:var(--line);margin:14px 0}
+.feat-list{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.feat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--M)}
+.feat::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--R);flex-shrink:0}
+
+.invest-btn{width:100%;padding:13px;background:var(--R);border:none;border-radius:10px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.invest-btn:hover{background:#a80000;box-shadow:0 4px 20px rgba(204,0,0,0.3)}
+.invest-btn:disabled{background:var(--g3);color:var(--dim);cursor:not-allowed;box-shadow:none}
+
+/* MODAL — overlay with centered panel */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;backdrop-filter:blur(6px);padding:20px;align-items:center;justify-content:center}
+.overlay.open{display:flex;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-panel{width:100%;max-width:400px;background:var(--g1);border:1px solid var(--line);border-radius:20px;overflow:hidden;animation:slideUp .3s}
+@keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-top{background:linear-gradient(135deg,var(--R),#8B0000);padding:24px;position:relative;overflow:hidden}
+.modal-top::after{content:'';position:absolute;top:-30px;right:-30px;width:130px;height:130px;background:rgba(255,255,255,0.06);border-radius:50%}
+.mt-label{font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:4px;font-family:'DM Mono',monospace}
+.mt-amount{font-family:'Bebas Neue',sans-serif;font-size:52px;color:#fff;letter-spacing:1px;line-height:1}
+.mt-plan{font-size:14px;color:rgba(255,255,255,0.7);margin-top:6px}
+.modal-body{padding:20px}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.meta-cell{background:var(--g2);border-radius:10px;padding:12px}
+.mc-l{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--M);font-family:'DM Mono',monospace;margin-bottom:4px}
+.mc-v{font-size:15px;font-weight:600;color:var(--T)}
+.modal-err{background:var(--Rb);border:1px solid rgba(204,0,0,0.2);border-radius:8px;padding:10px 12px;font-size:12px;color:#ff7070;margin-bottom:14px;display:none}
+.modal-err.show{display:block}
+.modal-btns{display:flex;gap:10px}
+.btn-ghost{flex:1;padding:12px;background:transparent;border:1px solid var(--line);border-radius:10px;color:var(--M);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{color:var(--T);border-color:rgba(255,255,255,0.15)}
+.btn-red{flex:2;padding:12px;background:var(--R);border:none;border-radius:10px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-red:hover:not(:disabled){background:#a80000}
+.btn-red:disabled{opacity:.45;cursor:not-allowed}
+
+/* WELCOME */
+.welcome-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:600;padding:20px;align-items:center;justify-content:center}
+.welcome-overlay.open{display:flex;animation:fadeIn .3s}
+.welcome-panel{width:100%;max-width:380px;background:var(--g1);border:1px solid rgba(201,168,76,0.3);border-radius:24px;padding:0;overflow:hidden;animation:slideUp .4s}
+.wb-top{background:linear-gradient(135deg,#1a1200,#261a00);padding:32px 24px;text-align:center;border-bottom:1px solid rgba(201,168,76,0.15)}
+.wb-icon{width:64px;height:64px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:var(--gold)}
+.wb-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.wb-amount{font-family:'Bebas Neue',sans-serif;font-size:72px;color:var(--gold);line-height:1;letter-spacing:2px}
+.wb-sub{font-size:13px;color:var(--M);margin-top:4px}
+.wb-body{padding:20px 24px}
+.wb-body p{font-size:14px;color:var(--M);line-height:1.6;margin-bottom:16px}
+.btn-gold{width:100%;padding:14px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:all .2s}
+.btn-gold:hover{opacity:.9}
+
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.15);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.spinner-sm{width:12px;height:12px;border-top-color:var(--R);border-color:var(--Rb)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading{text-align:center;padding:60px;color:var(--dim)}
+
+@media(min-width:769px){.hero{padding:40px 40px 28px}.plans-wrap{padding:32px 40px}.cost-amount{font-size:40px}}
+@media(min-width:1024px){.plans-wrap{max-width:1200px;margin:0 auto}.hero{max-width:1200px;margin:0 auto}}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Choose Your Investment Plan</h1>
-            <p>Start growing your wealth with flexible options</p>
-        </div>
 
-        <div class="banner error" id="errorBanner">
-            <i class="fas fa-exclamation-circle"></i>
-            <div><strong>Error:</strong> <span id="errorMsg"></span></div>
-        </div>
-
-        <div class="banner warning" id="warningBanner">
-            <i class="fas fa-exclamation-triangle"></i>
-            <div><strong>Notice:</strong> <span id="warningMsg"></span></div>
-        </div>
-
-        <div class="banner info show">
-            <i class="fas fa-lightbulb"></i>
-            <div>Confirm your investment plan properly before investing.</div>
-        </div>
-
-        <div class="balance">
-            <div class="balance-label">Available Balance</div>
-            <div class="balance-amount" id="balance"><span class="spinner"></span></div>
-        </div>
-
-        <div id="loader" class="loading" style="display:none"><div class="spinner" style="width:24px;height:24px;border-width:3px"></div><div>Loading plans...</div></div>
-        <div class="grid" id="grid"></div>
+<div class="hero">
+  <div class="hero-eyebrow">// Investment Plans</div>
+  <div class="hero-title">CHOOSE<br><span>YOUR</span> PLAN</div>
+  <div class="hero-row">
+    <div class="balance-block">
+      <div class="bal-inner">
+        <div class="bal-l">Available Balance</div>
+        <div class="bal-v" id="balance"><span class="spinner spinner-sm"></span></div>
+      </div>
     </div>
+    <div class="banner banner-info" id="infoBanner"><i class="fas fa-info-circle"></i><span>Confirm your plan carefully before investing</span></div>
+  </div>
+  <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
+    <div class="banner" id="errorBanner"><i class="fas fa-times-circle"></i><span id="errorMsg"></span></div>
+    <div class="banner banner-warn" id="warningBanner"><i class="fas fa-exclamation-triangle"></i><span id="warningMsg"></span></div>
+  </div>
+</div>
 
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <h3 id="modalTitle"></h3>
-            <div class="confirm">
-                <div class="confirm-label">Investment Amount</div>
-                <div class="confirm-value" id="amt"></div>
-            </div>
-            <div class="summary">
-                <div class="row"><span>Plan:</span><strong id="sp"></strong></div>
-                <div class="row"><span>Daily Income:</span><strong id="sd"></strong></div>
-                <div class="row"><span>Duration:</span><strong id="su"></strong></div>
-            </div>
-            <div class="err" id="err"></div>
-            <div class="actions">
-                <button class="modal-btn cancel" onclick="closeModal()">Cancel</button>
-                <button class="modal-btn confirm-btn" id="btn">Invest Now</button>
-            </div>
-        </div>
+<div class="plans-wrap">
+  <div class="grid-label">// Select a Plan <span></span></div>
+  <div id="loader" class="loading" style="display:none"><span class="spinner spinner-sm" style="width:20px;height:20px"></span><div style="margin-top:12px;font-size:13px">Loading plans…</div></div>
+  <div class="plans-grid" id="grid"></div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="overlay" id="modal">
+  <div class="modal-panel">
+    <div class="modal-top">
+      <div class="mt-label">Investment Amount</div>
+      <div class="mt-amount" id="m_amount"></div>
+      <div class="mt-plan" id="m_plan"></div>
     </div>
-
-    <div class="welcome-modal" id="welcomeModal">
-        <div class="welcome-content">
-            <div class="welcome-icon">
-                <i class="fas fa-gift"></i>
-            </div>
-            <h2 class="welcome-title">🎉 Welcome Bonus!</h2>
-            <p class="welcome-text">Congratulations on making your first investment! As a warm welcome to Crest Point Investment, we're crediting your account with a special bonus.</p>
-            <div class="bonus-box">
-                <div class="bonus-label">Welcome Bonus Credited</div>
-                <div class="bonus-amount">₦1,000</div>
-                <div class="bonus-note">Added to your available balance</div>
-            </div>
-            <p class="welcome-text" style="margin-top:16px">Start growing your wealth with us today! Your investment journey begins now.</p>
-            <button class="welcome-btn" onclick="closeWelcome()"><i class="fas fa-check-circle"></i> Got it, Thanks!</button>
-        </div>
+    <div class="modal-body">
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="mc-l">Daily Income</div><div class="mc-v" id="m_daily"></div></div>
+        <div class="meta-cell"><div class="mc-l">Duration</div><div class="mc-v" id="m_dur"></div></div>
+      </div>
+      <div class="modal-err" id="m_err"></div>
+      <div class="modal-btns">
+        <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn-red" id="m_btn"><i class="fas fa-rocket"></i> INVEST NOW</button>
+      </div>
     </div>
+  </div>
+</div>
 
-    <script type="module">
-        import{onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-        import{ref,get,update,push}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
-        import{auth,database}from"./lib/firebase.js";
+<!-- WELCOME MODAL -->
+<div class="welcome-overlay" id="welcomeModal">
+  <div class="welcome-panel">
+    <div class="wb-top">
+      <div class="wb-icon"><i class="fas fa-gift"></i></div>
+      <div class="wb-eyebrow">// Welcome Bonus</div>
+      <div class="wb-amount">₦1K</div>
+      <div class="wb-sub">credited to your balance</div>
+    </div>
+    <div class="wb-body">
+      <p>Congratulations on your first investment! We've added a ₦1,000 welcome bonus to your account. Your journey to financial growth starts now.</p>
+      <button class="btn-gold" onclick="closeWelcome()"><i class="fas fa-check"></i> AWESOME, THANKS!</button>
+    </div>
+  </div>
+</div>
 
-        const P={starter:{cost:3000,income:750,dur:'30 days'},bronze:{cost:6000,income:1500,dur:'30 days'},silver:{cost:10000,income:2500,dur:'30 days'},gold:{cost:15000,income:4750,dur:'30 days'},platinum:{cost:25000,income:7000,dur:'30 days'}};
-        const plans=[{id:'starter',name:'Starter Plan',badge:'Beginner'},{id:'bronze',name:'Bronze Plan',featured:1,badge:'Popular'},{id:'silver',name:'Silver Plan'},{id:'gold',name:'Gold Plan',featured:1,badge:'Best Value'},{id:'platinum',name:'Platinum Plan',badge:'Elite'}];
-        let user,bal=0,sel,init=0,userData={};
+<script type="module">
+import{onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import{ref,get,update,push}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import{auth,database}from"./lib/firebase.js";
 
-        const showErr=m=>{document.getElementById('errorMsg').textContent=m;document.getElementById('errorBanner').classList.add('show')};
-        const showWarn=m=>{document.getElementById('warningMsg').textContent=m;document.getElementById('warningBanner').classList.add('show')};
-        const hideWarn=()=>document.getElementById('warningBanner').classList.remove('show');
+const P={starter:{cost:3000,income:750,dur:'30 days'},bronze:{cost:6000,income:1500,dur:'30 days'},silver:{cost:10000,income:2500,dur:'30 days'},gold:{cost:15000,income:4750,dur:'30 days'},platinum:{cost:25000,income:7000,dur:'30 days'}};
+const plans=[{id:'starter',name:'Starter',tier:'01',badge:'Beginner'},{id:'bronze',name:'Bronze',tier:'02',featured:1,badge:'Popular'},{id:'silver',name:'Silver',tier:'03'},{id:'gold',name:'Gold',tier:'04',featured:1,badge:'Best Value',goldBadge:1},{id:'platinum',name:'Platinum',tier:'05',badge:'Elite'}];
+let user,bal=0,sel,init=0,userData={};
+const fmt=n=>`₦${n.toLocaleString('en-NG',{minimumFractionDigits:2})}`;
+const showErr=m=>{document.getElementById('errorMsg').textContent=m;document.getElementById('errorBanner').classList.add('show')};
+const showWarn=m=>{document.getElementById('warningMsg').textContent=m;document.getElementById('warningBanner').classList.add('show')};
+const hideWarn=()=>document.getElementById('warningBanner').classList.remove('show');
+window.closeWelcome=()=>{document.getElementById('welcomeModal').classList.remove('open');document.body.style.overflow='';};
 
-        window.closeWelcome=()=>{
-            document.getElementById('welcomeModal').classList.remove('active');
-            document.body.style.overflow='';
-        };
+const render=()=>{
+  const g=document.getElementById('grid');g.innerHTML='';
+  plans.forEach(p=>{
+    const c=P[p.id];
+    const card=document.createElement('div');
+    card.className=`plan-card${p.featured?' featured':''}`;
+    card.innerHTML=`
+      <div class="card-band ${p.featured?'band-featured':'band-default'}">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--M);margin-bottom:4px">${p.tier}</div>
+          <div class="plan-tier">${p.name}</div>
+        </div>
+        ${p.badge?`<span class="plan-badge${p.goldBadge?' gold':''}">${p.badge}</span>`:''}
+        <div class="plan-num">${p.tier}</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:10px;letter-spacing:1.5px;color:var(--M);text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:4px">Investment</div>
+        <div class="cost-amount">${fmt(c.cost)}</div>
+        <div class="daily-row"><i class="fas fa-coins"></i><span>Daily Income</span><strong>${fmt(c.income)}</strong></div>
+        <div class="divider"></div>
+        <div class="feat-list">
+          <div class="feat">Duration: ${c.dur}</div>
+          <div class="feat">Claim earnings anytime</div>
+          <div class="feat">Auto-completes at maturity</div>
+          <div class="feat">24/7 Support</div>
+        </div>
+        <button class="invest-btn" onclick="openPlan('${p.id}')"><i class="fas fa-rocket"></i> INVEST NOW</button>
+      </div>`;
+    g.appendChild(card);
+  });
+};
 
-        const showWelcomeBonus=()=>{
-            document.getElementById('welcomeModal').classList.add('active');
-            document.body.style.overflow='hidden';
-        };
+onAuthStateChanged(auth,async u=>{
+  if(!u){showWarn('Not logged in.');document.getElementById('balance').textContent='₦0.00';user=null;bal=0;init=1;render();return;}
+  hideWarn();user=u;
+  const s=await get(ref(database,'users/'+u.uid));
+  if(s.exists()){userData=s.val();bal=userData.balance||0;document.getElementById('balance').textContent=fmt(bal);}
+  else{document.getElementById('balance').textContent='₦0.00';bal=0;}
+  init=1;render();
+});
 
-        const render=()=>{
-            const g=document.getElementById('grid');
-            g.innerHTML='';
-            plans.forEach(p=>{
-                const c=P[p.id];
-                const card=document.createElement('div');
-                card.className=`card ${p.featured?'featured':''}`;
-                card.innerHTML=`
-                    ${p.badge?`<span class="badge">${p.badge}</span>`:''}
-                    <div class="plan-name">${p.name}</div>
-                    <div class="price"><div class="price-label">Investment Amount</div><div class="price-amount">₦${c.cost.toLocaleString()}</div></div>
-                    <div class="daily"><i class="fas fa-coins"></i> Daily Income: ₦${c.income.toLocaleString()}</div>
-                    <ul class="features">
-                        <li><i class="fas fa-check-circle"></i>Investment: ₦${c.cost.toLocaleString()}</li>
-                        <li><i class="fas fa-check-circle"></i>Daily Earnings: ₦${c.income.toLocaleString()}</li>
-                        <li><i class="fas fa-check-circle"></i>Duration: ${c.dur}</li>
-                        <li><i class="fas fa-check-circle"></i>Claim earnings anytime</li>
-                        <li><i class="fas fa-check-circle"></i>Auto-completes at maturity</li>
-                        <li><i class="fas fa-check-circle"></i>24/7 Support</li>
-                    </ul>
-                    <button class="btn" onclick="openPlan('${p.id}')"><i class="fas fa-rocket"></i> Invest Now</button>
-                `;
-                g.appendChild(card);
-            });
-        };
+window.openPlan=id=>{
+  sel=plans.find(p=>p.id===id);const c=P[id];
+  document.getElementById('m_amount').textContent=fmt(c.cost);
+  document.getElementById('m_plan').textContent=sel.name+' Plan';
+  document.getElementById('m_daily').textContent=fmt(c.income);
+  document.getElementById('m_dur').textContent=c.dur;
+  document.getElementById('m_err').classList.remove('show');
+  document.getElementById('modal').classList.add('open');
+};
+window.closeModal=()=>document.getElementById('modal').classList.remove('open');
 
-        const processReferralCommissions=async(investmentAmount,investorId,investorName)=>{
-            try{
-                const investorSnap=await get(ref(database,`users/${investorId}`));
-                if(!investorSnap.exists())return;
-                
-                const investorData=investorSnap.val();
-                const referredBy=investorData.referredBy;
-                
-                if(!referredBy)return;
-                
-                const level1Snap=await get(ref(database,`users/${referredBy}`));
-                if(!level1Snap.exists())return;
-                
-                const level1Data=level1Snap.val();
-                const level1Commission=investmentAmount*0.10;
-                
-                const level1Updates={
-                    balance:(level1Data.balance||0)+level1Commission,
-                    totalReferralEarnings:(level1Data.totalReferralEarnings||0)+level1Commission
-                };
-                
-                const level1Refs=level1Data.referrals||[];
-                const refIndex=level1Refs.findIndex(r=>r.userId===investorId);
-                if(refIndex>=0){
-                    level1Refs[refIndex].earned=(level1Refs[refIndex].earned||0)+level1Commission;
-                    level1Refs[refIndex].lastInvestment=new Date().toISOString();
-                    level1Updates.referrals=level1Refs;
-                }
-                
-                await update(ref(database,`users/${referredBy}`),level1Updates);
-                
-                if(level1Data.referredBy){
-                    const level2Snap=await get(ref(database,`users/${level1Data.referredBy}`));
-                    if(level2Snap.exists()){
-                        const level2Data=level2Snap.val();
-                        const level2Commission=investmentAmount*0.20;
-                        
-                        const level2Updates={
-                            balance:(level2Data.balance||0)+level2Commission,
-                            totalReferralEarnings:(level2Data.totalReferralEarnings||0)+level2Commission
-                        };
-                        
-                        const level2Refs=level2Data.referrals||[];
-                        const l2RefIndex=level2Refs.findIndex(r=>r.userId===investorId);
-                        if(l2RefIndex>=0){
-                            level2Refs[l2RefIndex].earned=(level2Refs[l2RefIndex].earned||0)+level2Commission;
-                            level2Refs[l2RefIndex].lastInvestment=new Date().toISOString();
-                            level2Updates.referrals=level2Refs;
-                        }else{
-                            level2Refs.push({
-                                userId:investorId,
-                                name:investorName,
-                                level:2,
-                                earned:level2Commission,
-                                joinedAt:investorData.createdAt||new Date().toISOString(),
-                                lastInvestment:new Date().toISOString()
-                            });
-                            level2Updates.referrals=level2Refs;
-                        }
-                        
-                        await update(ref(database,`users/${level1Data.referredBy}`),level2Updates);
-                    }
-                }
-            }catch(e){
-                console.error('Referral commission error:',e);
-            }
-        };
-
-        const initApp=async()=>{
-            try{
-                init=1;
-                onAuthStateChanged(auth,async u=>{
-                    if(!u){
-                        showWarn('Not logged in. Log in to invest.');
-                        document.getElementById('balance').textContent='₦0.00';
-                        user=null;bal=0;
-                        render();
-                        return;
-                    }
-                    hideWarn();user=u;
-                    const s=await get(ref(database,'users/'+u.uid));
-                    if(s.exists()){
-                        userData=s.val();
-                        bal=userData.balance||0;
-                        document.getElementById('balance').textContent='₦'+bal.toLocaleString('en-NG',{minimumFractionDigits:2});
-                    }else{document.getElementById('balance').textContent='₦0.00';bal=0}
-                    render();
-                });
-            }catch(e){
-                showErr('Firebase error: '+e.message);
-                document.getElementById('balance').textContent='₦0.00';
-                render();
-            }
-        };
-
-        window.openPlan=id=>{
-            sel=plans.find(p=>p.id===id);
-            const c=P[id];
-            document.getElementById('modalTitle').textContent=`Confirm ${sel.name}`;
-            document.getElementById('amt').textContent='₦'+c.cost.toLocaleString();
-            document.getElementById('sp').textContent=sel.name;
-            document.getElementById('sd').textContent='₦'+c.income.toLocaleString();
-            document.getElementById('su').textContent=c.dur;
-            document.getElementById('modal').classList.add('active');
-            document.getElementById('err').classList.remove('show');
-        };
-
-        window.closeModal=()=>document.getElementById('modal').classList.remove('active');
-
-        document.getElementById('btn').onclick=async()=>{
-            const c=P[sel.id],btn=document.getElementById('btn'),err=document.getElementById('err');
-            if(!user){err.textContent='Please log in.';err.classList.add('show');return}
-            if(!init){err.textContent='Firebase not ready.';err.classList.add('show');return}
-            if(bal<c.cost){err.textContent='Insufficient funds. Fund wallet.';err.classList.add('show');return}
-            btn.disabled=1;btn.innerHTML='<span class="spinner"></span> Processing...';
-            try{
-                const now=Date.now();
-                const userRef=ref(database,'users/'+user.uid);
-                const snapshot=await get(userRef);
-                const currentData=snapshot.val()||{};
-                
-                const isFirstInvestment=!currentData.investments||Object.keys(currentData.investments).length===0;
-                const welcomeBonus=isFirstInvestment?1000:0;
-                
-                const invKey=push(ref(database,`users/${user.uid}/investments`)).key;
-                const updates={
-                    balance:(bal-c.cost)+welcomeBonus,
-                    [`investments/${invKey}`]:{
-                        planId:sel.id,planName:sel.name,amount:c.cost,dailyIncome:c.income,
-                        duration:c.dur,startDate:now,maturityDate:now+(86400000*30),
-                        status:'active',totalClaimed:0
-                    }
-                };
-                
-                if(isFirstInvestment){
-                    updates.firstInvestmentDate=new Date().toISOString();
-                    updates.welcomeBonusReceived=true;
-                }
-                
-                await update(userRef,updates);
-                
-                await processReferralCommissions(c.cost,user.uid,currentData.fullName||currentData.email||'User');
-                
-                bal=(bal-c.cost)+welcomeBonus;
-                document.getElementById('balance').textContent='₦'+bal.toLocaleString('en-NG',{minimumFractionDigits:2});
-                closeModal();
-                
-                if(isFirstInvestment){
-                    setTimeout(()=>showWelcomeBonus(),500);
-                }else{
-                    alert('✓ Investment successful!');
-                }
-            }catch(e){err.textContent='Error: '+e.message;err.classList.add('show')}
-            finally{btn.disabled=0;btn.innerHTML='Invest Now'}
-        };
-
-        initApp();
-    </script>
+document.getElementById('m_btn').onclick=async()=>{
+  const c=P[sel.id],btn=document.getElementById('m_btn'),err=document.getElementById('m_err');
+  if(!user){err.textContent='Please log in.';err.classList.add('show');return;}
+  if(!init){err.textContent='Firebase not ready.';err.classList.add('show');return;}
+  if(bal<c.cost){err.textContent='Insufficient funds. Please top up your wallet.';err.classList.add('show');return;}
+  btn.disabled=1;btn.innerHTML='<span class="spinner"></span>';
+  try{
+    const now=Date.now(),userRef=ref(database,'users/'+user.uid);
+    const snapshot=await get(userRef),currentData=snapshot.val()||{};
+    const isFirst=!currentData.investments||Object.keys(currentData.investments).length===0;
+    const bonus=isFirst?1000:0;
+    const invKey=push(ref(database,`users/${user.uid}/investments`)).key;
+    const updates={balance:(bal-c.cost)+bonus,[`investments/${invKey}`]:{planId:sel.id,planName:sel.name,amount:c.cost,dailyIncome:c.income,duration:c.dur,startDate:now,maturityDate:now+(86400000*30),status:'active',totalClaimed:0}};
+    if(isFirst){updates.firstInvestmentDate=new Date().toISOString();updates.welcomeBonusReceived=true;}
+    await update(userRef,updates);
+    try{
+      const referredBy=currentData.referredBy;
+      if(referredBy){
+        const l1=await get(ref(database,`users/${referredBy}`));
+        if(l1.exists()){const l1d=l1.val(),l1c=c.cost*.10;await update(ref(database,`users/${referredBy}`),{balance:(l1d.balance||0)+l1c,totalReferralEarnings:(l1d.totalReferralEarnings||0)+l1c});
+          if(l1d.referredBy){const l2=await get(ref(database,`users/${l1d.referredBy}`));if(l2.exists()){const l2d=l2.val(),l2c=c.cost*.20;await update(ref(database,`users/${l1d.referredBy}`),{balance:(l2d.balance||0)+l2c,totalReferralEarnings:(l2d.totalReferralEarnings||0)+l2c});}}
+        }
+      }
+    }catch(e){console.error('Referral:',e);}
+    bal=(bal-c.cost)+bonus;document.getElementById('balance').textContent=fmt(bal);
+    closeModal();
+    if(isFirst){setTimeout(()=>{document.getElementById('welcomeModal').classList.add('open');document.body.style.overflow='hidden';},500);}
+    else alert('✓ Investment successful!');
+  }catch(e){err.textContent='Error: '+e.message;err.classList.add('show');}
+  finally{btn.disabled=0;btn.innerHTML='<i class="fas fa-rocket"></i> INVEST NOW';}
+};
+</script>
 </body>
 </html>
