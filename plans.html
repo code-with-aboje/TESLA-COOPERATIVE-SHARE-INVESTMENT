@@ -72,14 +72,14 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .invest-btn:hover{background:#a80000;box-shadow:0 4px 20px rgba(204,0,0,0.3)}
 
 /* MODAL OVERLAY */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;backdrop-filter:blur(6px);padding:20px;align-items:flex-end;justify-content:center}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;backdrop-filter:blur(6px);padding:0;align-items:flex-end;justify-content:center}
 .overlay.open{display:flex;animation:fadeIn .2s}
-@media(min-width:600px){.overlay{align-items:center}}
+@media(min-width:600px){.overlay{padding:20px;align-items:center}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-.modal-panel{width:100%;max-width:420px;background:var(--g1);border:1px solid var(--line);border-radius:20px 20px 0 0;overflow:hidden;animation:slideUp .28s}
-@media(min-width:600px){.modal-panel{border-radius:20px}}
-@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-panel{width:100%;max-width:100%;background:var(--g1);border:1px solid var(--line);border-radius:22px 22px 0 0;overflow:hidden;animation:slideUp .28s}
+@media(min-width:600px){.modal-panel{max-width:440px;border-radius:20px}}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
 
 .modal-top{background:linear-gradient(135deg,var(--R),#8B0000);padding:20px 22px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between}
 .modal-top::after{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,0.06);border-radius:50%}
@@ -87,8 +87,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .mt-info .mt-plan{font-size:13px;color:rgba(255,255,255,0.65);margin-top:3px}
 .mt-amount{font-family:'Bebas Neue',sans-serif;font-size:44px;color:#fff;letter-spacing:1px;line-height:1;position:relative;z-index:1}
 
-.modal-body{padding:18px 20px 20px}
-.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px}
+.modal-body{padding:16px 20px 28px}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
 .meta-cell{background:var(--g2);border-radius:10px;padding:11px}
 .mc-l{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--M);font-family:'DM Mono',monospace;margin-bottom:3px}
 .mc-v{font-size:14px;font-weight:600;color:var(--T)}
@@ -109,10 +109,10 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
 .modal-err{background:var(--Rb);border:1px solid rgba(204,0,0,0.2);border-radius:8px;padding:9px 11px;font-size:12px;color:#ff7070;margin-bottom:12px;display:none}
 .modal-err.show{display:block}
-.modal-btns{display:flex;gap:9px}
-.btn-ghost{flex:1;padding:12px;background:transparent;border:1px solid var(--line);border-radius:10px;color:var(--M);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all .2s}
-.btn-ghost:hover{color:var(--T);border-color:rgba(255,255,255,0.15)}
-.btn-red{flex:2;padding:12px;background:var(--R);border:none;border-radius:10px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.modal-btns{display:flex;gap:10px;margin-top:4px}
+.btn-ghost{flex:1;padding:14px 12px;background:var(--g2);border:1px solid var(--line);border-radius:12px;color:var(--T);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.2);background:var(--g3)}
+.btn-red{flex:2;padding:14px 12px;background:var(--R);border:none;border-radius:12px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 18px rgba(204,0,0,0.3)}
 .btn-red:hover:not(:disabled){background:#a80000}
 .btn-red:disabled{opacity:.45;cursor:not-allowed}
 
