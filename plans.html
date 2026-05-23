@@ -101,12 +101,13 @@ import{ref,get,update,push}from"https://www.gstatic.com/firebasejs/10.7.0/fireba
 import{auth,database}from"./lib/firebase.js";
 
 /* ── PLAN DEFINITIONS ── */
+// earnings: [min_daily, max_daily] shown on card; income_pct used in modal for live calc
 const P={
-  starter: {name:'Starter', min:200,   max:500,   recs:[200,300,500],   rec:'Great for beginners',      income_pct:.25, dur:'30 days'},
-  bronze:  {name:'Bronze',  min:500,   max:700,   recs:[500,600,700],   rec:'Most popular choice',      income_pct:.25, dur:'30 days'},
-  silver:  {name:'Silver',  min:700,   max:1500,  recs:[700,1000,1500], rec:'Steady mid-range returns',  income_pct:.25, dur:'30 days'},
-  gold:    {name:'Gold',    min:1500,  max:4000,  recs:[1500,2500,4000],rec:'Best value for growth',    income_pct:.25, dur:'30 days', featured:1,badge:'Best Value',goldBadge:1},
-  platinum:{name:'Platinum',min:4000,  max:10000, recs:[4000,7000,10000],rec:'Elite high-yield tier',   income_pct:.25, dur:'30 days', badge:'Elite'},
+  starter: {name:'Starter', min:200,  max:500,   recs:[200,300,500],    rec:'Great for beginners',      earnings:[15,20],   income_pct:.07,  dur:'30 days'},
+  bronze:  {name:'Bronze',  min:500,  max:700,   recs:[500,600,700],    rec:'Most popular choice',      earnings:[40,55],   income_pct:.08,  dur:'30 days'},
+  silver:  {name:'Silver',  min:700,  max:1500,  recs:[700,1000,1500],  rec:'Steady mid-range returns', earnings:[60,90],   income_pct:.09,  dur:'30 days'},
+  gold:    {name:'Gold',    min:1500, max:4000,  recs:[1500,2500,4000], rec:'Best value for growth',    earnings:[120,200], income_pct:.10,  dur:'30 days', featured:1,badge:'Best Value',goldBadge:1},
+  platinum:{name:'Platinum',min:4000, max:10000, recs:[4000,7000,10000],rec:'Elite high-yield tier',    earnings:[300,600], income_pct:.115, dur:'30 days', badge:'Elite'},
 };
 const planOrder=['starter','bronze','silver','gold','platinum'];
 const badges={starter:'Beginner',bronze:'Popular',gold:'Best Value',platinum:'Elite'};
@@ -137,7 +138,7 @@ const render=()=>{
       <div class="card-body">
         <div class="cost-label">Investment Range</div>
         <div class="cost-range"><span>${fmtShort(c.min)}</span> — <span>${fmtShort(c.max)}</span></div>
-        <div class="daily-row"><i class="fas fa-coins"></i><span>Daily Income</span><strong>25% of amount</strong></div>
+        <div class="daily-row"><i class="fas fa-coins"></i><span>Daily Income</span><strong>~$${c.earnings[0]}–$${c.earnings[1]}/day</strong></div>
         <div class="rec-tag"><i class="fas fa-star"></i>${c.rec}</div>
         <div class="divider"></div>
         <div class="feat-list">
@@ -179,6 +180,7 @@ function openPlan(id){
       recs:plan.recs,
       rec:plan.rec,
       income_pct:plan.income_pct,
+      earnings:plan.earnings,
       dur:plan.dur
     },
     balance:bal,

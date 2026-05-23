@@ -300,10 +300,9 @@ const invModal=$('invModal'),imInput=$('im_input'),imErr=$('im_err'),imBtn=$('im
 
 function openInvestModal(d){
   sel=d.plan; sel._id=d.planId; bal=d.balance||0; uid=d.uid;
-  const ex=Math.round(sel.min*sel.income_pct);
   $('im_amount').textContent=fmtS(sel.min)+' – '+fmtS(sel.max);
   $('im_plan').textContent=sel.name+' Plan';
-  $('im_daily').textContent=`~${fmt(ex)} / day`;
+  $('im_daily').textContent=`~$${sel.earnings[0]}–$${sel.earnings[1]} / day`;
   $('im_dur').textContent=sel.dur;
   $('im_range_hint').textContent=`Min ${fmt(sel.min)} — Max ${fmt(sel.max)}`;
   $('im_rec_hint').textContent='★ Recommended: '+fmtS(sel.recs[1]);
@@ -319,7 +318,7 @@ function openInvestModal(d){
   invModal.classList.add('open');
 }
 const closeInv=()=>invModal.classList.remove('open');
-const updateAmt=()=>{const v=+imInput.value;if(v>=sel.min&&v<=sel.max)$('im_daily').textContent=fmt(Math.round(v*sel.income_pct))+' / day'};
+const updateAmt=()=>{const v=+imInput.value;if(v>=sel.min&&v<=sel.max)$('im_daily').textContent='~'+fmt(Math.round(v*sel.income_pct))+' / day';else if(!v)$('im_daily').textContent=`~$${sel.earnings[0]}–$${sel.earnings[1]} / day`};
 const showErr=m=>{imErr.textContent=m;imErr.classList.add('show')};
 
 imInput.addEventListener('input',updateAmt);
