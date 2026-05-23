@@ -546,7 +546,7 @@
         await signInWithEmailAndPassword(auth, email, password);
         sucMsg.textContent = '✅ Login successful! Redirecting...';
         sucMsg.classList.add('show');
-        setTimeout(() => window.location.href = '/dashboard.html', 1500);
+        setTimeout(() => window.location.href = '/invest', 1500);
       } catch (error) {
         let msg = 'Login failed. Please try again.';
         if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential')
