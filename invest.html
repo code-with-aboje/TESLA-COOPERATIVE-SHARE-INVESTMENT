@@ -40,29 +40,29 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   background:var(--bg2);
   border-bottom:1px solid var(--border2);
   box-shadow:0 2px 12px rgba(0,0,0,.5);
-  padding:0 16px;
-  display:grid;
-  grid-template-columns:auto 1fr auto;
+  padding:0;
+  display:flex;
   align-items:stretch;
+  width:100%;
 }
 
 /* Brand — left, only on dashboard */
 .tn-brand{
   display:flex;align-items:center;gap:10px;
-  padding-right:16px;align-self:center;
+  padding:0 16px;flex-shrink:0;
 }
-.tn-brand.hidden{visibility:hidden}
+.tn-brand.hidden{visibility:hidden;width:0;padding:0;overflow:hidden}
 .tn-logo svg{width:28px;height:28px;filter:drop-shadow(0 0 8px rgba(232,25,44,.6))}
 .tn-name{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:17px;letter-spacing:2.5px;text-transform:uppercase;white-space:nowrap}
 .tn-name span{color:var(--red)}
 
 /* Tab strip */
-.tn-pills{display:flex;align-items:stretch;height:100%}
+.tn-pills{display:flex;align-items:stretch;height:100%;flex:1;justify-content:center}
 .tn-item{
   position:relative;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:4px;
-  min-width:90px;padding:0 18px;height:100%;
+  flex:1;max-width:120px;padding:0;height:100%;
   cursor:pointer;color:var(--txt2);
   text-decoration:none;transition:.15s;
   border-top:3px solid transparent;
@@ -76,7 +76,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .tn-item.active i,.tn-item.active span{color:var(--red)}
 
 /* Right utilities */
-.tn-right{display:flex;align-items:center;justify-content:flex-end;gap:8px;align-self:center;padding-left:16px}
+.tn-right{display:flex;align-items:center;justify-content:flex-end;padding:0 12px;flex-shrink:0}
 .tn-bell{position:relative;width:36px;height:36px;border-radius:50%;background:var(--glass2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--txt2);font-size:14px;transition:.15s}
 .tn-bell:hover{background:rgba(232,25,44,.1);border-color:var(--border);color:var(--txt)}
 .tn-badge{position:absolute;top:5px;right:5px;width:8px;height:8px;background:var(--red);border-radius:50%;border:2px solid var(--bg2)}
@@ -144,9 +144,9 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .sb-item.active i{color:var(--red)}
 
 /* RESPONSIVE */
-@media(max-width:960px){.tn-item{min-width:72px;padding:0 12px}}
-@media(max-width:768px){.sidebar{display:none}.tn-item{min-width:60px;padding:0 8px}.chat-btn{bottom:20px;right:16px;width:46px;height:46px;font-size:18px}}
-@media(max-width:520px){.tn-bell{display:none}.top-nav{padding:0 8px}.tn-brand{display:none}.tn-item{min-width:50px;padding:0 6px}.tn-item i{font-size:20px}.tn-item span{font-size:10px}}
+@media(max-width:960px){.tn-item{max-width:100px}}
+@media(max-width:768px){.sidebar{display:none}.tn-item i{font-size:22px}.chat-btn{bottom:20px;right:16px;width:46px;height:46px;font-size:18px}}
+@media(max-width:520px){.tn-bell{display:none}.tn-right{padding:0}.tn-brand{display:none}.tn-item i{font-size:20px}.tn-item span{font-size:10px}}
 </style>
 </head>
 <body>
