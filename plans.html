@@ -7,154 +7,187 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--R:#CC0000;--Rg:rgba(204,0,0,0.15);--Rb:rgba(204,0,0,0.06);--bg:#080808;--g1:#0f0f0f;--g2:#161616;--g3:#1e1e1e;--line:rgba(255,255,255,0.06);--T:#f5f5f5;--M:#888;--dim:#444;--gold:#C9A84C;--green:#22c55e}
+:root{
+  --R:#CC0000;--Rg:rgba(204,0,0,0.15);--Rb:rgba(204,0,0,0.06);
+  --bg:#111318;--g1:#1a1d24;--g2:#21252e;--g3:#2a2f3a;
+  --line:rgba(255,255,255,0.10);--T:#f5f5f5;--M:#9aa3b0;--dim:#555;
+  --gold:#C9A84C;--green:#22c55e;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--T);min-height:100vh;padding-bottom:120px;overflow-x:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--T);min-height:100vh;padding-bottom:100px;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
 
 /* HERO */
-.hero{position:relative;z-index:1;background:var(--g1);border-bottom:1px solid var(--line);padding:28px 24px 24px;overflow:hidden}
+.hero{position:relative;z-index:1;background:var(--g1);border-bottom:1px solid var(--line);padding:28px 20px 22px;overflow:hidden}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--R),transparent 60%)}
 .hero-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--R);text-transform:uppercase;margin-bottom:8px}
-.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,11vw,80px);letter-spacing:2px;line-height:.85;margin-bottom:16px}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,10vw,76px);letter-spacing:2px;line-height:.88;margin-bottom:16px}
 .hero-title span{color:var(--R)}
-.hero-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.balance-block{display:flex;align-items:center;gap:16px}
-.bal-inner{background:var(--g2);border:1px solid var(--line);border-radius:12px;padding:12px 18px}
-.bal-l{font-size:10px;letter-spacing:2px;color:var(--M);text-transform:uppercase;margin-bottom:4px}
-.bal-v{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--green);letter-spacing:1px}
-.banner{display:none;align-items:center;gap:8px;background:var(--Rb);border:1px solid rgba(204,0,0,0.2);border-radius:8px;padding:8px 12px;font-size:12px;color:#ff7070}
+.bal-inner{display:inline-flex;flex-direction:column;background:var(--g2);border:1px solid var(--line);border-radius:12px;padding:10px 16px}
+.bal-l{font-size:10px;letter-spacing:2px;color:var(--M);text-transform:uppercase;margin-bottom:3px}
+.bal-v{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--green);letter-spacing:1px}
+.banner{display:none;align-items:center;gap:8px;border-radius:8px;padding:8px 12px;font-size:12px;margin-top:10px}
 .banner.show{display:flex}
-.banner-warn{background:rgba(201,168,76,0.07);border-color:rgba(201,168,76,0.2);color:var(--gold)}
-.banner-info{background:rgba(255,255,255,0.03);border-color:var(--line);color:var(--M);display:flex}
+.banner-err{background:var(--Rb);border:1px solid rgba(204,0,0,0.2);color:#ff7070}
+.banner-warn{background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);color:var(--gold)}
 
-/* PLAN GRID */
-.plans-wrap{position:relative;z-index:1;padding:24px}
-.grid-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--M);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.grid-label::after{content:'';flex:1;height:1px;background:var(--line)}
-.plans-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+/* PLANS */
+.plans-wrap{position:relative;z-index:1;padding:20px}
+.section-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--M);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--line)}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
 
-/* PLAN CARD — totally new layout */
-.plan-card{background:var(--g1);border:1px solid var(--line);border-radius:20px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;position:relative}
+/* CARD */
+.plan-card{background:var(--g1);border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;position:relative}
 .plan-card:hover{transform:translateY(-3px);border-color:rgba(204,0,0,0.4)}
-.plan-card.featured{border-color:rgba(204,0,0,0.3)}
-
-/* colored top band with plan number */
-.card-band{padding:18px 20px 16px;position:relative;display:flex;align-items:flex-start;justify-content:space-between}
-.band-default{background:linear-gradient(135deg,#141414,#1a1a1a)}
-.band-featured{background:linear-gradient(135deg,#1a0000,#200808)}
-.plan-num{font-family:'Bebas Neue',sans-serif;font-size:64px;color:rgba(255,255,255,0.05);line-height:1;position:absolute;right:14px;bottom:-4px;letter-spacing:-2px}
-.plan-tier{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--T)}
-.plan-badge{background:var(--R);color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px;font-family:'DM Mono',monospace}
+.plan-card.featured{border-color:rgba(204,0,0,0.28)}
+.card-band{padding:16px 18px 14px;display:flex;align-items:flex-start;justify-content:space-between;position:relative;overflow:hidden}
+.band-default{background:linear-gradient(135deg,#1e2229,#252b35)}
+.band-featured{background:linear-gradient(135deg,#2a1010,#321515)}
+.plan-num{font-family:'Bebas Neue',sans-serif;font-size:60px;color:rgba(255,255,255,0.05);line-height:1;position:absolute;right:10px;bottom:-6px;letter-spacing:-2px}
+.plan-tier{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:2px}
+.plan-tier-sub{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--M);margin-bottom:3px}
+.plan-badge{background:var(--R);color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px;font-family:'DM Mono',monospace;white-space:nowrap}
 .plan-badge.gold{background:var(--gold);color:#000}
 
-/* card body */
-.card-body{padding:16px 20px 20px;background:var(--g1)}
-.cost-row{display:flex;align-items:baseline;gap:4px;margin-bottom:4px}
-.cost-label{font-size:11px;color:var(--M);text-transform:uppercase;letter-spacing:1.5px;font-family:'DM Mono',monospace}
-.cost-amount{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:1px;color:var(--T)}
+.card-body{padding:14px 18px 18px}
+.cost-label{font-size:10px;letter-spacing:1.5px;color:var(--M);text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:2px}
+.cost-range{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;color:var(--M)}
+.cost-range span{color:var(--T);font-size:22px}
 
-.daily-row{display:flex;align-items:center;gap:8px;background:var(--Rb);border:1px solid rgba(204,0,0,0.18);border-radius:8px;padding:9px 12px;margin:12px 0}
-.daily-row i{color:var(--R);font-size:12px}
-.daily-row span{font-size:13px;color:var(--M)}
-.daily-row strong{font-family:'DM Mono',monospace;color:var(--T);margin-left:auto;font-size:14px}
+.daily-row{display:flex;align-items:center;gap:8px;background:var(--Rb);border:1px solid rgba(204,0,0,0.18);border-radius:8px;padding:8px 11px;margin:10px 0}
+.daily-row i{color:var(--R);font-size:11px}
+.daily-row span{font-size:12px;color:var(--M)}
+.daily-row strong{font-family:'DM Mono',monospace;color:var(--T);margin-left:auto;font-size:13px}
 
-.divider{height:1px;background:var(--line);margin:14px 0}
-.feat-list{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
-.feat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--M)}
-.feat::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--R);flex-shrink:0}
+/* Recommendation tag */
+.rec-tag{font-size:11px;color:var(--M);background:var(--g2);border:1px solid var(--line);border-radius:6px;padding:5px 9px;margin-bottom:10px;line-height:1.5}
+.rec-tag i{color:var(--gold);margin-right:4px;font-size:10px}
 
-.invest-btn{width:100%;padding:13px;background:var(--R);border:none;border-radius:10px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.divider{height:1px;background:var(--line);margin:12px 0}
+.feat-list{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.feat{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--M)}
+.feat::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--R);flex-shrink:0}
+.invest-btn{width:100%;padding:12px;background:var(--R);border:none;border-radius:10px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
 .invest-btn:hover{background:#a80000;box-shadow:0 4px 20px rgba(204,0,0,0.3)}
-.invest-btn:disabled{background:var(--g3);color:var(--dim);cursor:not-allowed;box-shadow:none}
 
-/* MODAL — overlay with centered panel */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;backdrop-filter:blur(6px);padding:20px;align-items:center;justify-content:center}
+/* MODAL OVERLAY */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;backdrop-filter:blur(6px);padding:20px;align-items:flex-end;justify-content:center}
 .overlay.open{display:flex;animation:fadeIn .2s}
+@media(min-width:600px){.overlay{align-items:center}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal-panel{width:100%;max-width:400px;background:var(--g1);border:1px solid var(--line);border-radius:20px;overflow:hidden;animation:slideUp .3s}
-@keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-top{background:linear-gradient(135deg,var(--R),#8B0000);padding:24px;position:relative;overflow:hidden}
-.modal-top::after{content:'';position:absolute;top:-30px;right:-30px;width:130px;height:130px;background:rgba(255,255,255,0.06);border-radius:50%}
-.mt-label{font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:4px;font-family:'DM Mono',monospace}
-.mt-amount{font-family:'Bebas Neue',sans-serif;font-size:52px;color:#fff;letter-spacing:1px;line-height:1}
-.mt-plan{font-size:14px;color:rgba(255,255,255,0.7);margin-top:6px}
-.modal-body{padding:20px}
-.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
-.meta-cell{background:var(--g2);border-radius:10px;padding:12px}
-.mc-l{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--M);font-family:'DM Mono',monospace;margin-bottom:4px}
-.mc-v{font-size:15px;font-weight:600;color:var(--T)}
-.modal-err{background:var(--Rb);border:1px solid rgba(204,0,0,0.2);border-radius:8px;padding:10px 12px;font-size:12px;color:#ff7070;margin-bottom:14px;display:none}
+
+.modal-panel{width:100%;max-width:420px;background:var(--g1);border:1px solid var(--line);border-radius:20px 20px 0 0;overflow:hidden;animation:slideUp .28s}
+@media(min-width:600px){.modal-panel{border-radius:20px}}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.modal-top{background:linear-gradient(135deg,var(--R),#8B0000);padding:20px 22px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between}
+.modal-top::after{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,0.06);border-radius:50%}
+.mt-info .mt-label{font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.65);text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:2px}
+.mt-info .mt-plan{font-size:13px;color:rgba(255,255,255,0.65);margin-top:3px}
+.mt-amount{font-family:'Bebas Neue',sans-serif;font-size:44px;color:#fff;letter-spacing:1px;line-height:1;position:relative;z-index:1}
+
+.modal-body{padding:18px 20px 20px}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px}
+.meta-cell{background:var(--g2);border-radius:10px;padding:11px}
+.mc-l{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--M);font-family:'DM Mono',monospace;margin-bottom:3px}
+.mc-v{font-size:14px;font-weight:600;color:var(--T)}
+
+/* Amount input */
+.amount-field{margin-bottom:14px}
+.amount-field label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--M);font-family:'DM Mono',monospace;display:block;margin-bottom:7px}
+.amount-input-wrap{position:relative}
+.amount-input-wrap span{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--M)}
+.amount-input{width:100%;padding:12px 12px 12px 30px;background:var(--g2);border:1px solid var(--line);border-radius:10px;color:var(--T);font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;outline:none;transition:border-color .2s}
+.amount-input:focus{border-color:rgba(204,0,0,0.5)}
+.amount-input::placeholder{color:var(--dim)}
+.amount-hint{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--M)}
+.amount-hint .rec{color:var(--gold)}
+.amount-rec-list{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.rec-chip{padding:4px 10px;background:var(--g3);border:1px solid var(--line);border-radius:20px;font-size:11px;font-family:'DM Mono',monospace;color:var(--M);cursor:pointer;transition:all .15s}
+.rec-chip:hover,.rec-chip.active{background:var(--Rg);border-color:rgba(204,0,0,0.35);color:var(--T)}
+
+.modal-err{background:var(--Rb);border:1px solid rgba(204,0,0,0.2);border-radius:8px;padding:9px 11px;font-size:12px;color:#ff7070;margin-bottom:12px;display:none}
 .modal-err.show{display:block}
-.modal-btns{display:flex;gap:10px}
+.modal-btns{display:flex;gap:9px}
 .btn-ghost{flex:1;padding:12px;background:transparent;border:1px solid var(--line);border-radius:10px;color:var(--M);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all .2s}
 .btn-ghost:hover{color:var(--T);border-color:rgba(255,255,255,0.15)}
-.btn-red{flex:2;padding:12px;background:var(--R);border:none;border-radius:10px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-red{flex:2;padding:12px;background:var(--R);border:none;border-radius:10px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
 .btn-red:hover:not(:disabled){background:#a80000}
 .btn-red:disabled{opacity:.45;cursor:not-allowed}
 
 /* WELCOME */
 .welcome-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:600;padding:20px;align-items:center;justify-content:center}
 .welcome-overlay.open{display:flex;animation:fadeIn .3s}
-.welcome-panel{width:100%;max-width:380px;background:var(--g1);border:1px solid rgba(201,168,76,0.3);border-radius:24px;padding:0;overflow:hidden;animation:slideUp .4s}
-.wb-top{background:linear-gradient(135deg,#1a1200,#261a00);padding:32px 24px;text-align:center;border-bottom:1px solid rgba(201,168,76,0.15)}
-.wb-icon{width:64px;height:64px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:var(--gold)}
-.wb-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
-.wb-amount{font-family:'Bebas Neue',sans-serif;font-size:72px;color:var(--gold);line-height:1;letter-spacing:2px}
-.wb-sub{font-size:13px;color:var(--M);margin-top:4px}
-.wb-body{padding:20px 24px}
-.wb-body p{font-size:14px;color:var(--M);line-height:1.6;margin-bottom:16px}
-.btn-gold{width:100%;padding:14px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:all .2s}
+.welcome-panel{width:100%;max-width:370px;background:var(--g1);border:1px solid rgba(201,168,76,0.3);border-radius:22px;overflow:hidden;animation:slideUp .4s}
+.wb-top{background:linear-gradient(135deg,#211a00,#2e2200);padding:28px 22px;text-align:center;border-bottom:1px solid rgba(201,168,76,0.15)}
+.wb-icon{width:60px;height:60px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:26px;color:var(--gold)}
+.wb-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.wb-amount{font-family:'Bebas Neue',sans-serif;font-size:68px;color:var(--gold);line-height:1;letter-spacing:2px}
+.wb-sub{font-size:13px;color:var(--M);margin-top:3px}
+.wb-body{padding:18px 22px}
+.wb-body p{font-size:13px;color:var(--M);line-height:1.6;margin-bottom:14px}
+.btn-gold{width:100%;padding:13px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer}
 .btn-gold:hover{opacity:.9}
 
-.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.15);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
-.spinner-sm{width:12px;height:12px;border-top-color:var(--R);border-color:var(--Rb)}
+.spinner{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,0.15);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.spinner-sm{border-top-color:var(--R);border-color:var(--Rb);width:12px;height:12px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading{text-align:center;padding:60px;color:var(--dim)}
 
-@media(min-width:769px){.hero{padding:40px 40px 28px}.plans-wrap{padding:32px 40px}.cost-amount{font-size:40px}}
-@media(min-width:1024px){.plans-wrap{max-width:1200px;margin:0 auto}.hero{max-width:1200px;margin:0 auto}}
+@media(min-width:769px){.hero{padding:38px 40px 26px}.plans-wrap{padding:28px 40px}}
+@media(min-width:1024px){.hero,.plans-wrap{max-width:1200px;margin:0 auto}}
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-eyebrow">// Investment Plans</div>
   <div class="hero-title">CHOOSE<br><span>YOUR</span> PLAN</div>
-  <div class="hero-row">
-    <div class="balance-block">
-      <div class="bal-inner">
-        <div class="bal-l">Available Balance</div>
-        <div class="bal-v" id="balance"><span class="spinner spinner-sm"></span></div>
-      </div>
-    </div>
-    <div class="banner banner-info" id="infoBanner"><i class="fas fa-info-circle"></i><span>Confirm your plan carefully before investing</span></div>
+  <div class="bal-inner">
+    <div class="bal-l">Available Balance</div>
+    <div class="bal-v" id="balance"><span class="spinner spinner-sm" style="width:16px;height:16px"></span></div>
   </div>
-  <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
-    <div class="banner" id="errorBanner"><i class="fas fa-times-circle"></i><span id="errorMsg"></span></div>
-    <div class="banner banner-warn" id="warningBanner"><i class="fas fa-exclamation-triangle"></i><span id="warningMsg"></span></div>
-  </div>
+  <div class="banner banner-err" id="errorBanner"><i class="fas fa-times-circle"></i>&nbsp;<span id="errorMsg"></span></div>
+  <div class="banner banner-warn" id="warningBanner"><i class="fas fa-exclamation-triangle"></i>&nbsp;<span id="warningMsg"></span></div>
 </div>
 
+<!-- PLANS -->
 <div class="plans-wrap">
-  <div class="grid-label">// Select a Plan <span></span></div>
-  <div id="loader" class="loading" style="display:none"><span class="spinner spinner-sm" style="width:20px;height:20px"></span><div style="margin-top:12px;font-size:13px">Loading plans…</div></div>
+  <div class="section-label">// Select a Plan</div>
   <div class="plans-grid" id="grid"></div>
 </div>
 
-<!-- CONFIRM MODAL -->
+<!-- INVEST MODAL -->
 <div class="overlay" id="modal">
   <div class="modal-panel">
     <div class="modal-top">
-      <div class="mt-label">Investment Amount</div>
-      <div class="mt-amount" id="m_amount"></div>
-      <div class="mt-plan" id="m_plan"></div>
+      <div class="mt-info">
+        <div class="mt-label">Investing in</div>
+        <div class="mt-amount" id="m_amount">—</div>
+        <div class="mt-plan" id="m_plan"></div>
+      </div>
     </div>
     <div class="modal-body">
       <div class="meta-grid">
         <div class="meta-cell"><div class="mc-l">Daily Income</div><div class="mc-v" id="m_daily"></div></div>
         <div class="meta-cell"><div class="mc-l">Duration</div><div class="mc-v" id="m_dur"></div></div>
       </div>
+
+      <!-- Amount input -->
+      <div class="amount-field">
+        <label>Enter Amount</label>
+        <div class="amount-input-wrap">
+          <span>$</span>
+          <input class="amount-input" id="m_input" type="number" placeholder="0">
+        </div>
+        <div class="amount-hint">
+          <span id="m_range_hint">Min — Max</span>
+          <span class="rec" id="m_rec_hint"></span>
+        </div>
+        <div class="amount-rec-list" id="m_chips"></div>
+      </div>
+
       <div class="modal-err" id="m_err"></div>
       <div class="modal-btns">
         <button class="btn-ghost" onclick="closeModal()">Cancel</button>
@@ -170,11 +203,11 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
     <div class="wb-top">
       <div class="wb-icon"><i class="fas fa-gift"></i></div>
       <div class="wb-eyebrow">// Welcome Bonus</div>
-      <div class="wb-amount">₦1K</div>
+      <div class="wb-amount">$1K</div>
       <div class="wb-sub">credited to your balance</div>
     </div>
     <div class="wb-body">
-      <p>Congratulations on your first investment! We've added a ₦1,000 welcome bonus to your account. Your journey to financial growth starts now.</p>
+      <p>Congratulations on your first investment! We've added a $1,000 welcome bonus to your account. Your journey to financial growth starts now.</p>
       <button class="btn-gold" onclick="closeWelcome()"><i class="fas fa-check"></i> AWESOME, THANKS!</button>
     </div>
   </div>
@@ -185,34 +218,47 @@ import{onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.7.0/firebas
 import{ref,get,update,push}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 import{auth,database}from"./lib/firebase.js";
 
-const P={starter:{cost:3000,income:750,dur:'30 days'},bronze:{cost:6000,income:1500,dur:'30 days'},silver:{cost:10000,income:2500,dur:'30 days'},gold:{cost:15000,income:4750,dur:'30 days'},platinum:{cost:25000,income:7000,dur:'30 days'}};
-const plans=[{id:'starter',name:'Starter',tier:'01',badge:'Beginner'},{id:'bronze',name:'Bronze',tier:'02',featured:1,badge:'Popular'},{id:'silver',name:'Silver',tier:'03'},{id:'gold',name:'Gold',tier:'04',featured:1,badge:'Best Value',goldBadge:1},{id:'platinum',name:'Platinum',tier:'05',badge:'Elite'}];
-let user,bal=0,sel,init=0,userData={};
-const fmt=n=>`₦${n.toLocaleString('en-NG',{minimumFractionDigits:2})}`;
-const showErr=m=>{document.getElementById('errorMsg').textContent=m;document.getElementById('errorBanner').classList.add('show')};
-const showWarn=m=>{document.getElementById('warningMsg').textContent=m;document.getElementById('warningBanner').classList.add('show')};
-const hideWarn=()=>document.getElementById('warningBanner').classList.remove('show');
-window.closeWelcome=()=>{document.getElementById('welcomeModal').classList.remove('open');document.body.style.overflow='';};
+/* ── PLAN DEFINITIONS ── */
+const P={
+  starter: {name:'Starter', min:200,   max:500,   recs:[200,300,500],   rec:'Great for beginners',     income_pct:.25, dur:'30 days'},
+  bronze:  {name:'Bronze',  min:500,   max:700,   recs:[500,600,700],   rec:'Most popular choice',     income_pct:.25, dur:'30 days'},
+  silver:  {name:'Silver',  min:700,   max:1500,  recs:[700,1000,1500], rec:'Steady mid-range returns', income_pct:.25, dur:'30 days'},
+  gold:    {name:'Gold',    min:1500,  max:4000,  recs:[1500,2500,4000],rec:'Best value for growth',   income_pct:.25, dur:'30 days', featured:1,badge:'Best Value',goldBadge:1},
+  platinum:{name:'Platinum',min:4000,  max:10000, recs:[4000,7000,10000],rec:'Elite high-yield tier',  income_pct:.25, dur:'30 days', badge:'Elite'},
+};
+const planOrder=['starter','bronze','silver','gold','platinum'];
+const badges={starter:'Beginner',bronze:'Popular',gold:'Best Value',platinum:'Elite'};
+const fmt=n=>`$${Number(n).toLocaleString('en-US',{minimumFractionDigits:2})}`;
+const fmtShort=n=>n>=1000?`$${n/1000}K`:`$${n}`;
 
+let user,bal=0,sel=null,userData={};
+
+const el=id=>document.getElementById(id);
+const showErr=m=>{el('errorMsg').textContent=m;el('errorBanner').classList.add('show')};
+const showWarn=m=>{el('warningMsg').textContent=m;el('warningBanner').classList.add('show')};
+window.closeWelcome=()=>{el('welcomeModal').classList.remove('open');document.body.style.overflow=''};
+window.closeModal=()=>el('modal').classList.remove('open');
+
+/* ── RENDER CARDS ── */
 const render=()=>{
-  const g=document.getElementById('grid');g.innerHTML='';
-  plans.forEach(p=>{
-    const c=P[p.id];
+  const g=el('grid');g.innerHTML='';
+  planOrder.forEach((id,i)=>{
+    const c=P[id];
+    const num=String(i+1).padStart(2,'0');
+    const badge=c.badge||badges[id]||'';
     const card=document.createElement('div');
-    card.className=`plan-card${p.featured?' featured':''}`;
+    card.className='plan-card'+(c.featured?' featured':'');
     card.innerHTML=`
-      <div class="card-band ${p.featured?'band-featured':'band-default'}">
-        <div>
-          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--M);margin-bottom:4px">${p.tier}</div>
-          <div class="plan-tier">${p.name}</div>
-        </div>
-        ${p.badge?`<span class="plan-badge${p.goldBadge?' gold':''}">${p.badge}</span>`:''}
-        <div class="plan-num">${p.tier}</div>
+      <div class="card-band ${c.featured?'band-featured':'band-default'}">
+        <div><div class="plan-tier-sub">${num}</div><div class="plan-tier">${c.name}</div></div>
+        ${badge?`<span class="plan-badge${c.goldBadge?' gold':''}">${badge}</span>`:''}
+        <div class="plan-num">${num}</div>
       </div>
       <div class="card-body">
-        <div style="font-size:10px;letter-spacing:1.5px;color:var(--M);text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:4px">Investment</div>
-        <div class="cost-amount">${fmt(c.cost)}</div>
-        <div class="daily-row"><i class="fas fa-coins"></i><span>Daily Income</span><strong>${fmt(c.income)}</strong></div>
+        <div class="cost-label">Investment Range</div>
+        <div class="cost-range"><span>${fmtShort(c.min)}</span> — <span>${fmtShort(c.max)}</span></div>
+        <div class="daily-row"><i class="fas fa-coins"></i><span>Daily Income</span><strong>25% of amount</strong></div>
+        <div class="rec-tag"><i class="fas fa-star"></i>${c.rec}</div>
         <div class="divider"></div>
         <div class="feat-list">
           <div class="feat">Duration: ${c.dur}</div>
@@ -220,59 +266,103 @@ const render=()=>{
           <div class="feat">Auto-completes at maturity</div>
           <div class="feat">24/7 Support</div>
         </div>
-        <button class="invest-btn" onclick="openPlan('${p.id}')"><i class="fas fa-rocket"></i> INVEST NOW</button>
+        <button class="invest-btn" onclick="openPlan('${id}')"><i class="fas fa-rocket"></i> INVEST NOW</button>
       </div>`;
     g.appendChild(card);
   });
 };
 
+/* ── AUTH ── */
 onAuthStateChanged(auth,async u=>{
-  if(!u){showWarn('Not logged in.');document.getElementById('balance').textContent='₦0.00';user=null;bal=0;init=1;render();return;}
-  hideWarn();user=u;
+  if(!u){showWarn('Not logged in.');el('balance').textContent='$0.00';user=null;bal=0;render();return;}
+  user=u;
   const s=await get(ref(database,'users/'+u.uid));
-  if(s.exists()){userData=s.val();bal=userData.balance||0;document.getElementById('balance').textContent=fmt(bal);}
-  else{document.getElementById('balance').textContent='₦0.00';bal=0;}
-  init=1;render();
+  if(s.exists()){userData=s.val();bal=userData.balance||0;}
+  el('balance').textContent=fmt(bal);
+  render();
 });
 
+/* ── OPEN MODAL ── */
 window.openPlan=id=>{
-  sel=plans.find(p=>p.id===id);const c=P[id];
-  document.getElementById('m_amount').textContent=fmt(c.cost);
-  document.getElementById('m_plan').textContent=sel.name+' Plan';
-  document.getElementById('m_daily').textContent=fmt(c.income);
-  document.getElementById('m_dur').textContent=c.dur;
-  document.getElementById('m_err').classList.remove('show');
-  document.getElementById('modal').classList.add('open');
+  sel=P[id];sel._id=id;
+  const dailyExample=Math.round(sel.min*sel.income_pct);
+  el('m_plan').textContent=sel.name+' Plan';
+  el('m_amount').textContent=fmtShort(sel.min)+' – '+fmtShort(sel.max);
+  el('m_daily').textContent=`~${fmt(dailyExample)} / day`;
+  el('m_dur').textContent=sel.dur;
+  el('m_range_hint').textContent=`Min ${fmt(sel.min)} — Max ${fmt(sel.max)}`;
+  el('m_rec_hint').textContent='★ Recommended: '+fmtShort(sel.recs[1]);
+  el('m_err').classList.remove('show');
+  // chips
+  const chips=el('m_chips');chips.innerHTML='';
+  sel.recs.forEach(v=>{
+    const btn=document.createElement('button');
+    btn.className='rec-chip';btn.textContent=fmtShort(v);
+    btn.onclick=()=>{
+      el('m_input').value=v;
+      chips.querySelectorAll('.rec-chip').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      updateAmount();
+    };
+    chips.appendChild(btn);
+  });
+  el('m_input').value='';
+  el('modal').classList.add('open');
 };
-window.closeModal=()=>document.getElementById('modal').classList.remove('open');
 
-document.getElementById('m_btn').onclick=async()=>{
-  const c=P[sel.id],btn=document.getElementById('m_btn'),err=document.getElementById('m_err');
+/* live amount display */
+const updateAmount=()=>{
+  const v=Number(el('m_input').value)||0;
+  if(v>=sel.min&&v<=sel.max){
+    const daily=Math.round(v*sel.income_pct);
+    el('m_daily').textContent=fmt(daily)+' / day';
+  }
+};
+el('m_input').addEventListener('input',updateAmount);
+
+/* ── INVEST ── */
+el('m_btn').onclick=async()=>{
+  const amount=Number(el('m_input').value);
+  const err=el('m_err'),btn=el('m_btn');
+  err.classList.remove('show');
   if(!user){err.textContent='Please log in.';err.classList.add('show');return;}
-  if(!init){err.textContent='Firebase not ready.';err.classList.add('show');return;}
-  if(bal<c.cost){err.textContent='Insufficient funds. Please top up your wallet.';err.classList.add('show');return;}
+  if(!amount||amount<sel.min||amount>sel.max){
+    err.textContent=`Enter an amount between ${fmt(sel.min)} and ${fmt(sel.max)}.`;
+    err.classList.add('show');return;
+  }
+  if(bal<amount){err.textContent='Insufficient funds. Please top up your wallet.';err.classList.add('show');return;}
   btn.disabled=1;btn.innerHTML='<span class="spinner"></span>';
   try{
     const now=Date.now(),userRef=ref(database,'users/'+user.uid);
-    const snapshot=await get(userRef),currentData=snapshot.val()||{};
-    const isFirst=!currentData.investments||Object.keys(currentData.investments).length===0;
+    const snap=await get(userRef),cur=snap.val()||{};
+    const isFirst=!cur.investments||Object.keys(cur.investments).length===0;
     const bonus=isFirst?1000:0;
+    const dailyIncome=Math.round(amount*sel.income_pct);
     const invKey=push(ref(database,`users/${user.uid}/investments`)).key;
-    const updates={balance:(bal-c.cost)+bonus,[`investments/${invKey}`]:{planId:sel.id,planName:sel.name,amount:c.cost,dailyIncome:c.income,duration:c.dur,startDate:now,maturityDate:now+(86400000*30),status:'active',totalClaimed:0}};
+    const updates={
+      balance:(bal-amount)+bonus,
+      [`investments/${invKey}`]:{planId:sel._id,planName:sel.name,amount,dailyIncome,duration:sel.dur,startDate:now,maturityDate:now+(86400000*30),status:'active',totalClaimed:0}
+    };
     if(isFirst){updates.firstInvestmentDate=new Date().toISOString();updates.welcomeBonusReceived=true;}
     await update(userRef,updates);
+    // referral
     try{
-      const referredBy=currentData.referredBy;
-      if(referredBy){
-        const l1=await get(ref(database,`users/${referredBy}`));
-        if(l1.exists()){const l1d=l1.val(),l1c=c.cost*.10;await update(ref(database,`users/${referredBy}`),{balance:(l1d.balance||0)+l1c,totalReferralEarnings:(l1d.totalReferralEarnings||0)+l1c});
-          if(l1d.referredBy){const l2=await get(ref(database,`users/${l1d.referredBy}`));if(l2.exists()){const l2d=l2.val(),l2c=c.cost*.20;await update(ref(database,`users/${l1d.referredBy}`),{balance:(l2d.balance||0)+l2c,totalReferralEarnings:(l2d.totalReferralEarnings||0)+l2c});}}
+      const ref2=cur.referredBy;
+      if(ref2){
+        const l1=await get(ref(database,`users/${ref2}`));
+        if(l1.exists()){const l1d=l1.val(),l1c=amount*.10;
+          await update(ref(database,`users/${ref2}`),{balance:(l1d.balance||0)+l1c,totalReferralEarnings:(l1d.totalReferralEarnings||0)+l1c});
+          if(l1d.referredBy){const l2=await get(ref(database,`users/${l1d.referredBy}`));
+            if(l2.exists()){const l2d=l2.val(),l2c=amount*.20;
+              await update(ref(database,`users/${l1d.referredBy}`),{balance:(l2d.balance||0)+l2c,totalReferralEarnings:(l2d.totalReferralEarnings||0)+l2c});}
+          }
         }
       }
     }catch(e){console.error('Referral:',e);}
-    bal=(bal-c.cost)+bonus;document.getElementById('balance').textContent=fmt(bal);
+    bal=(bal-amount)+bonus;
+    el('balance').textContent=fmt(bal);
     closeModal();
-    if(isFirst){setTimeout(()=>{document.getElementById('welcomeModal').classList.add('open');document.body.style.overflow='hidden';},500);}
+    if(isFirst){setTimeout(()=>{el('welcomeModal').classList.add('open');document.body.style.overflow='hidden';},500);}
     else alert('✓ Investment successful!');
   }catch(e){err.textContent='Error: '+e.message;err.classList.add('show');}
   finally{btn.disabled=0;btn.innerHTML='<i class="fas fa-rocket"></i> INVEST NOW';}
