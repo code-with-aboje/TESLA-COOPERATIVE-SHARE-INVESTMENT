@@ -7,35 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{
-  --red:#e8192c;--red2:#c0111f;--red3:#ff3347;
-  --bg:#080a0c;--bg2:#0d1014;--bg3:#12171c;
-  --glass:rgba(232,25,44,0.06);--glass2:rgba(255,255,255,0.04);
-  --border:rgba(232,25,44,0.2);--border2:rgba(255,255,255,0.07);
-  --txt:#f0f2f5;--txt2:#8a9bb0;--txt3:#c5cdd8;
-  --gold:#f0b429;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+:root{--red:#e8192c;--red2:#c0111f;--red3:#ff3347;--bg:#080a0c;--bg2:#0d1014;--bg3:#12171c;--glass:rgba(232,25,44,.06);--glass2:rgba(255,255,255,.04);--border:rgba(232,25,44,.2);--border2:rgba(255,255,255,.07);--txt:#f0f2f5;--txt2:#8a9bb0;--txt3:#c5cdd8;--gold:#f0b429}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
 body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
-
-/* ---- NOISE TEXTURE OVERLAY ---- */
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
-
-/* ---- AMBIENT GLOW ---- */
-.ambient{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(232,25,44,0.12) 0%,transparent 70%);top:-200px;right:-150px;pointer-events:none;z-index:0;animation:pulse 6s ease-in-out infinite}
-.ambient2{position:fixed;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(232,25,44,0.07) 0%,transparent 70%);bottom:-100px;left:-100px;pointer-events:none;z-index:0;animation:pulse 8s ease-in-out infinite reverse}
+.ambient{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(232,25,44,.12) 0%,transparent 70%);top:-200px;right:-150px;pointer-events:none;z-index:0;animation:pulse 6s ease-in-out infinite}
+.ambient2{position:fixed;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(232,25,44,.07) 0%,transparent 70%);bottom:-100px;left:-100px;pointer-events:none;z-index:0;animation:pulse 8s ease-in-out infinite reverse}
 @keyframes pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
-
-/* ---- MAIN LAYOUT ---- */
-main{position:relative;z-index:1;padding:20px 20px 20px;max-width:520px;margin:0 auto}
-@media(min-width:900px){
-  main{max-width:1100px;padding:20px 40px 40px;display:grid;grid-template-columns:300px 1fr;grid-template-rows:auto;gap:24px;align-items:start}
-  .col-left{grid-column:1;display:flex;flex-direction:column;gap:20px}
-  .col-right{grid-column:2;display:flex;flex-direction:column;gap:20px}
-}
-
-/* ---- HERO BALANCE CARD ---- */
+main{position:relative;z-index:1;padding:20px;max-width:520px;margin:0 auto}
+@media(min-width:900px){main{max-width:1100px;padding:20px 40px 40px;display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start}.col-left{grid-column:1;display:flex;flex-direction:column;gap:20px}.col-right{grid-column:2;display:flex;flex-direction:column;gap:20px}}
 .hero-card{position:relative;border-radius:20px;overflow:hidden;padding:28px 24px;background:var(--bg3);border:1px solid var(--border);margin-bottom:20px}
 .hero-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,25,44,.15) 0%,transparent 60%);pointer-events:none}
 .hero-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent)}
@@ -43,17 +23,12 @@ main{position:relative;z-index:1;padding:20px 20px 20px;max-width:520px;margin:0
 .hero-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--txt2);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .hero-label::before{content:'';width:20px;height:1px;background:var(--red)}
 .hero-balance{font-family:'Rajdhani',sans-serif;font-size:46px;font-weight:700;line-height:1;color:var(--txt);letter-spacing:-1px;margin-bottom:4px}
-.hero-available{font-size:12px;color:var(--txt2);margin-bottom:24px}
-.hero-available span{color:var(--red3);font-weight:600}
+.hero-available{font-size:12px;color:var(--txt2);margin-bottom:24px}.hero-available span{color:var(--red3);font-weight:600}
 .hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .hero-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border:none;transition:.2s}
-.hero-btn-primary{background:var(--red);color:#fff}
-.hero-btn-primary:hover{background:var(--red3);transform:translateY(-1px)}
-.hero-btn-secondary{background:var(--glass2);color:var(--txt3);border:1px solid var(--border2)}
-.hero-btn-secondary:hover{border-color:var(--border);color:var(--txt);transform:translateY(-1px)}
+.hero-btn-primary{background:var(--red);color:#fff}.hero-btn-primary:hover{background:var(--red3);transform:translateY(-1px)}
+.hero-btn-secondary{background:var(--glass2);color:var(--txt3);border:1px solid var(--border2)}.hero-btn-secondary:hover{border-color:var(--border);color:var(--txt);transform:translateY(-1px)}
 .hero-id{position:absolute;bottom:16px;right:20px;font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:2px;color:var(--txt2);opacity:.5}
-
-/* ---- STAT CARDS ---- */
 .stats-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .stat-card{background:var(--bg3);border:1px solid var(--border2);border-radius:14px;padding:18px 16px;position:relative;overflow:hidden;transition:.2s}
 .stat-card:hover{border-color:var(--border);transform:translateY(-2px)}
@@ -62,16 +37,11 @@ main{position:relative;z-index:1;padding:20px 20px 20px;max-width:520px;margin:0
 .stat-icon{width:32px;height:32px;border-radius:8px;background:rgba(232,25,44,.1);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:13px;margin-bottom:12px}
 .stat-lbl{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--txt2);font-weight:600;margin-bottom:6px}
 .stat-val{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--txt);line-height:1}
-.stat-sub{font-size:10px;color:var(--txt2);margin-top:4px}
-.stat-sub.good{color:#22c55e}
-
-/* ---- SECTION HEADER ---- */
+.stat-sub{font-size:10px;color:var(--txt2);margin-top:4px}.stat-sub.good{color:#22c55e}
 .sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .sec-title{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt);display:flex;align-items:center;gap:8px}
 .sec-title i{color:var(--red);font-size:13px}
 .sec-link{font-size:10px;letter-spacing:1px;color:var(--red);text-transform:uppercase;font-weight:600;cursor:pointer;text-decoration:none}
-
-/* ---- PENDING CLAIM CARD ---- */
 .claim-card{background:linear-gradient(135deg,rgba(232,25,44,.12),rgba(192,17,31,.05));border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;position:relative;overflow:hidden}
 .claim-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent)}
 .claim-amount-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px}
@@ -80,8 +50,6 @@ main{position:relative;z-index:1;padding:20px 20px 20px;max-width:520px;margin:0
 .claim-btn:hover:not(:disabled){background:var(--red3);transform:translateY(-1px);box-shadow:0 8px 24px rgba(232,25,44,.3)}
 .claim-btn:disabled{opacity:.4;cursor:not-allowed}
 .claim-timer{font-size:10px;color:var(--gold);text-align:center;margin-top:8px;letter-spacing:.5px}
-
-/* ---- PLAN ITEMS ---- */
 .plan-card{background:var(--bg3);border:1px solid var(--border2);border-radius:14px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden;transition:.2s}
 .plan-card:hover{border-color:var(--border)}
 .plan-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--red);border-radius:0 2px 2px 0}
@@ -92,11 +60,9 @@ main{position:relative;z-index:1;padding:20px 20px 20px;max-width:520px;margin:0
 .plan-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;animation:blink 2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .plan-earn-btn{width:100%;padding:10px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--border);background:var(--glass);color:var(--txt3);cursor:pointer;transition:.2s}
-.plan-earn-btn:not(:disabled):hover{background:rgba(232,25,44,.1);border-color:var(--border);color:var(--txt)}
+.plan-earn-btn:not(:disabled):hover{background:rgba(232,25,44,.1);color:var(--txt)}
 .plan-earn-btn:disabled{opacity:.35;cursor:not-allowed}
 .plan-earn-btn.claimable{background:rgba(232,25,44,.1);border-color:var(--border);color:var(--red3)}
-
-/* ---- REFERRAL CARD ---- */
 .ref-card{background:var(--bg3);border:1px solid var(--border2);border-radius:16px;padding:20px;margin-bottom:20px}
 .ref-code-box{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin:14px 0}
 .ref-code{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;letter-spacing:4px;color:var(--txt)}
@@ -112,11 +78,8 @@ main{position:relative;z-index:1;padding:20px 20px 20px;max-width:520px;margin:0
 .ref-commission strong{color:var(--red3)}
 .ref-lvl{display:inline-block;background:rgba(232,25,44,.15);color:var(--red3);padding:1px 7px;border-radius:4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:4px}
 .ref-member{background:var(--bg2);border-radius:8px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;margin-top:6px;border:1px solid var(--border2)}
-.ref-member-name{font-size:12px;font-weight:600;color:var(--txt)}
-.ref-member-date{font-size:10px;color:var(--txt2);margin-top:2px}
+.ref-member-name{font-size:12px;font-weight:600;color:var(--txt)}.ref-member-date{font-size:10px;color:var(--txt2);margin-top:2px}
 .ref-member-earned{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--txt)}
-
-/* ---- MODAL ---- */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;backdrop-filter:blur(8px);padding:20px;align-items:flex-end;justify-content:center}
 @media(min-width:600px){.modal{align-items:center}}
 .modal.active{display:flex}
@@ -126,16 +89,20 @@ main{position:relative;z-index:1;padding:20px 20px 20px;max-width:520px;margin:0
 .modal-drag{width:40px;height:3px;background:var(--border2);border-radius:99px;margin:0 auto 20px;display:block}
 @media(min-width:600px){.modal-drag{display:none}}
 .modal-title{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;letter-spacing:1px;margin-bottom:4px}
-.modal-sub{font-size:11px;color:var(--txt2);margin-bottom:20px;letter-spacing:.3px}
+.modal-sub{font-size:11px;color:var(--txt2);margin-bottom:20px}
 .modal-close{position:absolute;top:20px;right:20px;width:32px;height:32px;border-radius:8px;background:var(--glass2);border:1px solid var(--border2);color:var(--txt2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
 .modal-close:hover{color:var(--txt);border-color:var(--border)}
-.bank-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:18px}
-.bank-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border2)}
-.bank-row:last-child{border:0;padding-bottom:0}
+.pay-method-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:18px}
+.pay-method-row{padding:10px 0;border-bottom:1px solid var(--border2);cursor:pointer;transition:.2s}
+.pay-method-row:last-child{border:0;padding-bottom:0}
+.pay-method-row:hover{color:var(--red3)}
+.pay-method-row.selected{color:var(--red3)}
+.pm-type{font-size:9px;letter-spacing:2px;color:var(--txt2);font-weight:600;text-transform:uppercase;margin-bottom:3px}
+.pm-name{font-size:14px;font-weight:700}
+.pm-acct{font-size:12px;color:var(--txt2);margin-top:2px;font-family:monospace}
+.pm-copy{float:right;padding:4px 10px;background:var(--red);color:#fff;border:none;border-radius:5px;font-size:10px;font-weight:700;cursor:pointer}
 .bank-lbl{font-size:9px;letter-spacing:2px;color:var(--txt2);font-weight:600;text-transform:uppercase;margin-bottom:3px}
 .bank-val{font-size:13px;font-weight:700;color:var(--txt)}
-.bank-copy{padding:5px 11px;background:var(--red);color:#fff;border:none;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:.2s}
-.bank-copy:hover{background:var(--red3)}
 .inp-lbl{font-size:9px;letter-spacing:2px;color:var(--txt2);font-weight:600;text-transform:uppercase;margin-bottom:7px;display:block}
 .inp-field{width:100%;padding:12px 14px;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;font-family:'Exo 2',sans-serif;font-size:14px;color:var(--txt);outline:none;transition:.2s;margin-bottom:14px}
 .inp-field:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(232,25,44,.1)}
@@ -151,67 +118,35 @@ main{position:relative;z-index:1;padding:20px 20px 20px;max-width:520px;margin:0
 .upload-ok{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:10px;padding:14px;text-align:center;display:none;margin-bottom:14px}
 .upload-ok-icon{color:#22c55e;font-size:24px;margin-bottom:6px}
 .upload-ok-txt{color:#22c55e;font-size:12px;font-weight:600}
-
-/* ---- SPINNER ---- */
+.wa-contact-btn{width:100%;margin-top:10px;padding:12px;background:#25D366;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.wa-contact-btn:hover{background:#1da851}
+.no-methods{background:rgba(232,25,44,.06);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;font-size:12px;color:var(--txt2);margin-bottom:18px}
 .spin{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,.2);border-top-color:var(--red);border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-
-/* ---- WELCOME ---- */
 .welcome{margin-bottom:16px}
 .welcome-greeting{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--txt2);font-weight:600;margin-bottom:4px}
 .welcome-name{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;line-height:1.1}
 .welcome-name span{color:var(--red)}
 .welcome-date{font-size:11px;color:var(--txt2);margin-top:3px}
-
-/* ---- EMPTY STATE ---- */
 .empty{text-align:center;padding:30px 20px;color:var(--txt2)}
 .empty i{font-size:28px;color:var(--border);margin-bottom:10px;display:block}
 .empty-txt{font-size:12px;letter-spacing:.5px}
-
-/* ---- MOBILE SPECIFIC ---- */
-@media(max-width:899px){
-  main{padding:16px 16px 20px}
-  .hero-balance{font-size:38px}
-}
-
-/* ---- SCROLL ANIMATIONS ---- */
 .fade-up{opacity:0;transform:translateY(16px);animation:fadeUp .5s ease forwards}
-.fade-up:nth-child(1){animation-delay:.05s}
-.fade-up:nth-child(2){animation-delay:.1s}
-.fade-up:nth-child(3){animation-delay:.15s}
-.fade-up:nth-child(4){animation-delay:.2s}
+.fade-up:nth-child(1){animation-delay:.05s}.fade-up:nth-child(2){animation-delay:.1s}.fade-up:nth-child(3){animation-delay:.15s}.fade-up:nth-child(4){animation-delay:.2s}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-
-/* ---- PC SIDEBAR HIDDEN ELEMENTS ---- */
-@media(min-width:900px){
-  .mobile-only{display:none!important}
-  .col-left .hero-card{margin-bottom:0}
-  .col-left .stats-row{margin-bottom:0}
-  .col-left .ref-card{margin-bottom:0}
-}
-@media(max-width:899px){
-  .desktop-only{display:none!important}
-  .col-left,.col-right{display:contents}
-}
+@media(min-width:900px){.mobile-only{display:none!important}.col-left .hero-card{margin-bottom:0}.col-left .stats-row{margin-bottom:0}.col-left .ref-card{margin-bottom:0}}
+@media(max-width:899px){.desktop-only{display:none!important}.col-left,.col-right{display:contents}}
 </style>
 </head>
 <body>
-<div class="ambient"></div>
-<div class="ambient2"></div>
-
-
-<!-- MAIN -->
+<div class="ambient"></div><div class="ambient2"></div>
 <main>
-  <!-- LEFT COLUMN -->
   <div class="col-left">
-    <!-- WELCOME -->
     <div class="welcome fade-up">
       <div class="welcome-greeting">Welcome back</div>
       <div class="welcome-name">Hi, <span id="welcomeName">—</span> 👋</div>
       <div class="welcome-date" id="welcomeDate"></div>
     </div>
-
-    <!-- HERO CARD -->
     <div class="hero-card fade-up">
       <div class="hero-scan"></div>
       <div class="hero-label">Total Balance</div>
@@ -223,36 +158,14 @@ main{position:relative;z-index:1;padding:20px 20px 20px;max-width:520px;margin:0
       </div>
       <div class="hero-id" id="memberId">TCX—</div>
     </div>
-
-    <!-- STAT CARDS -->
     <div class="stats-row fade-up">
-      <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
-        <div class="stat-lbl">Invested</div>
-        <div class="stat-val" id="invested"><span class="spin"></span></div>
-        <div class="stat-sub good" id="investedCount">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-coins"></i></div>
-        <div class="stat-lbl">Total Claimed</div>
-        <div class="stat-val" id="totalClaimed"><span class="spin"></span></div>
-        <div class="stat-sub">Lifetime earnings</div>
-      </div>
+      <div class="stat-card"><div class="stat-icon"><i class="fas fa-layer-group"></i></div><div class="stat-lbl">Invested</div><div class="stat-val" id="invested"><span class="spin"></span></div><div class="stat-sub good" id="investedCount">—</div></div>
+      <div class="stat-card"><div class="stat-icon"><i class="fas fa-coins"></i></div><div class="stat-lbl">Total Claimed</div><div class="stat-val" id="totalClaimed"><span class="spin"></span></div><div class="stat-sub">Lifetime earnings</div></div>
     </div>
-
-    <!-- REFERRAL (left on PC, normal flow mobile) -->
     <div class="ref-card fade-up" id="refCard" style="display:none">
       <div class="sec-title" style="margin-bottom:4px"><i class="fas fa-network-wired"></i> Referral Network</div>
-      <div class="ref-commission">
-        Earn <strong>20%</strong> on Level 1 <span class="ref-lvl">Direct</span> &bull; <strong>2%</strong> on Level 2 <span class="ref-lvl">Indirect</span>
-      </div>
-      <div class="ref-code-box">
-        <div>
-          <div class="bank-lbl">Your Code</div>
-          <div class="ref-code" id="refCode">——</div>
-        </div>
-        <button class="ref-copy-btn" onclick="copyRefCode()"><i class="fas fa-copy"></i> Copy</button>
-      </div>
+      <div class="ref-commission">Earn <strong>20%</strong> on Level 1 <span class="ref-lvl">Direct</span> &bull; <strong>2%</strong> on Level 2 <span class="ref-lvl">Indirect</span></div>
+      <div class="ref-code-box"><div><div class="bank-lbl">Your Code</div><div class="ref-code" id="refCode">——</div></div><button class="ref-copy-btn" onclick="copyRefCode()"><i class="fas fa-copy"></i> Copy</button></div>
       <button class="ref-share-btn" onclick="shareRefLink()"><i class="fas fa-share-alt"></i> Share Referral Link</button>
       <div class="ref-stats">
         <div class="ref-stat"><div class="ref-stat-lbl">Referrals</div><div class="ref-stat-val" id="refCount">0</div></div>
@@ -261,31 +174,20 @@ main{position:relative;z-index:1;padding:20px 20px 20px;max-width:520px;margin:0
       <div id="refList" style="margin-top:10px"></div>
     </div>
   </div>
-
-  <!-- RIGHT COLUMN -->
   <div class="col-right">
-    <!-- PENDING CLAIM -->
     <div class="claim-card fade-up" id="pendingSection" style="display:none">
-      <div class="sec-head">
-        <div class="sec-title"><i class="fas fa-hand-holding-usd"></i> Claimable Earnings</div>
-      </div>
+      <div class="sec-head"><div class="sec-title"><i class="fas fa-hand-holding-usd"></i> Claimable Earnings</div></div>
       <div class="claim-amount-lbl">Ready to Withdraw</div>
       <div class="claim-amount" id="totalPending">$0.00</div>
       <button class="claim-btn" id="claimAllBtn" onclick="claimAll()"><i class="fas fa-bolt"></i> Claim All Earnings</button>
       <div class="claim-timer" id="claimCooldown" style="display:none"></div>
     </div>
-
-    <!-- INVESTMENT PLANS -->
     <div class="fade-up">
-      <div class="sec-head">
-        <div class="sec-title"><i class="fas fa-chart-line"></i> Active Plans</div>
-        <a href="/plans.html" class="sec-link">+ New</a>
-      </div>
+      <div class="sec-head"><div class="sec-title"><i class="fas fa-chart-line"></i> Active Plans</div><a href="/plans.html" class="sec-link">+ New</a></div>
       <div id="plansList"><div class="empty"><i class="fas fa-chart-bar"></i><div class="empty-txt">No active investment plans</div></div></div>
     </div>
   </div>
 </main>
-
 
 <!-- FUND MODAL -->
 <div id="fundModal" class="modal">
@@ -293,33 +195,27 @@ main{position:relative;z-index:1;padding:20px 20px 20px;max-width:520px;margin:0
     <span class="modal-drag"></span>
     <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
     <div class="modal-title">Fund Account</div>
-    <div class="modal-sub">Transfer to the account below then upload proof</div>
-    <div class="bank-box">
-      <div class="bank-row">
-        <div><div class="bank-lbl">Bank</div><div class="bank-val">Globus Bank</div></div>
+    <div class="modal-sub" id="fundModalSub">Choose a payment method below</div>
+    <!-- Payment methods loaded from Firebase -->
+    <div id="paymentMethodsContainer"><div style="text-align:center;padding:20px"><span class="spin"></span></div></div>
+    <!-- After method selected -->
+    <div id="fundFormSection" style="display:none">
+      <label class="inp-lbl">Amount Sent (₦)</label>
+      <input type="number" id="amountSent" class="inp-field" placeholder="Enter amount" min="1" step="0.01">
+      <label class="inp-lbl">Payment Proof <span style="color:var(--red)">*</span></label>
+      <label for="proofUpload" class="file-zone" id="fileUploadArea">
+        <div class="file-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+        <div class="file-zone-txt">Click to upload screenshot<br><span style="font-size:10px;color:var(--txt2)">JPG, PNG or PDF — Max 5MB</span></div>
+        <input type="file" id="proofUpload" accept="image/*,.pdf" onchange="handleFileSelect(event)">
+      </label>
+      <div id="filePreview" style="margin-bottom:14px;display:none"></div>
+      <div id="uploadSuccess" class="upload-ok">
+        <div class="upload-ok-icon"><i class="fas fa-check-circle"></i></div>
+        <div class="upload-ok-txt">Payment proof uploaded — pending verification</div>
       </div>
-      <div class="bank-row">
-        <div><div class="bank-lbl">Account Number</div><div class="bank-val">6130123012</div></div>
-        <button class="bank-copy" onclick="copyText('6130123012')">Copy</button>
-      </div>
-      <div class="bank-row">
-        <div><div class="bank-lbl">Account Name</div><div class="bank-val">Baxi-Nkechi Jacob</div></div>
-      </div>
+      <button class="submit-btn" id="submitBtn" onclick="submitFunding()" disabled>Confirm Payment</button>
+      <button class="wa-contact-btn" id="waContactBtn" style="display:none" onclick="contactWA()"><i class="fab fa-whatsapp"></i> Confirm via WhatsApp</button>
     </div>
-    <label class="inp-lbl">Amount Sent ($)</label>
-    <input type="number" id="amountSent" class="inp-field" placeholder="Enter amount" min="1" step="0.01">
-    <label class="inp-lbl">Payment Proof <span style="color:var(--red)">*</span></label>
-    <label for="proofUpload" class="file-zone" id="fileUploadArea">
-      <div class="file-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-      <div class="file-zone-txt">Click to upload screenshot<br><span style="font-size:10px;color:var(--txt2)">JPG, PNG or PDF — Max 5MB</span></div>
-      <input type="file" id="proofUpload" accept="image/*,.pdf" onchange="handleFileSelect(event)">
-    </label>
-    <div id="filePreview" style="margin-bottom:14px;display:none"></div>
-    <div id="uploadSuccess" class="upload-ok">
-      <div class="upload-ok-icon"><i class="fas fa-check-circle"></i></div>
-      <div class="upload-ok-txt">Payment proof uploaded — pending verification</div>
-    </div>
-    <button class="submit-btn" id="submitBtn" onclick="submitFunding()" disabled>Confirm Payment</button>
   </div>
 </div>
 
@@ -328,25 +224,63 @@ import{onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.7.0/firebas
 import{ref,get,update,push,onValue}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 import{auth,database}from"./lib/firebase.js";
 
-let user,plans={},userData={},selectedFile=null;
+let user,plans={},userData={},selectedFile=null,waSettings={},paymentMethods={},selectedMethod=null;
 
-window.openModal=()=>document.getElementById('fundModal').classList.add('active');
+// Load admin settings
+onValue(ref(database,'adminSettings/whatsapp'),s=>{waSettings=s.val()||{}});
+onValue(ref(database,'adminSettings/paymentMethods'),s=>{
+  paymentMethods=s.val()||{};
+  renderPaymentMethods();
+});
+
+function renderPaymentMethods(){
+  const container=document.getElementById('paymentMethodsContainer');
+  const entries=Object.values(paymentMethods);
+  if(!entries.length){
+    container.innerHTML='<div class="no-methods">No payment methods configured yet. Contact support.</div>';
+    return;
+  }
+  container.innerHTML='<div class="pay-method-box">'+entries.map((m,i)=>`
+    <div class="pay-method-row" onclick="selectMethod(${i})" data-idx="${i}">
+      <button class="pm-copy" onclick="event.stopPropagation();copyText('${m.account}')">Copy</button>
+      <div class="pm-type">${m.type==='btc'?'Bitcoin':m.type==='usdt'?'USDT':m.type==='eth'?'Ethereum':'Nigerian Bank'}</div>
+      <div class="pm-name">${m.name}</div>
+      <div class="pm-acct">${m.account}${m.accountName?' · '+m.accountName:''}</div>
+    </div>`).join('')+'</div>';
+}
+
+window.selectMethod=(idx)=>{
+  const entries=Object.values(paymentMethods);
+  selectedMethod=entries[idx];
+  document.querySelectorAll('.pay-method-row').forEach((r,i)=>r.classList.toggle('selected',i===idx));
+  document.getElementById('fundFormSection').style.display='block';
+  document.getElementById('fundModalSub').textContent=`Sending to: ${selectedMethod.name}`;
+  document.getElementById('submitBtn').disabled=true;
+};
+
+window.openModal=()=>{
+  document.getElementById('fundModal').classList.add('active');
+  renderPaymentMethods();
+};
 window.closeModal=()=>{
   document.getElementById('fundModal').classList.remove('active');
   document.getElementById('amountSent').value='';
-  selectedFile=null;
+  selectedFile=null;selectedMethod=null;
   document.getElementById('filePreview').style.display='none';
   document.getElementById('filePreview').innerHTML='';
   document.getElementById('uploadSuccess').style.display='none';
   document.getElementById('fileUploadArea').classList.remove('has-file');
   document.getElementById('fileUploadArea').style.display='flex';
   document.getElementById('submitBtn').disabled=true;
-  document.getElementById('submitBtn').textContent='Confirm Payment';
+  document.getElementById('submitBtn').style.display='block';
+  document.getElementById('waContactBtn').style.display='none';
+  document.getElementById('fundFormSection').style.display='none';
+  document.getElementById('fundModalSub').textContent='Choose a payment method below';
+  document.querySelectorAll('.pay-method-row').forEach(r=>r.classList.remove('selected'));
 };
 
 window.handleFileSelect=e=>{
-  const file=e.target.files[0];
-  if(!file)return;
+  const file=e.target.files[0];if(!file)return;
   if(file.size>5*1024*1024){alert('File too large. Max 5MB');return}
   selectedFile=file;
   const preview=document.getElementById('filePreview'),area=document.getElementById('fileUploadArea');
@@ -354,187 +288,120 @@ window.handleFileSelect=e=>{
   const fn=file.name.length>35?file.name.substring(0,32)+'...':file.name;
   const icon=file.type.startsWith('image/')?'fa-image':'fa-file-pdf';
   preview.innerHTML=`<div style="padding:10px;background:rgba(34,197,94,.08);color:#22c55e;border-radius:8px;font-size:12px;border:1px solid rgba(34,197,94,.2);display:flex;align-items:center;gap:8px"><i class="fas ${icon}"></i><span style="font-weight:600">${fn}</span></div>`;
-  preview.style.display='block';
-  checkFormValid();
+  preview.style.display='block';checkFormValid();
 };
 
 const checkFormValid=()=>{
   const amt=document.getElementById('amountSent').value;
   document.getElementById('submitBtn').disabled=!(amt&&parseFloat(amt)>0&&selectedFile);
 };
-
 document.getElementById('amountSent').addEventListener('input',checkFormValid);
 
 window.copyText=async t=>{
   try{await navigator.clipboard.writeText(t);alert('✅ Copied: '+t)}
   catch{const i=document.createElement('input');i.value=t;document.body.appendChild(i);i.select();document.execCommand('copy');document.body.removeChild(i);alert('✅ Copied: '+t)}
 };
-
 window.copyRefCode=()=>copyText(userData.referralCode||'');
-
 window.shareRefLink=()=>{
   const link=`${window.location.origin}/register.html?ref=${userData.referralCode}`;
-  const msg=`Join Crest Point Investment with my referral code! Use code: ${userData.referralCode}\n\nEarn 20% commission on direct referrals!\n\n${link}`;
-  if(navigator.share){navigator.share({title:'Join Crest Point',text:msg}).catch(()=>copyText(link))}
+  const msg=`Join Crest Point Investment! Code: ${userData.referralCode}\nEarn 20% commission!\n\n${link}`;
+  if(navigator.share)navigator.share({title:'Join Crest Point',text:msg}).catch(()=>copyText(link));
   else copyText(link);
 };
 
+window.contactWA=()=>{
+  const num=waSettings.number||'';
+  if(!num){alert('Support contact not configured. Try again later.');return}
+  const amt=document.getElementById('amountSent').value;
+  const msg=`Hello! I made a payment:\nUser: ${user.email}\nMethod: ${selectedMethod?.name||'—'}\nAmount: ₦${amt}\nPlease verify my account funding. Thank you!`;
+  window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`,'_blank');
+};
+
 window.submitFunding=async()=>{
-  if(!user||!selectedFile)return;
+  if(!user||!selectedFile||!selectedMethod)return;
   const amt=parseFloat(document.getElementById('amountSent').value);
   if(!amt||amt<=0){alert('Please enter a valid amount');return}
   const btn=document.getElementById('submitBtn');
   btn.disabled=true;btn.innerHTML='<span class="spin"></span> Uploading…';
   try{
-    const base64Data=await new Promise((resolve,reject)=>{
-      const reader=new FileReader();
-      reader.onload=()=>resolve(reader.result.split(',')[1]);
-      reader.onerror=reject;
-      reader.readAsDataURL(selectedFile);
-    });
+    const base64Data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.onerror=reject;reader.readAsDataURL(selectedFile);});
     await push(ref(database,'fundingRequests'),{
       userId:user.uid,userEmail:user.email,userName:user.displayName||user.email,
-      amount:amt,paymentMethod:'Globus Bank',accountNumber:'6130123012',
-      accountName:'Baxi-Nkechi Jacob',proofFileName:selectedFile.name,
-      proofFileType:selectedFile.type,proofFileSize:selectedFile.size,
-      proofBase64:base64Data,status:'pending',
-      createdAt:new Date().toISOString(),timestamp:Date.now()
+      amount:amt,paymentMethod:selectedMethod.name,paymentType:selectedMethod.type,
+      accountNumber:selectedMethod.account,accountName:selectedMethod.accountName||'',
+      proofFileName:selectedFile.name,proofFileType:selectedFile.type,proofFileSize:selectedFile.size,
+      proofBase64:base64Data,status:'pending',createdAt:new Date().toISOString(),timestamp:Date.now()
     });
     document.getElementById('fileUploadArea').style.display='none';
     document.getElementById('filePreview').style.display='none';
     document.getElementById('uploadSuccess').style.display='block';
     btn.style.display='none';
-    setTimeout(()=>{closeModal();alert('✅ Payment submitted! Verification within 24hrs.')},2500);
+    document.getElementById('waContactBtn').style.display='flex';
   }catch(e){alert('❌ Failed: '+e.message);btn.disabled=false;btn.innerHTML='Confirm Payment'}
 };
 
-const calcPending=p=>{
-  const now=Date.now();
-  if(now>=p.maturityDate)return Math.max(0,p.dailyIncome*30-(p.totalClaimed||0));
-  const daysPassed=(now-p.startDate)/86400000;
-  return Math.max(0,p.dailyIncome*daysPassed-(p.totalClaimed||0));
-};
-
+const calcPending=p=>{const now=Date.now();if(now>=p.maturityDate)return Math.max(0,p.dailyIncome*30-(p.totalClaimed||0));const daysPassed=(now-p.startDate)/86400000;return Math.max(0,p.dailyIncome*daysPassed-(p.totalClaimed||0));};
 const canClaim=p=>{if(!p.lastClaim)return true;return(Date.now()-p.lastClaim)/3600000>=24};
-
-const getTimeUntilClaim=p=>{
-  if(!p.lastClaim)return null;
-  const h=(Date.now()-p.lastClaim)/3600000;
-  if(h>=24)return null;
-  const r=24-h;
-  return`${Math.floor(r)}h ${Math.floor((r-Math.floor(r))*60)}m`;
-};
-
+const getTimeUntilClaim=p=>{if(!p.lastClaim)return null;const h=(Date.now()-p.lastClaim)/3600000;if(h>=24)return null;const r=24-h;return`${Math.floor(r)}h ${Math.floor((r-Math.floor(r))*60)}m`};
 const generateCode=()=>Math.random().toString(36).substring(2,8).toUpperCase();
 
 window.claimEarnings=async id=>{
-  if(!user)return;
-  const p=plans[id];
-  if(!p||!canClaim(p)){alert('You can only claim once every 24 hours');return}
-  const amt=calcPending(p);
-  if(amt<1)return;
-  try{
-    const snap=await get(ref(database,`users/${user.uid}`));
-    const d=snap.val();
-    const claimed=(p.totalClaimed||0)+amt;
-    await update(ref(database,`users/${user.uid}`),{
-      balance:(d.balance||0)+amt,totalClaimed:(d.totalClaimed||0)+amt,
-      [`investments/${id}/totalClaimed`]:claimed,[`investments/${id}/lastClaim`]:Date.now()
-    });
-    alert(`✅ Successfully claimed $${amt.toFixed(2)}!`);
-  }catch{alert('Failed to claim. Try again.')}
+  if(!user)return;const p=plans[id];
+  if(!p||!canClaim(p)){alert('Claim once every 24 hours');return}
+  const amt=calcPending(p);if(amt<1)return;
+  try{const snap=await get(ref(database,`users/${user.uid}`));const d=snap.val();const claimed=(p.totalClaimed||0)+amt;
+    await update(ref(database,`users/${user.uid}`),{balance:(d.balance||0)+amt,totalClaimed:(d.totalClaimed||0)+amt,[`investments/${id}/totalClaimed`]:claimed,[`investments/${id}/lastClaim`]:Date.now()});
+    alert(`✅ Claimed $${amt.toFixed(2)}!`);
+  }catch{alert('Failed. Try again.')}
 };
 
 window.claimAll=async()=>{
-  if(!user||!plans)return;
-  let total=0;const updates={};const now=Date.now();
-  Object.entries(plans).forEach(([id,p])=>{
-    if(p.status!=='active'||!canClaim(p))return;
-    const pending=calcPending(p);
-    if(pending>=1){total+=pending;const claimed=(p.totalClaimed||0)+pending;updates[`investments/${id}/totalClaimed`]=claimed;updates[`investments/${id}/lastClaim`]=now}
-  });
-  if(total<1)return alert('No earnings to claim or cooldown period active');
-  try{
-    const snap=await get(ref(database,`users/${user.uid}`));
-    const d=snap.val();
-    await update(ref(database,`users/${user.uid}`),{...updates,balance:(d.balance||0)+total,totalClaimed:(d.totalClaimed||0)+total});
-    alert(`✅ Successfully claimed $${total.toFixed(2)}!`);
-  }catch{alert('Failed to claim. Try again.')}
+  if(!user||!plans)return;let total=0;const updates={};const now=Date.now();
+  Object.entries(plans).forEach(([id,p])=>{if(p.status!=='active'||!canClaim(p))return;const pending=calcPending(p);if(pending>=1){total+=pending;const claimed=(p.totalClaimed||0)+pending;updates[`investments/${id}/totalClaimed`]=claimed;updates[`investments/${id}/lastClaim`]=now}});
+  if(total<1)return alert('No earnings to claim or cooldown active');
+  try{const snap=await get(ref(database,`users/${user.uid}`));const d=snap.val();await update(ref(database,`users/${user.uid}`),{...updates,balance:(d.balance||0)+total,totalClaimed:(d.totalClaimed||0)+total});alert(`✅ Claimed $${total.toFixed(2)}!`);}
+  catch{alert('Failed. Try again.')}
 };
 
 const fmt=n=>`$${(n||0).toLocaleString('en-US',{minimumFractionDigits:2})}`;
 
 const updateUI=async d=>{
-  userData=d;
-  const name=d.fullName||d.email?.split('@')[0]||'Investor';
-  const firstName=name.split(' ')[0];
+  userData=d;const name=d.fullName||d.email?.split('@')[0]||'Investor';const firstName=name.split(' ')[0];
   document.getElementById('welcomeName').textContent=firstName;
-  const now=new Date();
-  document.getElementById('welcomeDate').textContent=now.toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  document.getElementById('memberId').textContent=`TCX—${(d.memberId||'12345')}`;
+  document.getElementById('welcomeDate').textContent=new Date().toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('memberId').textContent=`TCX—${d.memberId||'12345'}`;
   document.getElementById('totalBalance').textContent=fmt(d.balance);
   document.getElementById('availableBalance').textContent=fmt(d.balance);
-  const investments=d.investments||{};
-  let totalInvested=0;
+  const investments=d.investments||{};let totalInvested=0;
   Object.values(investments).forEach(inv=>{if(inv.status==='active')totalInvested+=inv.amount});
   document.getElementById('invested').textContent=fmt(totalInvested);
   document.getElementById('totalClaimed').textContent=fmt(d.totalClaimed);
   const activeCount=Object.values(investments).filter(i=>i.status==='active').length;
   document.getElementById('investedCount').textContent=`${activeCount} active plan${activeCount!==1?'s':''}`;
-
-  if(!d.referralCode&&user){
-    const newCode=generateCode();
-    try{
-      await update(ref(database,`users/${user.uid}`),{referralCode:newCode});
-      await update(ref(database,`referralCodes/${newCode}`),{userId:user.uid,createdAt:new Date().toISOString()});
-      d.referralCode=newCode;
-    }catch(e){console.error('Failed to generate referral code:',e)}
-  }
-
+  if(!d.referralCode&&user){const newCode=generateCode();try{await update(ref(database,`users/${user.uid}`),{referralCode:newCode});await update(ref(database,`referralCodes/${newCode}`),{userId:user.uid,createdAt:new Date().toISOString()});d.referralCode=newCode;}catch(e){}}
   document.getElementById('refCard').style.display='block';
   document.getElementById('refCode').textContent=d.referralCode||'——';
-  const level1Count=(d.referrals||[]).filter(r=>r.level===1).length;
-  const level2Count=(d.referrals||[]).filter(r=>r.level===2).length;
+  const level1Count=(d.referrals||[]).filter(r=>r.level===1).length,level2Count=(d.referrals||[]).filter(r=>r.level===2).length;
   document.getElementById('refCount').textContent=level1Count+level2Count;
   document.getElementById('refEarnings').textContent=`$${(d.totalReferralEarnings||0).toLocaleString('en-US')}`;
-
   const refList=document.getElementById('refList');
-  if((d.referrals||[]).length>0){
-    refList.innerHTML=(d.referrals||[]).slice(0,5).map(r=>`
-      <div class="ref-member">
-        <div><div class="ref-member-name">${r.name||'User'} <span class="ref-lvl">L${r.level||1}</span></div><div class="ref-member-date">${new Date(r.joinedAt).toLocaleDateString()}</div></div>
-        <div class="ref-member-earned">${fmt(r.earned)}</div>
-      </div>`).join('');
-  }
-
-  plans=investments;
-  const arr=Object.entries(plans).map(([id,p])=>({id,...p}));
-  let totalPending=0,earliestClaim=null;
-
+  if((d.referrals||[]).length>0)refList.innerHTML=(d.referrals||[]).slice(0,5).map(r=>`<div class="ref-member"><div><div class="ref-member-name">${r.name||'User'} <span class="ref-lvl">L${r.level||1}</span></div><div class="ref-member-date">${new Date(r.joinedAt).toLocaleDateString()}</div></div><div class="ref-member-earned">${fmt(r.earned)}</div></div>`).join('');
+  plans=investments;const arr=Object.entries(plans).map(([id,p])=>({id,...p}));let totalPending=0,earliestClaim=null;
   if(arr.length>0){
     document.getElementById('plansList').innerHTML=arr.map(p=>{
       const pending=calcPending(p),claimable=canClaim(p),timeLeft=getTimeUntilClaim(p);
       if(p.status==='active'){totalPending+=pending;if(!claimable&&(!earliestClaim||p.lastClaim<earliestClaim))earliestClaim=p.lastClaim}
       const btnClass=claimable&&pending>=1?'plan-earn-btn claimable':'plan-earn-btn';
       const btnLabel=!claimable?`<i class="fas fa-clock"></i> Wait ${timeLeft}`:pending>=1?`<i class="fas fa-bolt"></i> Claim ${fmt(pending)}`:'Nothing to Claim Yet';
-      return`<div class="plan-card">
-        <div class="plan-top">
-          <div><div class="plan-name">${p.planName}</div><span class="plan-badge">${p.status==='active'?'Active':'Completed'}</span></div>
-          <div class="plan-amount">${fmt(p.amount)}</div>
-        </div>
-        ${p.status==='active'?`<button class="${btnClass}"${(!claimable||pending<1)?' disabled':''} onclick="claimEarnings('${p.id}')">${btnLabel}</button>`:''}</div>`;
+      return`<div class="plan-card"><div class="plan-top"><div><div class="plan-name">${p.planName}</div><span class="plan-badge">${p.status==='active'?'Active':'Completed'}</span></div><div class="plan-amount">${fmt(p.amount)}</div></div>${p.status==='active'?`<button class="${btnClass}"${(!claimable||pending<1)?' disabled':''} onclick="claimEarnings('${p.id}')">${btnLabel}</button>`:''}</div>`;
     }).join('');
-
     if(totalPending>=1||earliestClaim){
       document.getElementById('pendingSection').style.display='block';
       document.getElementById('totalPending').textContent=`$${totalPending.toFixed(2)}`;
       const allClaimable=!earliestClaim||canClaim({lastClaim:earliestClaim});
       document.getElementById('claimAllBtn').disabled=!allClaimable||totalPending<1;
-      if(!allClaimable){
-        const remaining=getTimeUntilClaim({lastClaim:earliestClaim});
-        document.getElementById('claimCooldown').style.display='block';
-        document.getElementById('claimCooldown').textContent=`⏰ Next claim in ${remaining}`;
-      }else document.getElementById('claimCooldown').style.display='none';
+      if(!allClaimable){const remaining=getTimeUntilClaim({lastClaim:earliestClaim});document.getElementById('claimCooldown').style.display='block';document.getElementById('claimCooldown').textContent=`⏰ Next claim in ${remaining}`;}
+      else document.getElementById('claimCooldown').style.display='none';
     }
   }
 };

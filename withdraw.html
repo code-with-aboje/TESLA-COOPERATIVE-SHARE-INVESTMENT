@@ -3,27 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Withdraw — Tesla Cooperative</title>
+<title>Withdraw — Crest Point</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --R:#CC0000;--Rg:rgba(204,0,0,0.15);--Rb:rgba(204,0,0,0.06);
-  --bg:#080808;--g1:#0f0f0f;--g2:#161616;--g3:#1e1e1e;
-  --line:rgba(255,255,255,0.06);--T:#f5f5f5;--M:#888;--dim:#444;
-  --gold:#C9A84C;--green:#22c55e;
-}
+:root{--R:#CC0000;--Rg:rgba(204,0,0,.15);--Rb:rgba(204,0,0,.06);--bg:#080808;--g1:#0f0f0f;--g2:#161616;--g3:#1e1e1e;--line:rgba(255,255,255,.06);--T:#f5f5f5;--M:#888;--dim:#444;--gold:#C9A84C;--green:#22c55e}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--T);overflow-x:hidden;padding-bottom:120px}
-
-/* ── NOISE TEXTURE OVERLAY ── */
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
-
-/* ── PAGE LAYOUT ── */
 .page{position:relative;z-index:1;min-height:100vh}
-
-/* ── TOP HERO STRIP ── */
 .hero{background:var(--g1);border-bottom:1px solid var(--line);padding:28px 24px 0;position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--R),transparent 60%)}
 .hero-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
@@ -33,297 +22,199 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .balance-pill{background:var(--g2);border:1px solid var(--line);border-radius:12px;padding:12px 16px;text-align:right;min-width:140px}
 .bp-label{font-size:10px;letter-spacing:2px;color:var(--M);text-transform:uppercase;margin-bottom:4px}
 .bp-val{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--green);letter-spacing:1px}
-
-/* ── TIME ALERT ── */
-.time-bar{display:flex;align-items:center;gap:10px;background:rgba(201,168,76,0.08);border-top:none;border-bottom:1px solid rgba(201,168,76,0.15);padding:10px 24px;font-size:12px;color:var(--gold)}
-.time-bar i{font-size:13px}
-
-/* ── STATS ROW ── */
+.time-bar{display:flex;align-items:center;gap:10px;background:rgba(201,168,76,.08);border-bottom:1px solid rgba(201,168,76,.15);padding:10px 24px;font-size:12px;color:var(--gold)}
 .stats-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
 .stat{background:var(--g1);padding:20px 24px}
 .stat-label{font-size:10px;letter-spacing:2px;color:var(--M);text-transform:uppercase;margin-bottom:6px}
 .stat-value{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:1px;color:var(--T)}
 .stat-value.accent{color:var(--R)}
 .stat-sub{font-size:11px;color:var(--dim);margin-top:2px;font-family:'DM Mono',monospace}
-
-/* ── MAIN CONTENT ── */
 .content{padding:24px}
-
-/* ── WITHDRAW TRIGGER (mobile) ── */
 .trigger-card{background:linear-gradient(135deg,var(--R) 0%,#8B0000 100%);border-radius:20px;padding:24px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;cursor:pointer;position:relative;overflow:hidden;transition:opacity .2s}
-.trigger-card::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,0.06);border-radius:50%}
-.trigger-card::after{content:'';position:absolute;bottom:-20px;left:40px;width:80px;height:80px;background:rgba(255,255,255,0.04);border-radius:50%}
+.trigger-card::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,.06);border-radius:50%}
 .trigger-card:active{opacity:.85}
-.tc-left{}
-.tc-label{font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:6px}
+.tc-label{font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:6px}
 .tc-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;color:#fff}
-.tc-sub{font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px}
-.tc-icon{width:52px;height:52px;background:rgba(255,255,255,0.15);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;flex-shrink:0;position:relative;z-index:1}
+.tc-sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:4px}
+.tc-icon{width:52px;height:52px;background:rgba(255,255,255,.15);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;flex-shrink:0;position:relative;z-index:1}
 .trigger-card.disabled{background:var(--g2);cursor:not-allowed}
 .trigger-card.disabled .tc-title,.trigger-card.disabled .tc-sub,.trigger-card.disabled .tc-label{color:var(--M)}
-.trigger-card.disabled .tc-icon{background:var(--g3);color:var(--dim)}
-
-/* ── INFO CHIPS ── */
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
 .chip{display:flex;align-items:center;gap:6px;background:var(--g2);border:1px solid var(--line);border-radius:100px;padding:7px 12px;font-size:12px;color:var(--M)}
 .chip i{font-size:11px;color:var(--R)}
-
-/* ── SECTION HEADER ── */
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .sh-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1.5px;color:var(--T)}
 .sh-line{flex:1;height:1px;background:var(--line);margin-left:12px}
-
-/* ── HISTORY TABLE (card style) ── */
 .history-list{display:flex;flex-direction:column;gap:8px}
-.h-item{background:var(--g1);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:4px;align-items:center;transition:border-color .2s}
-.h-item:hover{border-color:rgba(255,255,255,0.12)}
+.h-item{background:var(--g1);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:4px;align-items:center}
 .h-top{display:flex;align-items:center;gap:10px}
 .h-dot{width:8px;height:8px;border-radius:50%;background:var(--dim);flex-shrink:0}
-.h-dot.pending{background:var(--gold)}
-.h-dot.completed,.h-dot.approved{background:var(--green)}
-.h-dot.rejected{background:var(--R)}
+.h-dot.pending{background:var(--gold)}.h-dot.completed,.h-dot.approved{background:var(--green)}.h-dot.rejected{background:var(--R)}
 .h-method{font-size:14px;font-weight:500;color:var(--T)}
 .h-date{font-size:11px;color:var(--dim);font-family:'DM Mono',monospace;margin-top:2px;padding-left:18px}
-.h-right{text-align:right}
 .h-amount{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.5px;color:var(--T)}
 .h-badge{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--M);margin-top:2px;font-family:'DM Mono',monospace}
-.h-badge.pending{color:var(--gold)}
-.h-badge.completed,.h-badge.approved{color:var(--green)}
-.h-badge.rejected{color:var(--R)}
-
+.h-badge.pending{color:var(--gold)}.h-badge.completed,.h-badge.approved{color:var(--green)}.h-badge.rejected{color:var(--R)}
 .empty{text-align:center;padding:48px 20px;color:var(--dim)}
 .empty i{font-size:36px;margin-bottom:12px;display:block;opacity:.3}
-.empty p{font-size:13px}
-
-/* ── DESKTOP PANEL (right split) ── */
+/* Desktop */
 @media(min-width:769px){
   .trigger-card{display:none}
   .page{display:grid;grid-template-columns:1fr 380px;min-height:100vh}
   .page-left{border-right:1px solid var(--line)}
-  .hero{padding:40px 40px 0}
-  .hero-top{margin-bottom:28px}
-  .stats-row{grid-template-columns:1fr 1fr}
-  .content{padding:32px 40px}
-  .chips{margin-bottom:28px}
+  .hero{padding:40px 40px 0}.content{padding:32px 40px}
   .page-right{background:var(--g1);display:flex;flex-direction:column}
   .right-head{padding:40px 32px 24px;border-bottom:1px solid var(--line)}
   .right-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--R);text-transform:uppercase;margin-bottom:6px}
   .right-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px}
   .right-body{padding:24px 32px;flex:1;overflow-y:auto}
 }
-@media(max-width:768px){
-  .page-right{display:none}
-}
-
-/* ── DESKTOP FORM ── */
+@media(max-width:768px){.page-right{display:none}}
+/* Form */
 .form-field{margin-bottom:18px}
 .f-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--M);display:block;margin-bottom:8px;font-family:'DM Mono',monospace}
-.f-input,.f-select{width:100%;background:var(--g2);border:1px solid var(--line);border-radius:10px;padding:13px 14px;color:var(--T);font-family:'DM Sans',sans-serif;font-size:15px;transition:border-color .2s,box-shadow .2s}
+.f-input,.f-select{width:100%;background:var(--g2);border:1px solid var(--line);border-radius:10px;padding:13px 14px;color:var(--T);font-family:'DM Sans',sans-serif;font-size:15px;transition:.2s}
 .f-input:focus,.f-select:focus{outline:none;border-color:var(--R);box-shadow:0 0 0 3px var(--Rg)}
 .f-input::placeholder{color:var(--dim)}
 .f-select option{background:#1a1a1a}
-
-.fee-reveal{background:var(--Rb);border:1px solid rgba(204,0,0,0.2);border-radius:10px;padding:14px;margin-bottom:18px;display:none}
+.acct-fields{display:none}
+.fee-reveal{background:var(--Rb);border:1px solid rgba(204,0,0,.2);border-radius:10px;padding:14px;margin-bottom:18px;display:none}
 .fee-reveal.show{display:block}
 .fee-line{display:flex;justify-content:space-between;padding:3px 0;font-size:13px;color:var(--M)}
 .fee-line strong{color:var(--T);font-family:'DM Mono',monospace}
-.fee-total{border-top:1px solid rgba(204,0,0,0.15);margin-top:8px;padding-top:10px}
-.fee-total .fee-line{font-size:15px}
+.fee-total{border-top:1px solid rgba(204,0,0,.15);margin-top:8px;padding-top:10px}
 .fee-total strong{color:var(--R);font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.5px}
-
 .msg{border-radius:10px;padding:11px 14px;font-size:13px;margin-bottom:14px;border:1px solid;display:none}
 .msg.show{display:block}
-.msg-err{background:var(--Rb);border-color:rgba(204,0,0,0.25);color:#ff7070}
-.msg-ok{background:rgba(34,197,94,0.07);border-color:rgba(34,197,94,0.2);color:var(--green)}
-
-.pending-notice{background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:16px;margin-bottom:14px;display:none}
+.msg-err{background:var(--Rb);border-color:rgba(204,0,0,.25);color:#ff7070}
+.msg-ok{background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.2);color:var(--green)}
+.pending-notice{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px;margin-bottom:14px;display:none}
 .pending-notice.show{display:block}
 .pending-notice h4{color:var(--gold);font-size:13px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .pending-notice p{font-size:12px;color:var(--M);line-height:1.6}
-
 .submit-row{display:flex;gap:10px;margin-top:6px}
-.btn-ghost{flex:1;padding:13px;background:transparent;border:1px solid var(--line);border-radius:10px;color:var(--M);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s}
-.btn-ghost:hover{border-color:rgba(255,255,255,0.15);color:var(--T)}
-.btn-red{flex:2;padding:13px;background:var(--R);border:none;border-radius:10px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-red:hover:not(:disabled){background:#a80000;box-shadow:0 4px 20px rgba(204,0,0,0.3)}
+.btn-ghost{flex:1;padding:13px;background:transparent;border:1px solid var(--line);border-radius:10px;color:var(--M);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:.2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.15);color:var(--T)}
+.btn-red{flex:2;padding:13px;background:var(--R);border:none;border-radius:10px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-red:hover:not(:disabled){background:#a80000;box-shadow:0 4px 20px rgba(204,0,0,.3)}
 .btn-red:disabled{opacity:.45;cursor:not-allowed}
-.tg-btn{width:100%;margin-top:10px;padding:11px;background:#1d97cc;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .2s;font-family:'DM Sans',sans-serif}
-.tg-btn:hover{background:#1780aa}
-
-/* ── BOTTOM SHEET MODAL (mobile) ── */
-.sheet-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;backdrop-filter:blur(4px)}
-.sheet-bg.open{display:block;animation:bgIn .25s}
-@keyframes bgIn{from{opacity:0}to{opacity:1}}
-.sheet{position:fixed;bottom:0;left:0;right:0;background:var(--g1);border-radius:24px 24px 0 0;padding:0;z-index:201;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1)}
+.wa-btn{width:100%;margin-top:10px;padding:11px;background:#25D366;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.2s}
+.wa-btn:hover{background:#1da851}
+/* Sheet */
+.sheet-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;backdrop-filter:blur(4px)}
+.sheet-bg.open{display:block}
+.sheet{position:fixed;bottom:0;left:0;right:0;background:var(--g1);border-radius:24px 24px 0 0;z-index:201;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1)}
 .sheet.open{transform:translateY(0)}
 .sheet-handle{width:40px;height:4px;background:var(--g3);border-radius:2px;margin:14px auto 0}
 .sheet-header{padding:20px 24px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
 .sheet-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px}
 .sheet-close{width:30px;height:30px;background:var(--g2);border:none;border-radius:8px;color:var(--M);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
 .sheet-body{padding:20px 24px 40px}
-
-.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.15);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.15);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.spinner-dark{border-top-color:var(--R);border-color:rgba(204,0,0,0.15)}
+.spinner-dark{border-top-color:var(--R);border-color:rgba(204,0,0,.15)}
 </style>
 </head>
 <body>
 <div class="page" id="page">
-
-  <!-- LEFT COLUMN / MOBILE FULL -->
   <div class="page-left">
     <div class="hero">
       <div class="hero-top">
-        <div>
-          <div class="page-eyebrow">// Funds</div>
-          <div class="page-title">WITH<span>DRAW</span></div>
-        </div>
-        <div class="balance-pill">
-          <div class="bp-label">Available</div>
-          <div class="bp-val" id="availableAmount"><span class="spinner spinner-dark" style="width:16px;height:16px"></span></div>
-        </div>
+        <div><div class="page-eyebrow">// Funds</div><div class="page-title">WITH<span>DRAW</span></div></div>
+        <div class="balance-pill"><div class="bp-label">Available</div><div class="bp-val" id="availableAmount"><span class="spinner spinner-dark" style="width:16px;height:16px"></span></div></div>
       </div>
       <div class="stats-row" style="margin:0 -24px">
-        <div class="stat">
-          <div class="stat-label">Total Withdrawn</div>
-          <div class="stat-value accent" id="totalWithdrawn">—</div>
-          <div class="stat-sub">lifetime</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">Processing Fee</div>
-          <div class="stat-value">15%</div>
-          <div class="stat-sub">per request</div>
-        </div>
+        <div class="stat"><div class="stat-label">Total Withdrawn</div><div class="stat-value accent" id="totalWithdrawn">—</div><div class="stat-sub">lifetime</div></div>
+        <div class="stat"><div class="stat-label">Processing Fee</div><div class="stat-value">15%</div><div class="stat-sub">per request</div></div>
       </div>
     </div>
-
-    <div class="time-bar">
-      <i class="fas fa-clock"></i>
-      <span>Withdrawal window: <strong>10:00 AM – 6:00 PM</strong> daily &nbsp;·&nbsp; Min: ₦800 &nbsp;·&nbsp; Processed within 10 mins</span>
-    </div>
-
+    <div class="time-bar"><i class="fas fa-clock"></i><span>Window: <strong>10:00 AM – 6:00 PM</strong> daily &nbsp;·&nbsp; Min: ₦800 &nbsp;·&nbsp; ~10 mins</span></div>
     <div class="content">
-      <!-- Mobile CTA -->
       <div class="trigger-card" id="triggerCard" onclick="openSheet()">
-        <div class="tc-left">
-          <div class="tc-label">Tap to begin</div>
-          <div class="tc-title">New Request</div>
-          <div class="tc-sub">Secure · Encrypted</div>
-        </div>
+        <div class="tc-left"><div class="tc-label">Tap to begin</div><div class="tc-title">New Request</div><div class="tc-sub">Secure · Encrypted</div></div>
         <div class="tc-icon"><i class="fas fa-arrow-up-right"></i></div>
       </div>
-
-      <!-- Info chips -->
       <div class="chips">
         <div class="chip"><i class="fas fa-shield-alt"></i>Bank-level security</div>
         <div class="chip"><i class="fas fa-bolt"></i>10 min processing</div>
         <div class="chip"><i class="fas fa-headset"></i>24/7 support</div>
       </div>
-
-      <!-- History -->
-      <div class="section-head">
-        <div class="sh-title">History</div>
-        <div class="sh-line"></div>
-      </div>
-      <div class="history-list" id="historyList">
-        <div class="empty"><span class="spinner spinner-dark" style="width:20px;height:20px;display:inline-block"></span></div>
-      </div>
+      <div class="section-head"><div class="sh-title">History</div><div class="sh-line"></div></div>
+      <div class="history-list" id="historyList"><div class="empty"><span class="spinner spinner-dark" style="width:20px;height:20px;display:inline-block"></span></div></div>
     </div>
   </div>
 
-  <!-- RIGHT PANEL — Desktop form -->
+  <!-- Desktop form -->
   <div class="page-right">
-    <div class="right-head">
-      <div class="right-eyebrow">// New Request</div>
-      <div class="right-title">Request Withdrawal</div>
-    </div>
+    <div class="right-head"><div class="right-eyebrow">// New Request</div><div class="right-title">Request Withdrawal</div></div>
     <div class="right-body">
       <div class="msg msg-err" id="d_error"></div>
       <div class="msg msg-ok" id="d_success"></div>
       <div class="pending-notice" id="d_pending">
         <h4><i class="fas fa-hourglass-half"></i> Request Submitted</h4>
-        <p>Your withdrawal is pending approval. Contact support to speed up processing.</p>
-        <button class="tg-btn" onclick="contactCS('d')"><i class="fab fa-telegram"></i> Contact Support</button>
+        <p>Your withdrawal is being processed. Contact support on WhatsApp to speed things up.</p>
+        <button class="wa-btn" onclick="contactWA('d')"><i class="fab fa-whatsapp"></i> Contact Support on WhatsApp</button>
       </div>
       <div id="d_form">
         <div class="form-field">
           <label class="f-label">Payment Method</label>
-          <select class="f-select" id="d_method">
+          <select class="f-select" id="d_method" onchange="onMethodChange('d')">
             <option value="">Select method…</option>
-            <option>Bank Transfer</option><option>Opay</option><option>Palmpay</option>
-            <option>Kuda Bank</option><option>GTBank</option><option>First Bank</option>
-            <option>Access Bank</option><option>Zenith Bank</option><option>UBA</option>
           </select>
         </div>
-        <div class="form-field">
-          <label class="f-label">Account Number</label>
-          <input class="f-input" type="text" id="d_acctNum" placeholder="0123456789">
+        <div class="acct-fields" id="d_acctFields">
+          <div class="form-field"><label class="f-label">Account Number</label><input class="f-input" type="text" id="d_acctNum" placeholder="0123456789"></div>
+          <div class="form-field"><label class="f-label">Account Name</label><input class="f-input" type="text" id="d_acctName" placeholder="Full account name"></div>
         </div>
-        <div class="form-field">
-          <label class="f-label">Account Name</label>
-          <input class="f-input" type="text" id="d_acctName" placeholder="Full account name">
+        <div class="form-field" id="d_walletField" style="display:none">
+          <label class="f-label">Wallet Address</label>
+          <input class="f-input" type="text" id="d_wallet" placeholder="Wallet address">
         </div>
-        <div class="form-field">
-          <label class="f-label">Amount (₦)</label>
-          <input class="f-input" type="number" id="d_amount" placeholder="Minimum ₦800" min="800" step="0.01">
-        </div>
+        <div class="form-field"><label class="f-label">Amount (₦)</label><input class="f-input" type="number" id="d_amount" placeholder="Minimum ₦800" min="800" step="0.01"></div>
         <div class="fee-reveal" id="d_feeBox">
           <div class="fee-line"><span>Requested</span><strong id="d_req">₦0</strong></div>
           <div class="fee-line"><span>Fee (15%)</span><strong id="d_fee">₦0</strong></div>
           <div class="fee-line fee-total"><span>You Receive</span><strong id="d_net">₦0</strong></div>
         </div>
         <div class="submit-row" id="d_btnRow">
-          <button class="btn-red" id="d_submitBtn" onclick="submitDesktop()">
-            <i class="fas fa-arrow-up-right"></i> SEND REQUEST
-          </button>
+          <button class="btn-red" id="d_submitBtn" onclick="submitDesktop()"><i class="fas fa-arrow-up-right"></i> SEND REQUEST</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MOBILE BOTTOM SHEET -->
+<!-- Mobile Sheet -->
 <div class="sheet-bg" id="sheetBg" onclick="closeSheet()"></div>
 <div class="sheet" id="sheet">
   <div class="sheet-handle"></div>
-  <div class="sheet-header">
-    <div class="sheet-title">New Withdrawal</div>
-    <button class="sheet-close" onclick="closeSheet()"><i class="fas fa-times"></i></button>
-  </div>
+  <div class="sheet-header"><div class="sheet-title">New Withdrawal</div><button class="sheet-close" onclick="closeSheet()"><i class="fas fa-times"></i></button></div>
   <div class="sheet-body">
     <div class="msg msg-err" id="m_error"></div>
     <div class="msg msg-ok" id="m_success"></div>
     <div class="pending-notice" id="m_pending">
       <h4><i class="fas fa-hourglass-half"></i> Request Submitted</h4>
-      <p>Your withdrawal is pending approval. Contact support to speed it up.</p>
-      <button class="tg-btn" onclick="contactCS('m')"><i class="fab fa-telegram"></i> Contact Support</button>
+      <p>Contact support on WhatsApp to speed up processing.</p>
+      <button class="wa-btn" onclick="contactWA('m')"><i class="fab fa-whatsapp"></i> Contact on WhatsApp</button>
     </div>
     <div id="m_form">
-      <div class="form-field" style="background:var(--Rb);border:1px solid rgba(204,0,0,0.15);border-radius:10px;padding:12px 14px;margin-bottom:18px">
+      <div class="form-field" style="background:var(--Rb);border:1px solid rgba(204,0,0,.15);border-radius:10px;padding:12px 14px;margin-bottom:18px">
         <div class="f-label" style="margin-bottom:4px">Available Balance</div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--green);letter-spacing:1px" id="m_balance">—</div>
       </div>
       <div class="form-field">
         <label class="f-label">Payment Method</label>
-        <select class="f-select" id="m_method">
-          <option value="">Select method…</option>
-          <option>Bank Transfer</option><option>Opay</option><option>Palmpay</option>
-          <option>Kuda Bank</option><option>GTBank</option><option>First Bank</option>
-          <option>Access Bank</option><option>Zenith Bank</option><option>UBA</option>
-        </select>
+        <select class="f-select" id="m_method" onchange="onMethodChange('m')"><option value="">Select method…</option></select>
       </div>
-      <div class="form-field">
-        <label class="f-label">Account Number</label>
-        <input class="f-input" type="text" id="m_acctNum" placeholder="0123456789">
+      <div class="acct-fields" id="m_acctFields">
+        <div class="form-field"><label class="f-label">Account Number</label><input class="f-input" type="text" id="m_acctNum" placeholder="0123456789"></div>
+        <div class="form-field"><label class="f-label">Account Name</label><input class="f-input" type="text" id="m_acctName" placeholder="Full account name"></div>
       </div>
-      <div class="form-field">
-        <label class="f-label">Account Name</label>
-        <input class="f-input" type="text" id="m_acctName" placeholder="Full account name">
+      <div class="form-field" id="m_walletField" style="display:none">
+        <label class="f-label">Wallet Address</label>
+        <input class="f-input" type="text" id="m_wallet" placeholder="Wallet address">
       </div>
-      <div class="form-field">
-        <label class="f-label">Amount (₦)</label>
-        <input class="f-input" type="number" id="m_amount" placeholder="Min ₦800" min="800" step="0.01">
-      </div>
+      <div class="form-field"><label class="f-label">Amount (₦)</label><input class="f-input" type="number" id="m_amount" placeholder="Min ₦800" min="800" step="0.01"></div>
       <div class="fee-reveal" id="m_feeBox">
         <div class="fee-line"><span>Requested</span><strong id="m_req">₦0</strong></div>
         <div class="fee-line"><span>Fee (15%)</span><strong id="m_fee">₦0</strong></div>
@@ -331,9 +222,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
       </div>
       <div class="submit-row" id="m_btnRow">
         <button class="btn-ghost" onclick="closeSheet()">Cancel</button>
-        <button class="btn-red" id="m_submitBtn" onclick="submitMobile()">
-          <i class="fas fa-arrow-up-right"></i> SEND
-        </button>
+        <button class="btn-red" id="m_submitBtn" onclick="submitMobile()"><i class="fas fa-arrow-up-right"></i> SEND</button>
       </div>
     </div>
   </div>
@@ -341,14 +230,44 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
 <script type="module">
 import{onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-import{ref,get,set,push,update}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import{ref,get,set,push,update,onValue}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 import{auth,database}from"./lib/firebase.js";
 
-let user,userData,dRef,mRef;
+let user,userData,waSettings={},lastRef={};
 const fmt=n=>`₦${n.toLocaleString('en-NG',{minimumFractionDigits:2})}`;
 const isAllowed=()=>{const h=new Date().getHours();return h>=10&&h<18;};
+const cryptoTypes=['btc','usdt','eth'];
 
-// ── sheet open/close ──
+// Load WhatsApp settings + payment methods from Firebase
+onValue(ref(database,'adminSettings/whatsapp'),s=>{waSettings=s.val()||{}});
+onValue(ref(database,'adminSettings/paymentMethods'),s=>{
+  const methods=s.val()||{};
+  populateMethods(methods);
+});
+
+function populateMethods(methods){
+  const entries=Object.values(methods);
+  ['d_method','m_method'].forEach(id=>{
+    const sel=document.getElementById(id);
+    // Keep only first placeholder option
+    sel.innerHTML='<option value="">Select method…</option>';
+    entries.forEach(m=>{
+      const opt=document.createElement('option');
+      opt.value=JSON.stringify({name:m.name,type:m.type,account:m.account,accountName:m.accountName});
+      opt.textContent=m.name+(m.type==='btc'||m.type==='usdt'||m.type==='eth'?' (Crypto)':'');
+      sel.appendChild(opt);
+    });
+  });
+}
+
+window.onMethodChange=(prefix)=>{
+  const sel=document.getElementById(`${prefix}_method`);
+  const val=sel.value?JSON.parse(sel.value):{};
+  const isCrypto=cryptoTypes.includes(val.type||'');
+  document.getElementById(`${prefix}_acctFields`).style.display=isCrypto?'none':'block';
+  document.getElementById(`${prefix}_walletField`).style.display=isCrypto?'block':'none';
+};
+
 window.openSheet=()=>{
   if(!isAllowed()){alert('⏰ Withdrawals available 10:00 AM – 6:00 PM only.');return;}
   document.getElementById('sheetBg').classList.add('open');
@@ -362,68 +281,52 @@ window.closeSheet=()=>{
   document.body.style.overflow='';
 };
 
-// ── trigger card state ──
 function syncTrigger(){
-  const ok=isAllowed();
-  const card=document.getElementById('triggerCard');
-  if(!ok){
-    card.classList.add('disabled');
-    card.onclick=()=>alert('⏰ Withdrawals available 10:00 AM – 6:00 PM only.');
-    card.querySelector('.tc-title').textContent='Unavailable';
-    card.querySelector('.tc-sub').textContent='Available 10 AM – 6 PM';
-    card.querySelector('.tc-icon').innerHTML='<i class="fas fa-clock"></i>';
-  }
-  const btn=document.getElementById('d_submitBtn');
-  if(btn){btn.disabled=!ok;}
+  const ok=isAllowed();const card=document.getElementById('triggerCard');
+  if(!ok){card.classList.add('disabled');card.onclick=()=>alert('⏰ Available 10 AM – 6 PM only.');card.querySelector('.tc-title').textContent='Unavailable';card.querySelector('.tc-sub').textContent='Available 10 AM – 6 PM';}
+  const btn=document.getElementById('d_submitBtn');if(btn)btn.disabled=!ok;
 }
 
-// ── fee calcs ──
 function setupFee(amtId,reqId,feeId,netId,boxId){
   document.getElementById(amtId).addEventListener('input',function(){
-    const a=parseFloat(this.value)||0;
-    const box=document.getElementById(boxId);
-    if(a>0){
-      const f=a*.15,n=a-f;
-      document.getElementById(reqId).textContent=fmt(a);
-      document.getElementById(feeId).textContent=fmt(f);
-      document.getElementById(netId).textContent=fmt(n);
-      box.classList.add('show');
-    }else box.classList.remove('show');
+    const a=parseFloat(this.value)||0;const box=document.getElementById(boxId);
+    if(a>0){const f=a*.15,n=a-f;document.getElementById(reqId).textContent=fmt(a);document.getElementById(feeId).textContent=fmt(f);document.getElementById(netId).textContent=fmt(n);box.classList.add('show');}
+    else box.classList.remove('show');
   });
 }
 setupFee('d_amount','d_req','d_fee','d_net','d_feeBox');
 setupFee('m_amount','m_req','m_fee','m_net','m_feeBox');
 
-// ── shared withdrawal logic ──
-async function processW(method,acctNum,acctName,amt,errId,okId,pendId,btnId,formId){
-  if(!isAllowed()){show(errId,'⏰ Available 10 AM – 6 PM only');return;}
+async function processW(prefix,method,acctNum,acctName,wallet,amt,errId,okId,pendId,btnId){
+  if(!isAllowed())return show(errId,'⏰ Available 10 AM – 6 PM only');
   if(!method)return show(errId,'Select a payment method');
-  if(!acctNum.trim())return show(errId,'Enter account number');
-  if(!acctName.trim())return show(errId,'Enter account name');
+  const methodData=JSON.parse(method);
+  const isCrypto=cryptoTypes.includes(methodData.type);
+  if(!isCrypto&&!acctNum.trim())return show(errId,'Enter account number');
+  if(!isCrypto&&!acctName.trim())return show(errId,'Enter account name');
+  if(isCrypto&&!wallet.trim())return show(errId,'Enter wallet address');
   if(amt<800)return show(errId,'Minimum withdrawal is ₦800');
   if(!userData||amt>(userData.balance||0))return show(errId,'Insufficient balance');
   hide(errId);hide(okId);
-  const btn=document.getElementById(btnId);
-  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
+  const btn=document.getElementById(btnId);btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
   try{
     const fee=amt*.15,net=amt-fee,ts=new Date().toISOString();
     const wData={userId:user.uid,userName:userData.name||userData.fullName||'User',userEmail:user.email||'',
-      amount:amt,fee,netAmount:net,method,accountNumber:acctNum,accountName:acctName,status:'pending',requestDate:ts,timestamp:Date.now()};
-    const newRef=push(ref(database,'pendingWithdrawals'));
-    const id=newRef.key;
+      amount:amt,fee,netAmount:net,methodName:methodData.name,methodType:methodData.type,
+      accountNumber:isCrypto?wallet:acctNum,accountName:isCrypto?'Crypto':acctName,
+      walletAddress:wallet||'',status:'pending',requestDate:ts,timestamp:Date.now()};
+    const newRef=push(ref(database,'pendingWithdrawals'));const id=newRef.key;
     await set(newRef,wData);
-    const snap=await get(ref(database,`users/${user.uid}`));
-    const bal=snap.val().balance||0;
+    const snap=await get(ref(database,`users/${user.uid}`));const bal=snap.val().balance||0;
     const upd={};
     upd[`users/${user.uid}/balance`]=Math.max(0,bal-amt);
-    upd[`users/${user.uid}/transactions/${id}`]={type:'withdrawal',amount:amt,fee,netAmount:net,status:'pending',method,accountNumber:acctNum,accountName:acctName,requestDate:ts};
+    upd[`users/${user.uid}/transactions/${id}`]={type:'withdrawal',amount:amt,fee,netAmount:net,status:'pending',method:methodData.name,accountNumber:isCrypto?wallet:acctNum,accountName:isCrypto?'Crypto':acctName,requestDate:ts};
     await update(ref(database),upd);
     userData.balance=Math.max(0,bal-amt);
     document.getElementById('availableAmount').textContent=fmt(userData.balance);
-    if(formId==='d')dRef={id,method,accountNumber:acctNum,accountName:acctName,amount:amt,fee,netAmount:net};
-    else mRef={id,method,accountNumber:acctNum,accountName:acctName,amount:amt,fee,netAmount:net};
-    document.getElementById(`${formId}_btnRow`).style.display='none';
-    document.getElementById(`${pendId}`).classList.add('show');
+    lastRef[prefix]={id,method:methodData.name,accountNumber:isCrypto?wallet:acctNum,accountName:isCrypto?'Crypto':acctName,amount:amt,fee,netAmount:net};
+    document.getElementById(`${prefix}_btnRow`).style.display='none';
+    document.getElementById(pendId).classList.add('show');
     show(okId,'✅ Request submitted successfully!');
     await loadHistory(user.uid);
   }catch(e){show(errId,e.message||'Error occurred');}
@@ -431,18 +334,21 @@ async function processW(method,acctNum,acctName,amt,errId,okId,pendId,btnId,form
 }
 
 window.submitDesktop=()=>{
-  const a=parseFloat(document.getElementById('d_amount').value);
-  processW(document.getElementById('d_method').value,document.getElementById('d_acctNum').value,document.getElementById('d_acctName').value,a,'d_error','d_success','d_pending','d_submitBtn','d');
+  const m=document.getElementById('d_method').value;
+  const isCrypto=m&&cryptoTypes.includes(JSON.parse(m).type);
+  processW('d',m,document.getElementById('d_acctNum').value,document.getElementById('d_acctName').value,document.getElementById('d_wallet').value,parseFloat(document.getElementById('d_amount').value),'d_error','d_success','d_pending','d_submitBtn');
 };
 window.submitMobile=()=>{
-  const a=parseFloat(document.getElementById('m_amount').value);
-  processW(document.getElementById('m_method').value,document.getElementById('m_acctNum').value,document.getElementById('m_acctName').value,a,'m_error','m_success','m_pending','m_submitBtn','m');
+  const m=document.getElementById('m_method').value;
+  processW('m',m,document.getElementById('m_acctNum').value,document.getElementById('m_acctName').value,document.getElementById('m_wallet').value,parseFloat(document.getElementById('m_amount').value),'m_error','m_success','m_pending','m_submitBtn');
 };
 
-window.contactCS=(src)=>{
-  const w=src==='d'?dRef:mRef;if(!w)return;
-  const msg=`Hello! Pending withdrawal:\nEmail: ${user.email}\nMethod: ${w.method}\nAccount: ${w.accountNumber}\nName: ${w.accountName}\nAmount: ${fmt(w.amount)}\nFee: ${fmt(w.fee)}\nNet: ${fmt(w.netAmount)}\nID: ${w.id}\n\nPlease process. Thank you!`;
-  window.open(`https://t.me/+haQbwQasg8xjZjRk?text=${encodeURIComponent(msg)}`,'_blank');
+window.contactWA=(src)=>{
+  const w=lastRef[src];if(!w)return;
+  const num=waSettings.number||'';
+  if(!num){alert('Support contact not configured yet.');return}
+  const msg=waSettings.message||`Hello! I have a pending withdrawal:\nEmail: ${user.email}\nMethod: ${w.method}\nAccount: ${w.accountNumber}\nName: ${w.accountName}\nAmount: ${fmt(w.amount)}\nFee: ${fmt(w.fee)}\nNet: ${fmt(w.netAmount)}\nID: ${w.id}\n\nPlease process. Thank you!`;
+  window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`,'_blank');
 };
 
 function show(id,msg){const e=document.getElementById(id);e.textContent=msg;e.classList.add('show');}
@@ -451,24 +357,24 @@ function hide(id){document.getElementById(id).classList.remove('show');}
 async function loadHistory(uid){
   try{
     const snap=await get(ref(database,`users/${uid}`));
-    if(!snap.exists()){document.getElementById('historyList').innerHTML='<div class="empty"><i class="fas fa-inbox"></i><p>No history yet</p></div>';return;}
+    if(!snap.exists()){document.getElementById('historyList').innerHTML='<div class="empty"><i class="fas fa-inbox"></i><p>No history yet</p></div>';return}
     const txs=snap.val().transactions||{};
     const ws=Object.values(txs).filter(t=>t.type==='withdrawal').sort((a,b)=>new Date(b.requestDate)-new Date(a.requestDate));
-    if(!ws.length){document.getElementById('historyList').innerHTML='<div class="empty"><i class="fas fa-inbox"></i><p>No withdrawals yet</p></div>';document.getElementById('totalWithdrawn').textContent='₦0.00';return;}
+    if(!ws.length){document.getElementById('historyList').innerHTML='<div class="empty"><i class="fas fa-inbox"></i><p>No withdrawals yet</p></div>';document.getElementById('totalWithdrawn').textContent='₦0.00';return}
     document.getElementById('historyList').innerHTML=ws.map(w=>`
       <div class="h-item">
         <div>
           <div class="h-top"><span class="h-dot ${w.status}"></span><span class="h-method">${w.method}</span></div>
           <div class="h-date">${new Date(w.requestDate).toLocaleDateString('en-NG',{day:'2-digit',month:'short',year:'numeric'})}</div>
         </div>
-        <div class="h-right">
+        <div style="text-align:right">
           <div class="h-amount">${fmt(w.amount)}</div>
           <div class="h-badge ${w.status}">${w.status}</div>
         </div>
       </div>`).join('');
     const total=ws.filter(w=>w.status==='completed'||w.status==='approved').reduce((s,w)=>s+w.amount,0);
     document.getElementById('totalWithdrawn').textContent=fmt(total);
-  }catch(e){console.error(e);}
+  }catch(e){console.error(e)}
 }
 
 onAuthStateChanged(auth,async u=>{
@@ -477,7 +383,7 @@ onAuthStateChanged(auth,async u=>{
       const snap=await get(ref(database,`users/${u.uid}`));
       if(snap.exists()){userData=snap.val();document.getElementById('availableAmount').textContent=fmt(userData.balance||0);}
       loadHistory(u.uid);
-    }catch(e){console.error(e);}
+    }catch(e){console.error(e)}
   }else location.href='/login';
 });
 
