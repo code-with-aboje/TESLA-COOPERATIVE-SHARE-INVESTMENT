@@ -1,26 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Crest Point</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>*{margin:0;padding:0;box-sizing:border-box}:root{--p:#10b981;--d:#059669;--bg:#fff;--txt:#000;--g:#666;--b:#e5e5e5}body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;font-size:14px;padding:20px}.welcome{background:linear-gradient(135deg,var(--p),var(--d));border-radius:12px;padding:28px 24px;margin-bottom:24px;color:#fff}.welcome h1{font-size:24px;font-weight:700;margin-bottom:4px}.welcome p{font-size:15px;opacity:.95}.error-msg{background:#fef2f2;border:1px solid #fecaca;color:#dc2626;padding:14px;border-radius:8px;margin-bottom:20px;display:none;text-align:center;font-size:13px}.error-msg.show{display:block}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:24px}.card{background:var(--bg);border:1px solid var(--b);border-radius:10px;padding:20px;transition:all .2s}.card:hover{border-color:var(--p);box-shadow:0 4px 12px rgba(16,185,129,.15)}.stat{text-align:center;padding:20px;background:#f0fdf4;border-radius:8px}.stat-val{font-size:32px;font-weight:700;margin-bottom:6px;font-family:monospace;color:var(--p)}.stat-label{font-size:13px;color:var(--g);font-weight:500}.loading{animation:pulse 2s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}.status{position:fixed;bottom:20px;right:20px;padding:10px 14px;border-radius:20px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:6px}.status.online{background:#f0fdf4;color:#22c55e;border:1px solid rgba(34,197,94,.2)}.status.offline{background:#fef2f2;color:#ef4444;border:1px solid rgba(239,68,68,.2)}.dot{width:6px;height:6px;border-radius:50%;background:currentColor}@media(max-width:768px){.grid{grid-template-columns:1fr}body{padding:16px}.welcome{padding:20px 16px}.welcome h1{font-size:20px}}</style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--r:#CC0000;--rd:#a00000;--bg:#080808;--g1:#0f0f0f;--g2:#161616;--g3:#1e1e1e;--line:rgba(255,255,255,0.07);--T:#f5f5f5;--M:#888;--dim:#555}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--T);padding:28px 24px;font-size:14px}
+.welcome{background:linear-gradient(135deg,var(--r),var(--rd));border-radius:14px;padding:24px;margin-bottom:24px;position:relative;overflow:hidden}
+.welcome::after{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:rgba(255,255,255,.06);border-radius:50%}
+.welcome h1{font-size:22px;font-weight:700;margin-bottom:3px}
+.welcome p{font-size:13px;opacity:.85}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.card{background:var(--g1);border:1px solid var(--line);border-radius:12px;padding:20px;transition:.2s}
+.card:hover{border-color:rgba(204,0,0,.4);transform:translateY(-2px)}
+.card-val{font-size:30px;font-weight:700;color:var(--r);font-variant-numeric:tabular-nums;margin-bottom:4px}
+.card-lbl{font-size:12px;color:var(--M);text-transform:uppercase;letter-spacing:1px}
+.card-icon{width:36px;height:36px;background:rgba(204,0,0,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:14px}
+.sec-title{font-size:13px;font-weight:600;color:var(--M);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sec-title::before{content:'';width:16px;height:2px;background:var(--r)}
+.users-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.user-row{background:var(--g1);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
+.u-name{font-weight:600;font-size:13px;margin-bottom:2px}
+.u-email{font-size:11px;color:var(--M)}
+.u-bal{font-size:14px;font-weight:700;color:var(--r)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--g3);border-top:2px solid var(--r);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
 </head>
 <body>
-    <div class="welcome">
-        <div class="welcome-content">
-            <h1>Admin Dashboard</h1>
-            <p><span id="userName">Admin</span> - Super Admin</p>
-        </div>
-    </div>
-    <div id="errorMsg" class="error-msg"></div>
-    <div class="grid">
-        <div class="card"><div class="stat"><div id="totalUsers" class="stat-val loading">...</div><div class="stat-label">Total Users</div></div></div>
-        <div class="card"><div class="stat"><div id="totalBalance" class="stat-val loading">...</div><div class="stat-label">Users Total Balance</div></div></div>
-        <div class="card"><div class="stat"><div id="withdrawalReq" class="stat-val loading">...</div><div class="stat-label">Withdrawal Requests</div></div></div>
-    </div>
-    <div id="status" class="status offline"><div class="dot"></div><span id="statusText">Connecting...</span></div>
-    <script type="module">import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';import{getDatabase,ref,onValue}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';const firebaseConfig={apiKey:"AIzaSyBSITcz0wWrZuVsSe0njOwB5K_iKuTwjxg",authDomain:"crestpoint-bb103.firebaseapp.com",databaseURL:"https://crestpoint-bb103-default-rtdb.firebaseio.com",projectId:"crestpoint-bb103",storageBucket:"crestpoint-bb103.firebasestorage.app",messagingSenderId:"249520798719",appId:"1:249520798719:web:2d83f3cef937c9dc1405ca"};const app=initializeApp(firebaseConfig),db=getDatabase(app),auth=getAuth(app),$=id=>document.getElementById(id);let connected=false;const fmt=(n,c=false)=>new Intl.NumberFormat('en-NG',c?{style:'currency',currency:'NGN',maximumFractionDigits:0}:{}).format(n),setStatus=o=>{connected=o;const e=$('status');e.className=`status ${o?'online':'offline'}`;$('statusText').textContent=o?'Connected':'Offline';if(o)$('errorMsg').classList.remove('show')},showError=m=>{$('errorMsg').textContent=m;$('errorMsg').classList.add('show');setStatus(false)},clearLoading=()=>document.querySelectorAll('.loading').forEach(e=>e.classList.remove('loading')),calcStats=(u,w)=>{let t=0,b=0,wr=0;if(!u)return{total:t,balance:b,withdrawals:wr};Object.values(u).forEach(user=>{t++;b+=parseFloat(user.balance)||0});if(w)Object.values(w).forEach(r=>{if(r.status==='pending')wr++});return{total:t,balance:b,withdrawals:wr}},updateDash=s=>{$('totalUsers').textContent=fmt(s.total);$('totalBalance').textContent=fmt(s.balance,true);$('withdrawalReq').textContent=fmt(s.withdrawals);clearLoading()},setupData=()=>{let usersData=null,withdrawalsData=null;onValue(ref(db,'users'),snap=>{try{usersData=snap.val();console.log('Users:',usersData?Object.keys(usersData).length:0);if(usersData&&withdrawalsData!==null){updateDash(calcStats(usersData,withdrawalsData));if(!connected)setStatus(true)}}catch(err){console.error('Error:',err);showError('Failed to load user data')}},err=>{console.error('DB error:',err);showError('Database connection failed')});onValue(ref(db,'withdrawalRequests'),snap=>{try{withdrawalsData=snap.val()||{};console.log('Withdrawals:',Object.keys(withdrawalsData).length);if(usersData){updateDash(calcStats(usersData,withdrawalsData));if(!connected)setStatus(true)}}catch(err){console.error('Error:',err);withdrawalsData={}}})};onAuthStateChanged(auth,user=>{if(user){$('userName').textContent=user.displayName||user.email?.split('@')[0]||'Admin';setupData()}else{showError('Please sign in');setTimeout(()=>window.location.href='/login.html',2000)}});onValue(ref(db,'.info/connected'),snap=>setStatus(snap.val()));</script>
+<div class="welcome"><h1>Admin Dashboard</h1><p id="adminName">Loading…</p></div>
+<div class="grid">
+  <div class="card"><div class="card-icon">👥</div><div class="card-val" id="totalUsers"><span class="spin"></span></div><div class="card-lbl">Total Users</div></div>
+  <div class="card"><div class="card-icon">💰</div><div class="card-val" id="totalBal"><span class="spin"></span></div><div class="card-lbl">Total Balance</div></div>
+  <div class="card"><div class="card-icon">⏳</div><div class="card-val" id="pendingW"><span class="spin"></span></div><div class="card-lbl">Pending Withdrawals</div></div>
+  <div class="card"><div class="card-icon">📥</div><div class="card-val" id="pendingF"><span class="spin"></span></div><div class="card-lbl">Pending Funding</div></div>
+</div>
+
+<div class="sec-title">Recent Users</div>
+<div class="users-grid" id="recentUsers"><div style="color:var(--M);font-size:13px"><span class="spin"></span></div></div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getDatabase,ref,onValue}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import firebaseConfig from'./firebaseConfig.js';
+const app=initializeApp(firebaseConfig),db=getDatabase(app),auth=getAuth(app);
+const fmt=n=>`₦${(n||0).toLocaleString('en-NG',{minimumFractionDigits:0})}`;
+onAuthStateChanged(auth,user=>{
+  if(!user)return;
+  document.getElementById('adminName').textContent=user.email||'Admin';
+  let users={},withdrawals={},fundings={};
+  const update=()=>{
+    const uArr=Object.values(users);
+    document.getElementById('totalUsers').textContent=uArr.length;
+    document.getElementById('totalBal').textContent=fmt(uArr.reduce((s,u)=>s+(parseFloat(u.balance)||0),0));
+    document.getElementById('pendingW').textContent=Object.values(withdrawals).filter(w=>w.status==='pending').length;
+    document.getElementById('pendingF').textContent=Object.values(fundings).filter(f=>f.status==='pending').length;
+    const recent=uArr.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).slice(0,6);
+    document.getElementById('recentUsers').innerHTML=recent.map(u=>`
+      <div class="user-row">
+        <div><div class="u-name">${u.fullName||u.name||'User'}</div><div class="u-email">${u.email||''}</div></div>
+        <div class="u-bal">${fmt(u.balance)}</div>
+      </div>`).join('');
+  };
+  onValue(ref(db,'users'),s=>{users=s.val()||{};update()});
+  onValue(ref(db,'pendingWithdrawals'),s=>{withdrawals=s.val()||{};update()});
+  onValue(ref(db,'fundingRequests'),s=>{fundings=s.val()||{};update()});
+});
+</script>
 </body>
 </html>

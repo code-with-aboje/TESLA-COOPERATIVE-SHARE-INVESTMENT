@@ -1,250 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Management</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Inter',sans-serif;background:#fff;color:#000;font-size:14px;padding:40px 20px}
-        .container{max-width:1400px;margin:0 auto}
-        h1{font-size:32px;margin-bottom:8px;font-weight:700}
-        .subtitle{color:#666;font-size:15px;margin-bottom:32px}
-        .search-bar{display:flex;gap:12px;margin-bottom:32px}
-        .search-wrapper{position:relative;flex:1;max-width:400px}
-        .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#666;width:16px;height:16px}
-        .search-box{width:100%;padding:10px 14px 10px 40px;border:2px solid #d0d0d0;border-radius:6px;font-size:14px}
-        .search-box:focus{outline:none;border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.1)}
-        .btn{padding:10px 16px;border:2px solid #d0d0d0;border-radius:6px;cursor:pointer;font-size:14px;font-weight:500;background:#fff;color:#000;transition:all .2s}
-        .btn:hover{background:#f0fdf4;border-color:#22c55e}
-        .btn-primary{background:#22c55e;color:#fff;border-color:#22c55e}
-        .btn-primary:hover{background:#16a34a;border-color:#16a34a}
-        .btn-small{padding:6px 12px;font-size:12px;border-radius:4px}
-        table{width:100%;border-collapse:collapse}
-        th{text-align:left;padding:14px;font-weight:600;color:#666;font-size:12px;text-transform:uppercase;border-bottom:2px solid #d0d0d0}
-        td{padding:16px 14px;font-size:14px;border-bottom:2px solid #d0d0d0}
-        tr:hover{background:#f0fdf4}
-        .user-name{font-weight:600}
-        .user-email{color:#666;font-size:13px}
-        .balance{font-weight:600}
-        .actions{display:flex;gap:8px}
-        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1000}
-        .modal-content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:32px;border-radius:8px;width:90%;max-width:400px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1)}
-        .modal-header h2{font-size:20px;font-weight:600;margin-bottom:4px}
-        .modal-header p{color:#666;font-size:13px;margin-bottom:24px}
-        .form-group{margin-bottom:20px}
-        .form-group label{display:block;margin-bottom:8px;font-weight:500;font-size:13px}
-        .form-group input,.form-group textarea{width:100%;padding:10px 12px;border:2px solid #d0d0d0;border-radius:6px;font-size:14px;font-family:'Inter',sans-serif}
-        .form-group input:focus,.form-group textarea:focus{outline:none;border-color:#22c55e}
-        .form-group textarea{resize:vertical;min-height:80px}
-        .modal-actions{display:flex;gap:12px;margin-top:24px}
-        .modal-actions .btn{flex:1}
-        .loading,.empty-state{text-align:center;padding:40px 20px;color:#666}
-        @media(max-width:768px){
-            body{padding:20px 16px}
-            h1{font-size:24px}
-            .search-bar{flex-direction:column}
-            .search-wrapper{max-width:none}
-            table{font-size:12px}
-            th,td{padding:12px 8px}
-            .actions{flex-direction:column}
-        }
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Users</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--r:#CC0000;--rd:#a00000;--bg:#080808;--g1:#0f0f0f;--g2:#161616;--g3:#1e1e1e;--line:rgba(255,255,255,0.07);--T:#f5f5f5;--M:#888}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--T);padding:28px 24px;font-size:14px}
+h2{font-size:20px;font-weight:700;margin-bottom:4px}
+.sub{color:var(--M);font-size:13px;margin-bottom:24px}
+.search-bar{display:flex;gap:10px;margin-bottom:20px}
+.search-inp{flex:1;background:var(--g1);border:1px solid var(--line);border-radius:9px;padding:11px 14px;color:var(--T);font-size:14px;outline:none;transition:.2s}
+.search-inp:focus{border-color:var(--r)}
+.refresh-btn{padding:10px 18px;background:var(--g1);border:1px solid var(--line);border-radius:9px;color:var(--M);font-size:13px;cursor:pointer;transition:.2s}
+.refresh-btn:hover{color:var(--T);border-color:rgba(255,255,255,.2)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th{text-align:left;padding:12px 14px;font-size:11px;color:var(--M);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--line)}
+td{padding:14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+tr:hover td{background:var(--g1)}
+.u-name{font-weight:600}
+.u-email{font-size:11px;color:var(--M);margin-top:2px}
+.bal{font-weight:700;color:var(--r)}
+.act-btn{padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;border:none}
+.fund-btn{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.25)}
+.fund-btn:hover{background:#22c55e;color:#000}
+.ban-btn{background:rgba(204,0,0,.12);color:var(--r);border:1px solid rgba(204,0,0,.25)}
+.ban-btn:hover{background:var(--r);color:#fff}
+/* Modal */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modal-box{background:var(--g1);border:1px solid var(--line);border-radius:16px;padding:28px;width:100%;max-width:400px;position:relative}
+.modal-box::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--r),transparent);border-radius:16px 16px 0 0}
+.modal-title{font-size:17px;font-weight:700;margin-bottom:4px}
+.modal-sub{font-size:12px;color:var(--M);margin-bottom:22px}
+.lbl{font-size:11px;color:var(--M);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:7px}
+.inp{width:100%;background:var(--g2);border:1px solid var(--line);border-radius:9px;padding:12px 14px;color:var(--T);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:.2s;margin-bottom:14px}
+.inp:focus{border-color:var(--r);box-shadow:0 0 0 3px rgba(204,0,0,.12)}
+.sel{width:100%;background:var(--g2);border:1px solid var(--line);border-radius:9px;padding:12px 14px;color:var(--T);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:.2s;margin-bottom:14px}
+.sel option{background:#1a1a1a}
+.modal-btns{display:flex;gap:10px}
+.btn-r{flex:2;padding:12px;background:var(--r);color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;transition:.2s}
+.btn-r:hover{background:var(--rd)}
+.btn-r:disabled{opacity:.4;cursor:not-allowed}
+.btn-ghost{flex:1;padding:12px;background:transparent;border:1px solid var(--line);border-radius:9px;color:var(--M);font-size:13px;cursor:pointer;transition:.2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.2);color:var(--T)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--g3);border-top:2px solid var(--r);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--g1);border:1px solid rgba(34,197,94,.3);color:#22c55e;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:500;transform:translateY(80px);opacity:0;transition:.3s;z-index:999}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.err{border-color:rgba(204,0,0,.3);color:var(--r)}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Users</h1>
-        <p class="subtitle">Manage and credit user accounts</p>
+<h2>Users</h2>
+<p class="sub">Manage accounts, fund users, ban/unban</p>
+<div class="search-bar">
+  <input class="search-inp" id="search" placeholder="Search name or email…" oninput="filterUsers()">
+  <button class="refresh-btn" onclick="loadUsers()">↻ Refresh</button>
+</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>User</th><th>Balance</th><th>Joined</th><th>Actions</th></tr></thead>
+    <tbody id="tbody"><tr><td colspan="4" style="text-align:center;padding:40px;color:var(--M)"><span class="spin"></span></td></tr></tbody>
+  </table>
+</div>
 
-        <div class="search-bar">
-            <div class="search-wrapper">
-                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-                <input type="text" id="searchBox" class="search-box" placeholder="Search by name or email...">
-            </div>
-            <button class="btn" onclick="refreshUsers()">Refresh</button>
-        </div>
-
-        <div style="overflow-x:auto">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Balance</th>
-                        <th>Total Claimed</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="usersBody">
-                    <tr><td colspan="5" class="loading">Loading users...</td></tr>
-                </tbody>
-            </table>
-        </div>
+<!-- Fund Modal -->
+<div class="modal" id="fundModal">
+  <div class="modal-box">
+    <div class="modal-title">💰 Fund User</div>
+    <div class="modal-sub" id="fundUserInfo">—</div>
+    <input type="hidden" id="fundUserId">
+    <label class="lbl">Action</label>
+    <select class="sel" id="fundAction">
+      <option value="add">Add Funds</option>
+      <option value="set">Set Balance</option>
+      <option value="subtract">Subtract Funds</option>
+    </select>
+    <label class="lbl">Amount (₦)</label>
+    <input class="inp" type="number" id="fundAmt" placeholder="0.00" min="0" step="0.01">
+    <label class="lbl">Note (optional)</label>
+    <input class="inp" type="text" id="fundNote" placeholder="Reason for adjustment">
+    <div class="modal-btns">
+      <button class="btn-ghost" onclick="closeFund()">Cancel</button>
+      <button class="btn-r" id="fundSubmit" onclick="submitFund()">Apply</button>
     </div>
+  </div>
+</div>
 
-    <div id="creditModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Credit Account</h2>
-                <p>Add funds to user account</p>
-            </div>
-            <div class="form-group">
-                <label>User</label>
-                <input type="text" id="creditUserName" readonly>
-            </div>
-            <div class="form-group">
-                <label>Amount (₦)</label>
-                <input type="number" id="creditAmount" placeholder="0.00" min="0" step="0.01">
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <textarea id="creditReason" placeholder="Optional description..."></textarea>
-            </div>
-            <div class="modal-actions">
-                <button class="btn" onclick="closeModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="processCreditUser()">Credit</button>
-            </div>
-        </div>
-    </div>
+<div class="toast" id="toast"></div>
 
-    <script type="module">
-        import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import{getDatabase,ref,onValue,update,get}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-        import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-        import firebaseConfig from'./firebaseConfig.js';
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getDatabase,ref,get,update,onValue,set}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import firebaseConfig from'./firebaseConfig.js';
+const app=initializeApp(firebaseConfig),db=getDatabase(app);
+const fmt=n=>`₦${(n||0).toLocaleString('en-NG')}`;
+const showToast=(msg,err=false)=>{const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(err?' err':'');setTimeout(()=>t.className='toast',2800)};
 
-        const app=initializeApp(firebaseConfig);
-        const db=getDatabase(app);
-        const auth=getAuth(app);
+let allUsers=[];
 
-        let users={};
-        let creditUid=null;
+window.loadUsers=()=>{
+  onValue(ref(db,'users'),snap=>{
+    allUsers=Object.entries(snap.val()||{}).map(([id,d])=>({id,...d}));
+    renderUsers(allUsers);
+  });
+};
 
-        const $=id=>document.getElementById(id);
-        const formatCurrency=a=>`₦${a.toLocaleString('en-NG',{minimumFractionDigits:2})}`;
+window.filterUsers=()=>{
+  const q=document.getElementById('search').value.toLowerCase();
+  renderUsers(allUsers.filter(u=>(u.fullName||u.name||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)));
+};
 
-        const filterUsers=term=>{
-            if(!term)return users;
-            return Object.fromEntries(
-                Object.entries(users).filter(([_,u])=>
-                    (u.fullName||'').toLowerCase().includes(term.toLowerCase())||
-                    (u.email||'').toLowerCase().includes(term.toLowerCase())
-                )
-            );
-        };
+function renderUsers(users){
+  document.getElementById('tbody').innerHTML=users.length?users.map(u=>`
+    <tr>
+      <td><div class="u-name">${u.fullName||u.name||'Unknown'}</div><div class="u-email">${u.email||''}</div></td>
+      <td><span class="bal">${fmt(u.balance)}</span></td>
+      <td style="color:var(--M);font-size:12px">${u.createdAt?new Date(u.createdAt).toLocaleDateString():'—'}</td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="act-btn fund-btn" onclick="openFund('${u.id}','${(u.fullName||u.name||'User').replace(/'/g,'')}&nbsp;·&nbsp;${(u.email||'').replace(/'/g,'')}',${u.balance||0})">Fund</button>
+        ${u.banned?`<button class="act-btn fund-btn" onclick="toggleBan('${u.id}',false)">Unban</button>`:`<button class="act-btn ban-btn" onclick="toggleBan('${u.id}',true)">Ban</button>`}
+      </td>
+    </tr>`).join(''):'<tr><td colspan="4" style="text-align:center;padding:40px;color:var(--M)">No users found</td></tr>';
+}
 
-        const renderUsers=(userList=users)=>{
-            const tbody=$('usersBody');
-            
-            if(!Object.keys(userList).length){
-                tbody.innerHTML='<tr><td colspan="5" class="empty-state">No users found</td></tr>';
-                return;
-            }
+window.openFund=(id,info,bal)=>{
+  document.getElementById('fundUserId').value=id;
+  document.getElementById('fundUserInfo').textContent=info;
+  document.getElementById('fundAmt').value='';
+  document.getElementById('fundNote').value='';
+  document.getElementById('fundModal').classList.add('open');
+};
+window.closeFund=()=>document.getElementById('fundModal').classList.remove('open');
 
-            tbody.innerHTML=Object.entries(userList).map(([uid,u])=>{
-                const fullName=u.fullName||'Unknown';
-                const email=u.email||'No email';
-                const balance=u.balance||0;
-                const totalClaimed=u.totalClaimed||0;
-                
-                return`
-                    <tr>
-                        <td><div class="user-name">${fullName}</div></td>
-                        <td><div class="user-email">${email}</div></td>
-                        <td><div class="balance">${formatCurrency(balance)}</div></td>
-                        <td><div class="balance">${formatCurrency(totalClaimed)}</div></td>
-                        <td>
-                            <div class="actions">
-                                <button class="btn btn-small btn-primary" onclick="openCreditModal('${uid}','${fullName}')">
-                                    Credit
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        };
+window.submitFund=async()=>{
+  const id=document.getElementById('fundUserId').value;
+  const action=document.getElementById('fundAction').value;
+  const amt=parseFloat(document.getElementById('fundAmt').value);
+  const note=document.getElementById('fundNote').value.trim();
+  if(!amt||amt<=0){showToast('Enter a valid amount',true);return}
+  const btn=document.getElementById('fundSubmit');
+  btn.disabled=true;btn.textContent='…';
+  try{
+    const snap=await get(ref(db,`users/${id}`));
+    const cur=snap.val()?.balance||0;
+    let newBal=action==='add'?cur+amt:action==='set'?amt:Math.max(0,cur-amt);
+    const txKey=`tx_${Date.now()}`;
+    await update(ref(db,`users/${id}`),{balance:newBal,[`transactions/${txKey}`]:{type:'admin_adjustment',action,amount:amt,balanceBefore:cur,balanceAfter:newBal,note:note||'Admin adjustment',timestamp:Date.now()}});
+    showToast(`✅ Balance updated → ${fmt(newBal)}`);
+    closeFund();
+  }catch(e){showToast('Error: '+e.message,true)}
+  finally{btn.disabled=false;btn.textContent='Apply'}
+};
 
-        window.openCreditModal=(uid,name)=>{
-            creditUid=uid;
-            $('creditUserName').value=name;
-            $('creditAmount').value='';
-            $('creditReason').value='';
-            $('creditModal').style.display='flex';
-        };
+window.toggleBan=async(id,ban)=>{
+  if(!confirm(ban?'Ban this user?':'Unban this user?'))return;
+  try{await update(ref(db,`users/${id}`),{banned:ban,bannedAt:ban?Date.now():null});showToast(ban?'User banned':'User unbanned');}
+  catch(e){showToast('Error',true)}
+};
 
-        window.closeModal=()=>{
-            $('creditModal').style.display='none';
-            creditUid=null;
-        };
-
-        window.processCreditUser=async()=>{
-            if(!creditUid)return;
-            
-            const amount=parseFloat($('creditAmount').value);
-            const description=$('creditReason').value.trim();
-            
-            if(!amount||amount<=0){
-                alert('Please enter a valid amount');
-                return;
-            }
-
-            try{
-                const userRef=ref(db,`users/${creditUid}`);
-                const snapshot=await get(userRef);
-                
-                if(snapshot.exists()){
-                    const userData=snapshot.val();
-                    const currentBalance=userData.balance||0;
-                    const newBalance=currentBalance+amount;
-                    
-                    const updates={
-                        'balance':newBalance
-                    };
-
-                    const transactionData={
-                        type:'credit',
-                        amount:amount,
-                        description:description||'Account credit',
-                        timestamp:new Date().toISOString(),
-                        previousBalance:currentBalance,
-                        newBalance:newBalance
-                    };
-
-                    updates[`transactions/${Date.now()}`]=transactionData;
-                    
-                    await update(userRef,updates);
-                    
-                    alert(`Successfully credited ₦${amount.toFixed(2)}`);
-                    window.closeModal();
-                }else{
-                    alert('User not found');
-                }
-            }catch(error){
-                console.error('Credit error:',error);
-                alert('Failed to credit user account');
-            }
-        };
-
-        window.refreshUsers=()=>renderUsers();
-
-        $('searchBox').oninput=e=>renderUsers(filterUsers(e.target.value));
-        
-        onValue(ref(db,'users'),snapshot=>{
-            users=snapshot.val()||{};
-            renderUsers();
-        });
-
-        onAuthStateChanged(auth,user=>{
-            if(!user){
-                $('usersBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:#ff4444;padding:40px">Please sign in to access user management</td></tr>';
-            }
-        });
-
-        $('creditModal').onclick=e=>e.target===$('creditModal')&&window.closeModal();
-    </script>
+loadUsers();
+</script>
 </body>
-    </html>
+</html>

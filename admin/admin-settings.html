@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Settings</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--r:#CC0000;--rd:#a00000;--bg:#080808;--g1:#0f0f0f;--g2:#161616;--g3:#1e1e1e;--line:rgba(255,255,255,0.07);--T:#f5f5f5;--M:#888;--dim:#555}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--T);padding:28px 24px;font-size:14px}
+h2{font-size:20px;font-weight:700;margin-bottom:4px}
+.sub{color:var(--M);font-size:13px;margin-bottom:28px}
+.section{background:var(--g1);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:20px}
+.sec-hd{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.lbl{font-size:11px;color:var(--M);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:7px}
+.inp{width:100%;background:var(--g2);border:1px solid var(--line);border-radius:9px;padding:12px 14px;color:var(--T);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:.2s;margin-bottom:14px}
+.inp:focus{border-color:var(--r);box-shadow:0 0 0 3px rgba(204,0,0,.12)}
+.sel{width:100%;background:var(--g2);border:1px solid var(--line);border-radius:9px;padding:12px 14px;color:var(--T);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:.2s;margin-bottom:14px}
+.sel:focus{border-color:var(--r)}
+.sel option{background:#1a1a1a}
+.btn-r{padding:12px 22px;background:var(--r);color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;transition:.2s}
+.btn-r:hover{background:var(--rd)}
+.btn-ghost{padding:10px 18px;background:transparent;border:1px solid var(--line);border-radius:9px;color:var(--M);font-size:13px;cursor:pointer;transition:.2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.2);color:var(--T)}
+.method-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.method-item{background:var(--g2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.m-type{font-size:11px;color:var(--r);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.m-name{font-weight:600;font-size:14px}
+.m-detail{font-size:12px;color:var(--M);margin-top:2px}
+.m-actions{display:flex;gap:6px}
+.del-btn{padding:6px 12px;background:rgba(204,0,0,.15);color:var(--r);border:1px solid rgba(204,0,0,.3);border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;transition:.2s}
+.del-btn:hover{background:var(--r);color:#fff}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--g1);border:1px solid rgba(34,197,94,.3);color:#22c55e;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:500;transform:translateY(80px);opacity:0;transition:.3s;z-index:999}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.err{border-color:rgba(204,0,0,.3);color:var(--r)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--g3);border-top:2px solid var(--r);border-radius:50%;animation:sp .8s linear infinite;vertical-align:middle}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<h2>Settings</h2>
+<p class="sub">Manage WhatsApp redirect and payment methods</p>
+
+<!-- WhatsApp Settings -->
+<div class="section">
+  <div class="sec-hd">📱 WhatsApp Redirect Number</div>
+  <label class="lbl">WhatsApp Number (with country code)</label>
+  <input class="inp" type="tel" id="waNumber" placeholder="e.g. 2348012345678">
+  <div style="margin-bottom:14px"><label class="lbl">Custom Message Template</label>
+  <input class="inp" type="text" id="waMsg" placeholder="Leave blank for default message"></div>
+  <button class="btn-r" onclick="saveWA()">💾 Save WhatsApp Settings</button>
+</div>
+
+<!-- Payment Methods -->
+<div class="section">
+  <div class="sec-hd">💳 Payment Methods</div>
+  <div class="method-list" id="methodList"><span class="spin"></span></div>
+  
+  <div style="border-top:1px solid var(--line);padding-top:16px;margin-top:4px">
+    <div style="font-size:13px;font-weight:600;margin-bottom:14px">Add New Method</div>
+    <label class="lbl">Method Type</label>
+    <select class="sel" id="newType">
+      <option value="bank">Nigerian Bank Transfer</option>
+      <option value="opay">OPay</option>
+      <option value="palmpay">PalmPay</option>
+      <option value="kuda">Kuda Bank</option>
+      <option value="btc">Bitcoin (BTC)</option>
+      <option value="usdt">USDT (TRC20)</option>
+      <option value="eth">Ethereum (ETH)</option>
+      <option value="other">Other</option>
+    </select>
+    <div class="row">
+      <div><label class="lbl">Bank/Wallet Name</label><input class="inp" id="newName" placeholder="e.g. GTBank / Bitcoin"></div>
+      <div><label class="lbl">Account / Address</label><input class="inp" id="newAcct" placeholder="Account number or wallet address"></div>
+    </div>
+    <div id="bankFields">
+      <label class="lbl">Account Name</label>
+      <input class="inp" id="newAcctName" placeholder="Full account holder name">
+    </div>
+    <button class="btn-r" onclick="addMethod()">➕ Add Payment Method</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getDatabase,ref,get,set,push,remove,onValue}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import firebaseConfig from'./firebaseConfig.js';
+const app=initializeApp(firebaseConfig),db=getDatabase(app);
+
+const showToast=(msg,err=false)=>{const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(err?' err':'');setTimeout(()=>t.className='toast',2800)};
+
+// Toggle bank fields for crypto
+document.getElementById('newType').addEventListener('change',function(){
+  document.getElementById('bankFields').style.display=this.value==='btc'||this.value==='usdt'||this.value==='eth'?'none':'block';
+});
+
+// Load settings
+onValue(ref(db,'adminSettings/whatsapp'),snap=>{
+  const d=snap.val()||{};
+  document.getElementById('waNumber').value=d.number||'';
+  document.getElementById('waMsg').value=d.message||'';
+});
+
+window.saveWA=async()=>{
+  const num=document.getElementById('waNumber').value.trim();
+  if(!num){showToast('Enter a WhatsApp number',true);return}
+  try{
+    await set(ref(db,'adminSettings/whatsapp'),{number:num,message:document.getElementById('waMsg').value.trim()});
+    showToast('✅ WhatsApp settings saved!');
+  }catch(e){showToast('Error: '+e.message,true)}
+};
+
+const typeLabels={bank:'Bank Transfer',opay:'OPay',palmpay:'PalmPay',kuda:'Kuda',btc:'Bitcoin',usdt:'USDT',eth:'Ethereum',other:'Other'};
+
+onValue(ref(db,'adminSettings/paymentMethods'),snap=>{
+  const methods=snap.val()||{};
+  const list=document.getElementById('methodList');
+  const entries=Object.entries(methods);
+  if(!entries.length){list.innerHTML='<div style="color:var(--M);font-size:13px">No payment methods added yet.</div>';return}
+  list.innerHTML=entries.map(([id,m])=>`
+    <div class="method-item">
+      <div>
+        <div class="m-type">${typeLabels[m.type]||m.type}</div>
+        <div class="m-name">${m.name}</div>
+        <div class="m-detail">${m.account}${m.accountName?' · '+m.accountName:''}</div>
+      </div>
+      <div class="m-actions"><button class="del-btn" onclick="deleteMethod('${id}')">Delete</button></div>
+    </div>`).join('');
+});
+
+window.addMethod=async()=>{
+  const type=document.getElementById('newType').value;
+  const name=document.getElementById('newName').value.trim();
+  const acct=document.getElementById('newAcct').value.trim();
+  const acctName=document.getElementById('newAcctName').value.trim();
+  if(!name||!acct){showToast('Fill in all required fields',true);return}
+  try{
+    await push(ref(db,'adminSettings/paymentMethods'),{type,name,account:acct,accountName:acctName||'',createdAt:Date.now()});
+    document.getElementById('newName').value='';
+    document.getElementById('newAcct').value='';
+    document.getElementById('newAcctName').value='';
+    showToast('✅ Payment method added!');
+  }catch(e){showToast('Error: '+e.message,true)}
+};
+
+window.deleteMethod=async id=>{
+  if(!confirm('Delete this payment method?'))return;
+  try{await remove(ref(db,`adminSettings/paymentMethods/${id}`));showToast('Deleted');}
+  catch(e){showToast('Error',true)}
+};
+</script>
+</body>
+</html>
