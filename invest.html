@@ -151,6 +151,90 @@ body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--txt);height
 @media(max-width:960px){.tn-item{max-width:100px}}
 @media(max-width:768px){.tn-item i{font-size:22px}.chat-btn{bottom:20px;right:16px;width:46px;height:46px;font-size:18px}}
 @media(max-width:520px){.tn-bell,.tn-brand{display:none}.tn-right{padding:0}.tn-item i{font-size:20px}.tn-item span{font-size:10px}}
+
+/* ── TESTIMONIAL TICKER ── */
+@keyframes tickerSlide{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+.testi-bar{
+  position:relative;
+  height:40px;
+  background:linear-gradient(90deg,#0a0d12 0%,#111520 50%,#0a0d12 100%);
+  border-bottom:1px solid rgba(232,25,44,.18);
+  overflow:hidden;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+}
+.testi-bar::before,.testi-bar::after{
+  content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;
+}
+.testi-bar::before{left:0;background:linear-gradient(90deg,#0a0d12,transparent)}
+.testi-bar::after{right:0;background:linear-gradient(270deg,#0a0d12,transparent)}
+.testi-label{
+  position:absolute;left:0;top:0;bottom:0;z-index:3;
+  background:var(--red);
+  display:flex;align-items:center;
+  padding:0 14px;
+  gap:6px;
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#fff;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.testi-label i{font-size:10px;opacity:.85}
+.testi-track-wrap{
+  overflow:hidden;
+  flex:1;
+  margin-left:108px;
+}
+.testi-track{
+  display:flex;
+  align-items:center;
+  width:max-content;
+  animation:tickerSlide 52s linear infinite;
+}
+.testi-track:hover{animation-play-state:paused}
+.testi-item{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:0 28px;
+  white-space:nowrap;
+  border-right:1px solid rgba(255,255,255,.07);
+}
+.testi-avatar{
+  width:22px;height:22px;border-radius:50%;
+  background:linear-gradient(135deg,var(--red2),#5c0000);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:700;color:#fff;
+  flex-shrink:0;
+  letter-spacing:.5px;
+}
+.testi-quote{
+  font-size:11.5px;color:var(--txt3);
+  font-family:'DM Sans',sans-serif;
+  font-style:italic;
+}
+.testi-author{
+  font-size:10px;color:var(--txt2);
+  font-family:'DM Mono',monospace;
+  letter-spacing:.5px;
+  flex-shrink:0;
+}
+.testi-amount{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:13px;
+  color:#4ade80;
+  letter-spacing:.5px;
+  flex-shrink:0;
+}
+.testi-dot{color:rgba(255,255,255,.15);margin:0 4px;font-size:8px}
+.testi-stars{color:#f59e0b;font-size:9px;letter-spacing:1px;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -181,6 +265,145 @@ body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--txt);height
     </div>
     <div class="tn-right"><div class="tn-bell"><i class="fas fa-bell"></i><span class="tn-badge"></span></div></div>
   </nav>
+  <!-- TESTIMONIAL TICKER -->
+  <div class="testi-bar">
+    <div class="testi-label"><i class="fas fa-star"></i> Members</div>
+    <div class="testi-track-wrap">
+      <div class="testi-track" id="testiTrack">
+        <!-- set 1 -->
+        <div class="testi-item">
+          <div class="testi-avatar">JM</div>
+          <span class="testi-quote">"Withdrew my earnings in under 10 minutes."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">James M.</span>
+          <span class="testi-amount">+$2,400</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">SR</div>
+          <span class="testi-quote">"Best passive income I've found. Totally legit."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Sofia R.</span>
+          <span class="testi-amount">+$5,800</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">DK</div>
+          <span class="testi-quote">"My daily returns hit every single day, no delays."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">David K.</span>
+          <span class="testi-amount">+$1,950</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">AL</div>
+          <span class="testi-quote">"Started with $500, compounded up to $9k in 3 months."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Amara L.</span>
+          <span class="testi-amount">+$9,200</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">TC</div>
+          <span class="testi-quote">"Support is fast and the platform never goes down."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Theo C.</span>
+          <span class="testi-amount">+$3,300</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">NP</div>
+          <span class="testi-quote">"Referred 4 friends — earning on their investments too!"</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Nina P.</span>
+          <span class="testi-amount">+$7,100</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">OM</div>
+          <span class="testi-quote">"Daily income hits like clockwork. Life-changing."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Omar M.</span>
+          <span class="testi-amount">+$4,600</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">LH</div>
+          <span class="testi-quote">"Smooth onboarding, verified platform, zero issues."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Laura H.</span>
+          <span class="testi-amount">+$6,500</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <!-- duplicate set for seamless loop -->
+        <div class="testi-item">
+          <div class="testi-avatar">JM</div>
+          <span class="testi-quote">"Withdrew my earnings in under 10 minutes."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">James M.</span>
+          <span class="testi-amount">+$2,400</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">SR</div>
+          <span class="testi-quote">"Best passive income I've found. Totally legit."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Sofia R.</span>
+          <span class="testi-amount">+$5,800</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">DK</div>
+          <span class="testi-quote">"My daily returns hit every single day, no delays."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">David K.</span>
+          <span class="testi-amount">+$1,950</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">AL</div>
+          <span class="testi-quote">"Started with $500, compounded up to $9k in 3 months."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Amara L.</span>
+          <span class="testi-amount">+$9,200</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">TC</div>
+          <span class="testi-quote">"Support is fast and the platform never goes down."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Theo C.</span>
+          <span class="testi-amount">+$3,300</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">NP</div>
+          <span class="testi-quote">"Referred 4 friends — earning on their investments too!"</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Nina P.</span>
+          <span class="testi-amount">+$7,100</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">OM</div>
+          <span class="testi-quote">"Daily income hits like clockwork. Life-changing."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Omar M.</span>
+          <span class="testi-amount">+$4,600</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+        <div class="testi-item">
+          <div class="testi-avatar">LH</div>
+          <span class="testi-quote">"Smooth onboarding, verified platform, zero issues."</span>
+          <span class="testi-dot">●</span>
+          <span class="testi-author">Laura H.</span>
+          <span class="testi-amount">+$6,500</span>
+          <span class="testi-stars">★★★★★</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="body-wrap">
     <div class="content-wrap">
       <div class="iframe-wrap">
