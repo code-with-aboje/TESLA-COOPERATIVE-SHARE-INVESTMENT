@@ -152,55 +152,85 @@ body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--txt);height
 @media(max-width:768px){.tn-item i{font-size:22px}.chat-btn{bottom:20px;right:16px;width:46px;height:46px;font-size:18px}}
 @media(max-width:520px){.tn-bell,.tn-brand{display:none}.tn-right{padding:0}.tn-item i{font-size:20px}.tn-item span{font-size:10px}}
 
-/* ── TESTIMONIAL CAROUSEL ── */
-@keyframes cardFadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* ── WITHDRAWAL TICKER ── */
+@keyframes tickerSlide{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+@keyframes itemIn{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:translateY(0)}
+}
 .testi-bar{
   position:relative;
-  height:72px;
-  background:#0d1018;
+  height:36px;
+  background:#0c0f15;
   border-bottom:1px solid rgba(255,255,255,.06);
   overflow:hidden;
   flex-shrink:0;
   display:flex;
   align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding:0 16px;
 }
-.testi-card{
+.testi-bar::before,.testi-bar::after{
+  content:'';position:absolute;top:0;bottom:0;width:48px;z-index:2;pointer-events:none;
+}
+.testi-bar::before{left:0;background:linear-gradient(90deg,#0c0f15,transparent)}
+.testi-bar::after{right:0;background:linear-gradient(270deg,#0c0f15,transparent)}
+.testi-track-wrap{
+  overflow:hidden;
+  flex:1;
+}
+.testi-track{
   display:flex;
   align-items:center;
-  gap:10px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:12px;
-  padding:10px 16px;
-  flex:1;
-  min-width:0;
-  max-width:200px;
-  animation:cardFadeIn .4s ease;
+  width:max-content;
+  animation:tickerSlide 60s linear infinite;
+  will-change:transform;
 }
-.testi-avatar{
-  width:30px;height:30px;border-radius:50%;
-  background:linear-gradient(135deg,var(--red2),#5c0000);
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:700;color:#fff;
-  flex-shrink:0;letter-spacing:.5px;
+.testi-track:hover{animation-play-state:paused}
+.testi-item{
+  display:inline-flex;
+  align-items:center;
+  gap:0;
+  padding:0 24px 0 0;
+  white-space:nowrap;
+  animation:itemIn .35s ease;
 }
-.testi-info{min-width:0;flex:1}
-.testi-name{
-  font-family:'DM Mono',monospace;
-  font-size:10px;color:var(--txt3);
-  letter-spacing:.4px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+.testi-sep{
+  color:rgba(255,255,255,.12);
+  font-size:11px;
+  margin:0 20px;
+  user-select:none;
+}
+.testi-author{
+  font-size:11px;
+  color:#c5cdd8;
+  font-family:'DM Sans',sans-serif;
+  font-weight:500;
+  letter-spacing:.2px;
+}
+.testi-withdrew{
+  font-size:11px;
+  color:rgba(255,255,255,.35);
+  font-family:'DM Sans',sans-serif;
+  margin:0 5px;
 }
 .testi-amount{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:13px;color:#4ade80;
-  letter-spacing:.5px;
-  margin-top:1px;
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:#4ade80;
+  font-weight:500;
+  letter-spacing:.3px;
 }
-.testi-time{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.28);letter-spacing:.3px;margin-top:1px}
+.testi-time{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:rgba(255,255,255,.22);
+  margin-left:7px;
+  letter-spacing:.2px;
+}
+.testi-live-dot{width:5px;height:5px;background:#4ade80;border-radius:50%;flex-shrink:0;margin-right:16px;margin-left:8px;animation:livePulse 1.6s ease-in-out infinite}
+@keyframes livePulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,.5)}60%{opacity:.5;box-shadow:0 0 0 4px rgba(74,222,128,0)}}
 </style>
 </head>
 <body>
@@ -231,8 +261,13 @@ body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--txt);height
     </div>
     <div class="tn-right"><div class="tn-bell"><i class="fas fa-bell"></i><span class="tn-badge"></span></div></div>
   </nav>
-  <!-- TESTIMONIAL CARDS -->
-  <div class="testi-bar" id="testiBar"></div>
+  <!-- WITHDRAWAL TICKER -->
+  <div class="testi-bar">
+    <span class="testi-live-dot"></span>
+    <div class="testi-track-wrap">
+      <div class="testi-track" id="testiTrack"></div>
+    </div>
+  </div>
 
   <div class="body-wrap">
     <div class="content-wrap">
@@ -414,66 +449,85 @@ imBtn.addEventListener('click',async()=>{
 
 $('welcomeCloseBtn').addEventListener('click',()=>$('welcomeModal').classList.remove('open'));
 
-/* ── TESTIMONIAL CARDS ROTATOR ── */
+/* ── WITHDRAWAL TICKER ── */
 (function(){
-  const firstNames=['James','Sofia','David','Amara','Theo','Nina','Omar','Laura','Carlos','Priya','Marcus','Elena','Kwame','Isabelle','Ravi','Fatima','Liam','Zara','Ethan','Chloe','Diego','Aisha','Noah','Yasmine','Patrick','Nadia','Andre','Leila','Jordan','Miriam','Felix','Kezia','Brandon','Selene','Aaron','Tanya','Victor','Diana','Samuel','Imani'];
-  const lastInitials='ABCDEFGHJKLMNOPRSTW';
-  const amounts=[480,920,1250,1800,2400,3100,3750,4200,5100,5800,6400,7200,8500,9100,10500,12000,14300,2150,3600,4800,6700,870,1550,2900,7800];
+  const names=[
+    'James B','Sofia M','David O','Amara K','Theo R','Nina L','Omar S','Laura P','Carlos V','Priya N',
+    'Marcus E','Elena F','Kwame A','Isabelle H','Ravi C','Fatima D','Liam W','Zara J','Ethan G','Chloe T',
+    'Diego X','Aisha Y','Noah Z','Yasmine Q','Patrick U','Nadia I','Andre O','Leila R','Jordan S','Miriam L',
+    'Felix B','Kezia M','Brandon T','Selene C','Aaron W','Tanya P','Victor H','Diana F','Samuel N','Imani K',
+    'Nathan A','Serena V','Malik E','Adaeze J','Jerome G','Bianca D','Tyler Q','Sasha U','Kevin I','Renata Z',
+    'Chris Y','Megan X','Brian O','Vanessa R','Derek S','Alicia L','Sean B','Jenna M','Mike T','Rachel C',
+    'Jake W','Monica P','Eric H','Stephanie F','Kyle N','Ashley K','Ryan A','Melissa V','Jason E','Brittany J'
+  ];
+  const amounts=[480,920,1250,1800,2400,3100,3750,4200,5100,5800,6400,7200,8500,9100,10500,12000,14300,
+    2150,3600,4800,6700,870,1550,2900,7800,500,750,1100,1650,2200,3300,4500,5500,6800,9500,11000,13500];
+
+  let lastUsed=[];
 
   function randInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
-  function pickRandom(arr){return arr[randInt(0,arr.length-1)];}
-  function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=randInt(0,i);[a[i],a[j]]=[a[j],a[i]];}return a;}
-  function fmtAmt(n){return '$'+n.toLocaleString('en-US');}
-  function relTime(){const m=randInt(1,59);if(m<2)return 'just now';if(m<60)return m+'m ago';return randInt(1,3)+'h ago';}
 
-  let namePool=shuffle([...firstNames]);
-  let nameIdx=0;
-  function nextName(){if(nameIdx>=namePool.length){namePool=shuffle([...firstNames]);nameIdx=0;}return namePool[nameIdx++];}
-
-  function pickData(){
-    const fn=nextName();
-    const li=lastInitials[randInt(0,lastInitials.length-1)];
-    return{initials:(fn[0]+li).toUpperCase(),name:fn+' '+li+'.',amt:fmtAmt(pickRandom(amounts)),time:relTime()};
+  function pickName(){
+    const pool=names.filter(n=>!lastUsed.slice(-6).includes(n));
+    const n=pool[randInt(0,pool.length-1)];
+    lastUsed.push(n);if(lastUsed.length>20)lastUsed.shift();
+    return n;
   }
 
-  function makeCard(d){
+  function fmtAmt(n){return '$'+n.toLocaleString('en-US');}
+
+  function relTime(){
+    const r=randInt(0,9);
+    if(r===0)return 'just now';
+    if(r<4)return randInt(1,9)+'m ago';
+    if(r<7)return randInt(10,55)+'m ago';
+    return randInt(1,3)+'h ago';
+  }
+
+  function makeItem(name,amt,time){
     const el=document.createElement('div');
-    el.className='testi-card';
+    el.className='testi-item';
     el.innerHTML=
-      `<div class="testi-avatar">${d.initials}</div>`+
-      `<div class="testi-info">`+
-        `<div class="testi-name">${d.name}</div>`+
-        `<div class="testi-amount">${d.amt}</div>`+
-        `<div class="testi-time">${d.time}</div>`+
-      `</div>`;
+      `<span class="testi-author">${name}</span>`+
+      `<span class="testi-withdrew">withdrew</span>`+
+      `<span class="testi-amount">${fmtAmt(amt)}</span>`+
+      `<span class="testi-time">${time}</span>`+
+      `<span class="testi-sep">|</span>`;
     return el;
   }
 
-  function buildCards(){
-    const bar=document.getElementById('testiBar');
-    if(!bar)return;
-    bar.innerHTML='';
-    for(let i=0;i<6;i++) bar.appendChild(makeCard(pickData()));
-  }
-
-  function rotateOne(){
-    const bar=document.getElementById('testiBar');
-    if(!bar)return;
-    const cards=[...bar.children];
-    const replaceIdx=Math.floor(Math.random()*6);
-    const newCard=makeCard(pickData());
-    newCard.style.opacity='0';
-    newCard.style.transform='translateY(6px)';
-    bar.replaceChild(newCard,cards[replaceIdx]);
+  function buildTrack(){
+    const track=document.getElementById('testiTrack');
+    track.innerHTML='';
+    lastUsed=[];
+    const set=[];
+    for(let i=0;i<28;i++)set.push({name:pickName(),amt:amounts[randInt(0,amounts.length-1)],time:relTime()});
+    lastUsed=[];
+    const set2=set.map(()=>({name:pickName(),amt:amounts[randInt(0,amounts.length-1)],time:relTime()}));
+    [...set,...set2].forEach(d=>track.appendChild(makeItem(d.name,d.amt,d.time)));
     requestAnimationFrame(()=>{
-      newCard.style.transition='opacity .4s,transform .4s';
-      newCard.style.opacity='1';
-      newCard.style.transform='translateY(0)';
+      const dur=Math.round((track.scrollWidth/2)/72);
+      track.style.animationDuration=dur+'s';
     });
   }
 
-  buildCards();
-  setInterval(rotateOne,2500);
+  buildTrack();
+
+  // Every ~9s update a random time label for live feel
+  setInterval(()=>{
+    const track=document.getElementById('testiTrack');
+    const items=[...track.querySelectorAll('.testi-item')];
+    const half=Math.floor(items.length/2);
+    const pick=items[randInt(0,half-1)];
+    if(pick){const t=pick.querySelector('.testi-time');if(t)t.textContent=relTime();}
+  },9000);
+
+  // Full refresh every 5 min
+  setInterval(()=>{
+    const track=document.getElementById('testiTrack');
+    track.style.animationPlayState='paused';
+    setTimeout(()=>{buildTrack();track.style.animationPlayState='running';},400);
+  },300000);
 })();
 
 /* ── postMessage ROUTER ── */
