@@ -314,7 +314,7 @@ window.contactWA=()=>{
   if(!num){alert('Support contact not configured. Try again later.');return}
   const amt=document.getElementById('amountSent').value;
   const msg=`Hello! I made a payment:\nUser: ${user.email}\nMethod: ${selectedMethod?.name||'—'}\nAmount: ₦${amt}\nPlease verify my account funding. Thank you!`;
-  window.open(`https://t.me/${num}?text=${encodeURIComponent(msg)}`,'_blank');
+  window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`,'_blank');
 };
 
 window.submitFunding=async()=>{
