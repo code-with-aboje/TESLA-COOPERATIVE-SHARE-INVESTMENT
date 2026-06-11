@@ -184,7 +184,7 @@ body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--txt);height
   display:flex;
   align-items:center;
   width:max-content;
-  animation:tickerSlide 60s linear infinite;
+  animation:tickerSlide 90s linear infinite;
   will-change:transform;
 }
 .testi-track:hover{animation-play-state:paused}
@@ -194,7 +194,6 @@ body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--txt);height
   gap:0;
   padding:0 24px 0 0;
   white-space:nowrap;
-  animation:itemIn .35s ease;
 }
 .testi-sep{
   color:rgba(255,255,255,.12);
@@ -498,6 +497,7 @@ $('welcomeCloseBtn').addEventListener('click',()=>$('welcomeModal').classList.re
 
   function buildTrack(){
     const track=document.getElementById('testiTrack');
+    track.style.animation='none';
     track.innerHTML='';
     lastUsed=[];
     const set=[];
@@ -505,10 +505,12 @@ $('welcomeCloseBtn').addEventListener('click',()=>$('welcomeModal').classList.re
     lastUsed=[];
     const set2=set.map(()=>({name:pickName(),amt:amounts[randInt(0,amounts.length-1)],time:relTime()}));
     [...set,...set2].forEach(d=>track.appendChild(makeItem(d.name,d.amt,d.time)));
-    requestAnimationFrame(()=>{
-      const dur=Math.round((track.scrollWidth/2)/72);
-      track.style.animationDuration=dur+'s';
-    });
+    // Double rAF ensures layout is fully computed before measuring
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      const half=track.scrollWidth/2||1;
+      const dur=Math.max(40,Math.round(half/72));
+      track.style.animation=`tickerSlide ${dur}s linear infinite`;
+    }));
   }
 
   buildTrack();
