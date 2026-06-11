@@ -152,96 +152,55 @@ body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--txt);height
 @media(max-width:768px){.tn-item i{font-size:22px}.chat-btn{bottom:20px;right:16px;width:46px;height:46px;font-size:18px}}
 @media(max-width:520px){.tn-bell,.tn-brand{display:none}.tn-right{padding:0}.tn-item i{font-size:20px}.tn-item span{font-size:10px}}
 
-/* ── TESTIMONIAL TICKER ── */
-@keyframes tickerSlide{
-  0%{transform:translateX(0)}
-  100%{transform:translateX(-50%)}
-}
+/* ── TESTIMONIAL CAROUSEL ── */
+@keyframes cardFadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .testi-bar{
   position:relative;
-  height:40px;
-  background:linear-gradient(90deg,#0a0d12 0%,#111520 50%,#0a0d12 100%);
-  border-bottom:1px solid rgba(232,25,44,.18);
+  height:72px;
+  background:#0d1018;
+  border-bottom:1px solid rgba(255,255,255,.06);
   overflow:hidden;
   flex-shrink:0;
   display:flex;
   align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:0 16px;
 }
-.testi-bar::before,.testi-bar::after{
-  content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;
-}
-.testi-bar::before{left:0;background:linear-gradient(90deg,#0a0d12,transparent)}
-.testi-bar::after{right:0;background:linear-gradient(270deg,#0a0d12,transparent)}
-.testi-label{
-  position:absolute;left:0;top:0;bottom:0;z-index:3;
-  background:var(--red);
-  display:flex;align-items:center;
-  padding:0 14px;
-  gap:6px;
-  font-family:'DM Mono',monospace;
-  font-size:9px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:#fff;
-  white-space:nowrap;
-  flex-shrink:0;
-}
-.testi-label i{font-size:10px;opacity:.85}
-.testi-live-dot{display:inline-block}
-.testi-track-wrap{
-  overflow:hidden;
+.testi-card{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;
+  padding:10px 16px;
   flex:1;
-  margin-left:108px;
-}
-.testi-track{
-  display:flex;
-  align-items:center;
-  width:max-content;
-  animation:tickerSlide 52s linear infinite;
-}
-.testi-track:hover{animation-play-state:paused}
-.testi-item{
-  display:inline-flex;
-  align-items:center;
-  gap:9px;
-  padding:0 28px;
-  white-space:nowrap;
-  border-right:1px solid rgba(255,255,255,.07);
+  min-width:0;
+  max-width:200px;
+  animation:cardFadeIn .4s ease;
 }
 .testi-avatar{
-  width:22px;height:22px;border-radius:50%;
+  width:30px;height:30px;border-radius:50%;
   background:linear-gradient(135deg,var(--red2),#5c0000);
   display:flex;align-items:center;justify-content:center;
-  font-size:9px;font-weight:700;color:#fff;
-  flex-shrink:0;
-  letter-spacing:.5px;
+  font-size:10px;font-weight:700;color:#fff;
+  flex-shrink:0;letter-spacing:.5px;
 }
-.testi-quote{
-  font-size:11.5px;color:var(--txt3);
-  font-family:'DM Sans',sans-serif;
-  font-style:italic;
-}
-.testi-withdrew{
-  font-size:11px;color:var(--txt2);
-  font-family:'DM Sans',sans-serif;
-}
-.testi-author{
-  font-size:10px;color:var(--txt2);
+.testi-info{min-width:0;flex:1}
+.testi-name{
   font-family:'DM Mono',monospace;
-  letter-spacing:.5px;
-  flex-shrink:0;
+  font-size:10px;color:var(--txt3);
+  letter-spacing:.4px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .testi-amount{
   font-family:'Bebas Neue',sans-serif;
-  font-size:13px;
-  color:#4ade80;
+  font-size:13px;color:#4ade80;
   letter-spacing:.5px;
-  flex-shrink:0;
+  margin-top:1px;
 }
-.testi-dot{color:rgba(255,255,255,.15);margin:0 4px;font-size:8px}
-.testi-time{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.28);flex-shrink:0;letter-spacing:.3px}
-.testi-live-dot{width:6px;height:6px;background:#4ade80;border-radius:50%;flex-shrink:0;animation:livePulse 1.4s ease-in-out infinite}
-@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+.testi-time{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.28);letter-spacing:.3px;margin-top:1px}
 </style>
 </head>
 <body>
@@ -272,13 +231,8 @@ body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--txt);height
     </div>
     <div class="tn-right"><div class="tn-bell"><i class="fas fa-bell"></i><span class="tn-badge"></span></div></div>
   </nav>
-  <!-- LIVE WITHDRAWAL TICKER -->
-  <div class="testi-bar">
-    <div class="testi-label"><span class="testi-live-dot"></span>&nbsp;Live Withdrawals</div>
-    <div class="testi-track-wrap">
-      <div class="testi-track" id="testiTrack"></div>
-    </div>
-  </div>
+  <!-- TESTIMONIAL CARDS -->
+  <div class="testi-bar" id="testiBar"></div>
 
   <div class="body-wrap">
     <div class="content-wrap">
@@ -460,79 +414,66 @@ imBtn.addEventListener('click',async()=>{
 
 $('welcomeCloseBtn').addEventListener('click',()=>$('welcomeModal').classList.remove('open'));
 
-/* ── LIVE WITHDRAWAL TICKER ── */
+/* ── TESTIMONIAL CARDS ROTATOR ── */
 (function(){
-  const firstNames=['James','Sofia','David','Amara','Theo','Nina','Omar','Laura','Carlos','Priya','Marcus','Elena','Kwame','Isabelle','Ravi','Fatima','Liam','Zara','Ethan','Chloe','Diego','Aisha','Noah','Yasmine','Patrick','Nadia','Andre','Leila','Jordan','Miriam','Felix','Kezia','Brandon','Selene','Aaron','Tanya','Victor','Diana','Samuel','Imani','Nathan','Serena','Malik','Adaeze','Jerome','Bianca','Tyler','Sasha','Kevin','Renata','Chris','Megan','Brian','Vanessa','Derek','Alicia','Sean','Jenna','Mike','Rachel','Jake','Monica','Eric','Stephanie','Kyle','Ashley','Ryan','Melissa','Jason','Brittany'];
+  const firstNames=['James','Sofia','David','Amara','Theo','Nina','Omar','Laura','Carlos','Priya','Marcus','Elena','Kwame','Isabelle','Ravi','Fatima','Liam','Zara','Ethan','Chloe','Diego','Aisha','Noah','Yasmine','Patrick','Nadia','Andre','Leila','Jordan','Miriam','Felix','Kezia','Brandon','Selene','Aaron','Tanya','Victor','Diana','Samuel','Imani'];
   const lastInitials='ABCDEFGHJKLMNOPRSTW';
-  const amounts=[480,920,1250,1800,2400,3100,3750,4200,5100,5800,6400,7200,8500,9100,10500,12000,14300,2150,3600,4800,6700,870,1550,2900,7800,500,750,1100,1650,2200,3300,4500,5500,6800,9500,11000,13500];
+  const amounts=[480,920,1250,1800,2400,3100,3750,4200,5100,5800,6400,7200,8500,9100,10500,12000,14300,2150,3600,4800,6700,870,1550,2900,7800];
 
   function randInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
   function pickRandom(arr){return arr[randInt(0,arr.length-1)];}
   function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=randInt(0,i);[a[i],a[j]]=[a[j],a[i]];}return a;}
-
   function fmtAmt(n){return '$'+n.toLocaleString('en-US');}
+  function relTime(){const m=randInt(1,59);if(m<2)return 'just now';if(m<60)return m+'m ago';return randInt(1,3)+'h ago';}
 
-  function relTime(){
-    const mins=randInt(1,59);
-    if(mins<2)return 'just now';
-    if(mins<60)return mins+'m ago';
-    return randInt(1,3)+'h ago';
+  let namePool=shuffle([...firstNames]);
+  let nameIdx=0;
+  function nextName(){if(nameIdx>=namePool.length){namePool=shuffle([...firstNames]);nameIdx=0;}return namePool[nameIdx++];}
+
+  function pickData(){
+    const fn=nextName();
+    const li=lastInitials[randInt(0,lastInitials.length-1)];
+    return{initials:(fn[0]+li).toUpperCase(),name:fn+' '+li+'.',amt:fmtAmt(pickRandom(amounts)),time:relTime()};
   }
 
-  function buildItems(count,usedNames){
-    const items=[];
-    const namePool=shuffle(firstNames.filter(n=>!usedNames.includes(n))).slice(0,count);
-    namePool.forEach(fn=>{
-      const li=lastInitials[randInt(0,lastInitials.length-1)];
-      const amt=pickRandom(amounts);
-      const amtStr=fmtAmt(amt);
-      const initials=(fn[0]+li).toUpperCase();
-      const time=relTime();
-      items.push({fn,li,amt,amtStr,initials,time});
-    });
-    return items;
-  }
-
-  function renderItem(d){
+  function makeCard(d){
     const el=document.createElement('div');
-    el.className='testi-item';
+    el.className='testi-card';
     el.innerHTML=
       `<div class="testi-avatar">${d.initials}</div>`+
-      `<span class="testi-author">${d.fn} ${d.li}.</span>`+
-      `<span class="testi-withdrew">withdrew</span>`+
-      `<span class="testi-amount">${d.amtStr}</span>`+
-      `<span class="testi-dot">●</span>`+
-      `<span class="testi-time">${d.time}</span>`;
+      `<div class="testi-info">`+
+        `<div class="testi-name">${d.name}</div>`+
+        `<div class="testi-amount">${d.amt}</div>`+
+        `<div class="testi-time">${d.time}</div>`+
+      `</div>`;
     return el;
   }
 
-  function buildTicker(){
-    const track=document.getElementById('testiTrack');
-    track.innerHTML='';
-    // Build a pool of 20 unique-name items, duplicate for seamless loop
-    const usedNames=[];
-    const set1=buildItems(20,usedNames);
-    set1.forEach(d=>usedNames.push(d.fn));
-    const set2=buildItems(20,[]); // second set fully different shuffle
-    [...set1,...set2].forEach(d=>track.appendChild(renderItem(d)));
+  function buildCards(){
+    const bar=document.getElementById('testiBar');
+    if(!bar)return;
+    bar.innerHTML='';
+    for(let i=0;i<6;i++) bar.appendChild(makeCard(pickData()));
+  }
 
-    // Recalculate animation duration based on content width
+  function rotateOne(){
+    const bar=document.getElementById('testiBar');
+    if(!bar)return;
+    const cards=[...bar.children];
+    const replaceIdx=Math.floor(Math.random()*6);
+    const newCard=makeCard(pickData());
+    newCard.style.opacity='0';
+    newCard.style.transform='translateY(6px)';
+    bar.replaceChild(newCard,cards[replaceIdx]);
     requestAnimationFrame(()=>{
-      const totalW=track.scrollWidth/2;
-      const speed=80; // px per second
-      const dur=Math.round(totalW/speed);
-      track.style.animationDuration=dur+'s';
+      newCard.style.transition='opacity .4s,transform .4s';
+      newCard.style.opacity='1';
+      newCard.style.transform='translateY(0)';
     });
   }
 
-  buildTicker();
-
-  // Refresh ticker every 4 minutes with new randomised entries for live feel
-  setInterval(()=>{
-    const track=document.getElementById('testiTrack');
-    track.style.animationPlayState='paused';
-    setTimeout(()=>{buildTicker();track.style.animationPlayState='running';},300);
-  },240000);
+  buildCards();
+  setInterval(rotateOne,2500);
 })();
 
 /* ── postMessage ROUTER ── */
