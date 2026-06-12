@@ -544,7 +544,7 @@
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        sucMsg.textContent = '✅ Login successful! Redirecting...';
+        sucMsg.textContent = 'Login successful! Redirecting...';
         sucMsg.classList.add('show');
         setTimeout(() => window.location.href = '/invest', 1500);
       } catch (error) {
