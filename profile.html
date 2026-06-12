@@ -89,7 +89,7 @@ body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);mi
   <div class="checkin-grid">
     <div class="checkin-left">
       <h3><i class="fas fa-gift"></i> Daily Check-in</h3>
-      <div class="checkin-amount">₦200</div>
+      <div class="checkin-amount">$1</div>
       <div class="streak-badge">🔥 <span id="streak">0</span> Day Streak</div>
     </div>
     <button class="checkin-btn" id="btn"><i class="fas fa-hand-pointer"></i> Claim Reward</button>
@@ -173,10 +173,10 @@ document.getElementById('btn').onclick=async()=>{
     let newStreak=1;
     if(lastCheckin){const yesterday=new Date(today);yesterday.setDate(yesterday.getDate()-1);if(lastDate.toDateString()===yesterday.toDateString())newStreak=(userData.checkinStreak||0)+1;}
     const currentBalance=userData.balance||0;
-    await update(ref(database,`users/${user.uid}`),{balance:currentBalance+200,lastCheckin:now,checkinStreak:newStreak,totalCheckins:(userData.totalCheckins||0)+1});
-    userData.balance=currentBalance+200;userData.lastCheckin=now;userData.checkinStreak=newStreak;userData.totalCheckins=(userData.totalCheckins||0)+1;
+    await update(ref(database,`users/${user.uid}`),{balance:currentBalance+1,lastCheckin:now,checkinStreak:newStreak,totalCheckins:(userData.totalCheckins||0)+1});
+    userData.balance=currentBalance+1;userData.lastCheckin=now;userData.checkinStreak=newStreak;userData.totalCheckins=(userData.totalCheckins||0)+1;
     updateCheckin();
-    alert('🎉 ₦200 has been added to your balance!');
+    alert('🎉 $1 has been added to your balance!');
   }catch(e){alert('Error: '+e.message);btn.disabled=false;btn.innerHTML='<i class="fas fa-hand-pointer"></i> Claim Reward';}
 };
 </script>
