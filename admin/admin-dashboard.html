@@ -47,7 +47,7 @@ import{getDatabase,ref,onValue}from'https://www.gstatic.com/firebasejs/10.7.1/fi
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 import firebaseConfig from'./firebaseConfig.js';
 const app=initializeApp(firebaseConfig),db=getDatabase(app),auth=getAuth(app);
-const fmt=n=>`₦${(n||0).toLocaleString('en-NG',{minimumFractionDigits:0})}`;
+const fmt=n=>`$${(n||0).toLocaleString('en-NG',{minimumFractionDigits:0})}`;
 onAuthStateChanged(auth,user=>{
   if(!user)return;
   document.getElementById('adminName').textContent=user.email||'Admin';
