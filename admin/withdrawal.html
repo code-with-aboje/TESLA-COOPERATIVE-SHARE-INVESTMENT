@@ -102,7 +102,7 @@ import firebaseConfig from'./firebaseConfig.js';
 const app=initializeApp(firebaseConfig),db=getDatabase(app),auth=getAuth(app);
 let withdrawals={},currentFilter='all',admin;
 
-const fmt=a=>`₦${a.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}`;
+const fmt=a=>`$${a.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}`;
 const fDate=d=>new Date(d).toLocaleString();
 
 window.filter=f=>{
