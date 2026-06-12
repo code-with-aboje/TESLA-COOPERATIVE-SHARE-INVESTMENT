@@ -128,7 +128,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <div class="stat"><div class="stat-label">Processing Fee</div><div class="stat-value">15%</div><div class="stat-sub">per request</div></div>
       </div>
     </div>
-    <div class="time-bar"><i class="fas fa-clock"></i><span>Window: <strong>10:00 AM – 6:00 PM</strong> daily &nbsp;·&nbsp; Min: ₦800 &nbsp;·&nbsp; ~10 mins</span></div>
+    <div class="time-bar"><i class="fas fa-clock"></i><span>Window: <strong>6:00 AM – 6:00 PM</strong> daily &nbsp;·&nbsp; Min: ₦800 &nbsp;·&nbsp; ~10 mins</span></div>
     <div class="content">
       <div class="trigger-card" id="triggerCard" onclick="openSheet()">
         <div class="tc-left"><div class="tc-label">Tap to begin</div><div class="tc-title">New Request</div><div class="tc-sub">Secure · Encrypted</div></div>
@@ -234,7 +234,7 @@ import{ref,get,set,push,update,onValue}from"https://www.gstatic.com/firebasejs/1
 import{auth,database}from"./lib/firebase.js";
 
 let user,userData,waSettings={},lastRef={};
-const fmt=n=>`₦${n.toLocaleString('en-NG',{minimumFractionDigits:2})}`;
+const fmt=n=>`$${n.toLocaleString('en-NG',{minimumFractionDigits:2})}`;
 const isAllowed=()=>{const h=new Date().getHours();return h>=10&&h<18;};
 const cryptoTypes=['btc','usdt','eth'];
 
@@ -269,7 +269,7 @@ window.onMethodChange=(prefix)=>{
 };
 
 window.openSheet=()=>{
-  if(!isAllowed()){alert('⏰ Withdrawals available 10:00 AM – 6:00 PM only.');return;}
+  if(!isAllowed()){alert('⏰ Withdrawals available 6:00 AM – 6:00 PM only.');return;}
   document.getElementById('sheetBg').classList.add('open');
   setTimeout(()=>document.getElementById('sheet').classList.add('open'),10);
   document.body.style.overflow='hidden';
@@ -283,7 +283,7 @@ window.closeSheet=()=>{
 
 function syncTrigger(){
   const ok=isAllowed();const card=document.getElementById('triggerCard');
-  if(!ok){card.classList.add('disabled');card.onclick=()=>alert('⏰ Available 10 AM – 6 PM only.');card.querySelector('.tc-title').textContent='Unavailable';card.querySelector('.tc-sub').textContent='Available 10 AM – 6 PM';}
+  if(!ok){card.classList.add('disabled');card.onclick=()=>alert('⏰ Available 6 AM – 6 PM only.');card.querySelector('.tc-title').textContent='Unavailable';card.querySelector('.tc-sub').textContent='Available 10 AM – 6 PM';}
   const btn=document.getElementById('d_submitBtn');if(btn)btn.disabled=!ok;
 }
 
@@ -298,14 +298,14 @@ setupFee('d_amount','d_req','d_fee','d_net','d_feeBox');
 setupFee('m_amount','m_req','m_fee','m_net','m_feeBox');
 
 async function processW(prefix,method,acctNum,acctName,wallet,amt,errId,okId,pendId,btnId){
-  if(!isAllowed())return show(errId,'⏰ Available 10 AM – 6 PM only');
+  if(!isAllowed())return show(errId,'⏰ Available 6 AM – 6 PM only');
   if(!method)return show(errId,'Select a payment method');
   const methodData=JSON.parse(method);
   const isCrypto=cryptoTypes.includes(methodData.type);
   if(!isCrypto&&!acctNum.trim())return show(errId,'Enter account number');
   if(!isCrypto&&!acctName.trim())return show(errId,'Enter account name');
   if(isCrypto&&!wallet.trim())return show(errId,'Enter wallet address');
-  if(amt<800)return show(errId,'Minimum withdrawal is ₦800');
+  if(amt<800)return show(errId,'Minimum withdrawal is $800');
   if(!userData||amt>(userData.balance||0))return show(errId,'Insufficient balance');
   hide(errId);hide(okId);
   const btn=document.getElementById(btnId);btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
