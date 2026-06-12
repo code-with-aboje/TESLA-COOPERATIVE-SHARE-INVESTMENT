@@ -128,7 +128,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <div class="stat"><div class="stat-label">Processing Fee</div><div class="stat-value">15%</div><div class="stat-sub">per request</div></div>
       </div>
     </div>
-    <div class="time-bar"><i class="fas fa-clock"></i><span>Window: <strong>6:00 AM – 6:00 PM</strong> daily &nbsp;·&nbsp; Min: ₦800 &nbsp;·&nbsp; ~10 mins</span></div>
+    <div class="time-bar"><i class="fas fa-clock"></i><span>Window: <strong>6:00 AM – 6:00 PM</strong> daily &nbsp;·&nbsp; Min: $800 &nbsp;·&nbsp; ~10 mins</span></div>
     <div class="content">
       <div class="trigger-card" id="triggerCard" onclick="openSheet()">
         <div class="tc-left"><div class="tc-label">Tap to begin</div><div class="tc-title">New Request</div><div class="tc-sub">Secure · Encrypted</div></div>
@@ -170,7 +170,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
           <label class="f-label">Wallet Address</label>
           <input class="f-input" type="text" id="d_wallet" placeholder="Wallet address">
         </div>
-        <div class="form-field"><label class="f-label">Amount ($)</label><input class="f-input" type="number" id="d_amount" placeholder="Minimum ₦800" min="800" step="0.01"></div>
+        <div class="form-field"><label class="f-label">Amount ($)</label><input class="f-input" type="number" id="d_amount" placeholder="Minimum $800" min="800" step="0.01"></div>
         <div class="fee-reveal" id="d_feeBox">
           <div class="fee-line"><span>Requested</span><strong id="d_req">$0</strong></div>
           <div class="fee-line"><span>Fee (15%)</span><strong id="d_fee">$0</strong></div>
@@ -360,7 +360,7 @@ async function loadHistory(uid){
     if(!snap.exists()){document.getElementById('historyList').innerHTML='<div class="empty"><i class="fas fa-inbox"></i><p>No history yet</p></div>';return}
     const txs=snap.val().transactions||{};
     const ws=Object.values(txs).filter(t=>t.type==='withdrawal').sort((a,b)=>new Date(b.requestDate)-new Date(a.requestDate));
-    if(!ws.length){document.getElementById('historyList').innerHTML='<div class="empty"><i class="fas fa-inbox"></i><p>No withdrawals yet</p></div>';document.getElementById('totalWithdrawn').textContent='₦0.00';return}
+    if(!ws.length){document.getElementById('historyList').innerHTML='<div class="empty"><i class="fas fa-inbox"></i><p>No withdrawals yet</p></div>';document.getElementById('totalWithdrawn').textContent='$0.00';return}
     document.getElementById('historyList').innerHTML=ws.map(w=>`
       <div class="h-item">
         <div>
